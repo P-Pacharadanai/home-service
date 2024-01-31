@@ -89,4 +89,32 @@ userRouter.delete("/:id", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+// userRouter.delete("/:id", async (req, res) => {
+//   try {
+//     const userId = req.params.id;
+
+//     const { data, error } = await supabase
+//       .from("auth.users")
+//       .delete()
+//       .eq("user_id", userId)
+//       .select();
+
+//     console.log("data: ", data);
+//     if (error) {
+//       return res.json({ message: error });
+//     }
+
+//     if (!data || data.length === 0) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     return res.json({ message: "user has been deleted" });
+//   } catch (error) {
+//     return res.json({ message: error });
+//   }
+// });
+
+>>>>>>> 08bbfbe (feat:add user api)
 export default userRouter;
