@@ -14,18 +14,13 @@ const App = () => (
     </section>
 
     <section className="padding py-10">
-      <JobInformation/>
+      <JobInformation />
     </section>
 
     <section className=" padding-x padding-t">
       <Footer/>
     </section>
-     
   </main>
-)
+);
 
-export default App
-
-
-
-
+export default App;
