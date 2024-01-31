@@ -3,11 +3,14 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+          prompt: ['prompt', 'sans-serif'],
+      },
       colors: {
-        black: "rgb(0 0 0)",
-        white: "rgb(255 255 255)",
-        red: "rgba(200, 36, 56, 1)",
-        base: "rgba(243, 244, 246, 1)",
+        "black": "rgb(0 0 0)",
+        "white": "rgb(255 255 255)",
+        "red": "rgba(200, 36, 56, 1)",
+        "base": "rgba(243, 244, 246, 1)",
         "blue-100": "rgb(219 234 254)",
         "blue-200": "rgb(210, 223, 252)",
         "blue-300": "rgb(166, 191, 250)",
@@ -35,6 +38,9 @@ export default {
         "green-100": "rgb(223, 249, 246)",
         "green-900": "rgb(0, 89, 108)",
       },
+      screens: {
+        "width": "1440px"
+      }
     },
   },
   plugins: [],
