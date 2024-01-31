@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       <DraftRegisterPage></DraftRegisterPage>
-      <DraftRegisterPage></DraftRegisterPage>
     </>
   );
 }
