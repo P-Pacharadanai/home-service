@@ -7,34 +7,47 @@ import {
   AccordionIcon,
   Box,
 } from "@chakra-ui/react";
-import DraftRegisterPage from "./pages/DraftRegister";
 
 function App() {
   return (
     <>
-      <DraftRegisterPage></DraftRegisterPage>
+      <h1 className="text-5xl font-bold underline">Hello world!</h1>;
+      <Accordion>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                Section 1 title
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                Section 2 title
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
-import { Home, Services, JobInformation } from "./components/landingPage";
-import { NavUser, Footer } from "./components/common";
-function App() {
-  return (
-    <main>
-      <section className="padding bg-slate-50">
-        <NavUser />
-      </section>
-     <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
-      <Home />
-     </section>
-     <section className="padding">
-      <Services />
-     </section>
-     <section className="padding">
-      <JobInformation/>
-    </section> 
-     <section className="padding-x padding-t pb-8">
-      <Footer />
-     </section>
-    </main>
   );
 }
 
