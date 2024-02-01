@@ -1,20 +1,7 @@
 import "./App.css";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from "@chakra-ui/react";
-import DraftRegisterPage from "./pages/DraftRegister";
 
 function App() {
-  return (
-    <>
-      <DraftRegisterPage></DraftRegisterPage>
-    </>
-  );
+  return <></>;
 }
 
 export default App;
