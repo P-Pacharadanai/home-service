@@ -8,12 +8,12 @@ const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) =
           <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">{tag}</p>
         </div>
         <h3 className="mt-2 text-xl leading-normal font-semibold pl-4 text-gray-950">{title}</h3>
-        <div className="flex items-start gap-2.5  pl-4">
-          <img src={iconTag} width={16} height={6} className="relative  " />
-          <img src={circle} width={4} height={4} className="absolute mb-1 mr-1 mt-1 ml-1" />
+        <div className="flex items-start gap-2.5 pl-4 mt-1">
+          <img src={iconTag} width={16} height={6} className="relative " />
+          <img src={circle} width={4} height={4} className="absolute -mb-3 mt-1 ml-1" />
           <p className="leading-normal text-gray-700 tracking-wide text-sm pb-6">{price}</p>
         </div>
-        <a href="/" className="text-blue-600 font-medium underline mt-6 mb-2 pl-4">{btnGhost}</a>
+        <a href="/" className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4">{btnGhost}</a>
 
       </div>
       
