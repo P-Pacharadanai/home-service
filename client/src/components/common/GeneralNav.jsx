@@ -1,7 +1,7 @@
+import { GeneralBtn } from "../../components/common";
 import { houseXs } from "../../assets/icons";
-import { ButtonAdmin } from "../../components/common";
 
-const NavAdmin = () => {
+const GeneralNav = () => {
   return (
     <section className="leading-none padding-x absolute z-10 w-full px-20 py-2 bg-white ">
       <nav className=" flex flex-wrap max-container justify-between items-center font-prompt font-medium ">
@@ -15,11 +15,12 @@ const NavAdmin = () => {
         </div>
 
         <div className="flex flex-wrap p-2 leading-none  justify-end max-lg:hidden">
-          <ButtonAdmin />
+          <GeneralBtn label="เข้าสู่ระบบ" backgroundColor="bg-white" borderColor="border-blue-600" textColor="text-blue-900 " />
         </div>
       </nav>
-  </section>
+    </section>  
   )
 }
 
-export default NavAdmin
+export default GeneralNav
+

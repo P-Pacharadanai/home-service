@@ -1,54 +1,31 @@
-import "./App.css";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from "@chakra-ui/react";
+import { Home, Services, JobInformation } from "./components/landingPage";
+import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 
-function App() {
-  return (
-    <>
-      <h1 className="text-5xl font-bold underline">Hello world!</h1>;
-      <Accordion>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
-                Section 1 title
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </AccordionPanel>
-        </AccordionItem>
+const App = () => (
+  <main className="relative">
+    <NavUser />
 
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
-                Section 2 title
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </>
-  );
-}
+    <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
+      <Home />
+    </section>
 
-export default App;
+    <section className="padding-x py-10">
+      <Services />
+    </section>
+
+    <section className="padding py-10">
+      <JobInformation/>
+    </section>
+
+    <section className=" padding-x padding-t pb-8">
+      <Footer/>
+    </section>
+     
+  </main>
+)
+
+export default App
+
+
+
+

@@ -1,20 +1,24 @@
-import { houseXs } from "../../assets/icons"
-import { Button } from "../../components/common";
+import { houseXs } from "../../assets/icons";
+import { ButtonUser } from "../../components/common";
 
 const NavUser = () => {
   return (
-    <section className="leading-none padding-x py-2 absolute z-10 w-full px-2 bg-white ">
-      <nav className=" flex flex-wrap max-container">
-        <a href="/" className="mt-4 flex gap-2 text-blue-600">
-          <img src={houseXs} alt="Logo" width={30} height={10} />
+    <section className="leading-none padding-x absolute z-10 w-full px-20 py-2 bg-white ">
+      <nav className=" flex flex-wrap max-container justify-between items-center font-prompt font-medium ">
+        <a href="/" className="mt-3 flex gap-1 text-blue-600">
+          <img src={houseXs} alt="Logo" width={20} height={10} className="-mt-1" />
           HomeServices
         </a>
-        <a href="/" className="flex justify-start items-start font-prompt gap-20 mt-4">บริการของเรา</a>
-        <div className="flex  max-lg:hidden">
-        <Button label="เข้าสู่ระบบ" backgroundColor="bg-white" borderColor="border-blue-600" textColor="text-blue-700" />
+
+        <div className="flex justify-start items-start absolute left-60 max-lg:hidden">
+          <a href="/" className="mt-3 ml-12">บริการของเรา</a>
+        </div>
+
+        <div className="flex flex-wrap p-2 leading-none  justify-end max-lg:hidden">
+          <ButtonUser />
         </div>
       </nav>
-  </section>
+    </section>  
   )
 }
 

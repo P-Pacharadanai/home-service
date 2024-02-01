@@ -5,6 +5,10 @@ import iconEmail from "./vector(email).png";
 import iconPhone from "./Vector(phone).png";
 import iconTag from "./VectorTag.png";
 import iconTagCircle from "./VectorTagCircle.png";
+import vectorChart from "./VectorChart.png";
+import vectorLogout from "./VectorLogout.png";
+import vectorHuman from "./VectorHuman.png";
+import vectorHistoryBlack from "./vectorHistoryBlack.png";
 
 export {
   houseXs,
@@ -14,4 +18,8 @@ export {
   iconPhone,
   iconTag,
   iconTagCircle,
+  vectorChart,
+  vectorHistoryBlack,
+  vectorHuman,
+  vectorLogout
 }
