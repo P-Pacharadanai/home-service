@@ -1,20 +1,31 @@
-import "./App.css";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
-} from "@chakra-ui/react";
-import DraftRegisterPage from "./pages/DraftRegister";
+import { Home, Services, JobInformation } from "./components/landingPage";
+import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 
-function App() {
-  return (
-    <>
-      <DraftRegisterPage></DraftRegisterPage>
-    </>
-  );
-}
+const App = () => (
+  <main className="relative">
+    <NavUser />
 
-export default App;
+    <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
+      <Home />
+    </section>
+
+    <section className="padding-x py-10">
+      <Services />
+    </section>
+
+    <section className="padding py-10">
+      <JobInformation/>
+    </section>
+
+    <section className=" padding-x padding-t pb-8">
+      <Footer/>
+    </section>
+     
+  </main>
+)
+
+export default App
+
+
+
+
