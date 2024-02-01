@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Home, Services, JobInformation } from "./components/landingPage";
 import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 
