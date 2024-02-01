@@ -1,4 +1,4 @@
-import { Home, Services, JobInformation } from "./components/landingPage";
+import { Home, Services, JobInformation, HomeAdminUser } from "./components/landingPage";
 import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 import DraftRegisterPage from "./pages/DraftRegister";
 
@@ -7,7 +7,11 @@ const App = () => (
     <GeneralNav />
 
     <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
+<<<<<<< HEAD
       <Home/>
+=======
+      <HomeAdminUser/>
+>>>>>>> cd9f657 (style: style and formatting change)
     </section>
 
     <section className="padding-x py-10 xl:padding-r">
