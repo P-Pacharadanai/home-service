@@ -18,8 +18,8 @@ const NavUser = () => {
           <ButtonUser />
         </div>
       </nav>
-    </section>  
-  )
-}
+    </section>
+  );
+};
 
-export default NavUser
+export default NavUser;
