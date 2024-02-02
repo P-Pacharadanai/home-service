@@ -1,5 +1,6 @@
 import { Home, Services, JobInformation } from "./components/landingPage";
 import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
+import DraftRegisterPage from "./pages/DraftRegister";
 
 const App = () => (
   <main className="relative">

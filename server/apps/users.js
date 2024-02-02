@@ -5,26 +5,29 @@ const userRouter = Router();
 
 userRouter.get("/", async (req, res) => {
   try {
+    //retrieve all user profile from the "users" table
     const { data, error } = await supabase.from("users").select();
 
+    //check if there's an error during the data retrieval
     if (error) {
       return res.json({ message: error });
     }
 
+    //send the retrieved user profile as a JSON response
     return res.json({ data: data });
   } catch (error) {
     return res.json({ message: error });
   }
 });
 
-userRouter.get("/:id", async (req, res) => {
+userRouter.get("/:authUserId", async (req, res) => {
   try {
-    const userId = req.params.id;
+    const authUserId = req.params.authUserId;
 
     const { data, error } = await supabase
       .from("users")
       .select()
-      .eq("user_id", userId);
+      .eq("auth_user_id", authUserId);
 
     if (error) {
       return res.json({ message: error });
