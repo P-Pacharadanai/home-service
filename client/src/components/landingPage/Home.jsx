@@ -4,11 +4,7 @@ import { plumber } from '../../assets/images';
 
 const Home = () => {
   return (
-<<<<<<< HEAD
     <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] gap-6 max-container bg-blue-100 ">
-=======
-    <section className="w-full flex flex-col xl:flex-row justify-start h-[540px] gap-6 max-container bg-blue-100 ">
->>>>>>> cd9f657 (style: style and formatting change)
       <div className="relative xl:w-3/5 flex flex-col justify-center items-start w-full max-xl:padding-x pt-10 left-20 px-9">
         <h1 className=" -mt-16 justify-center items-center text-blue-600 font-prompt text-6xl font-bold max-sm:text-[30px] max-sm:leading-[140px] ">
           เรื่องบ้าน...ให้เราช่วยดูแลคุณ

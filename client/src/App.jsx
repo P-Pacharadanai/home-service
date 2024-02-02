@@ -7,11 +7,7 @@ const App = () => (
     <GeneralNav />
 
     <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
-<<<<<<< HEAD
       <Home/>
-=======
-      <HomeAdminUser/>
->>>>>>> cd9f657 (style: style and formatting change)
     </section>
 
     <section className="padding-x py-10 xl:padding-r">
