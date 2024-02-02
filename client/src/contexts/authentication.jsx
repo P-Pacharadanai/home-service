@@ -136,8 +136,6 @@ function AuthProvider(props) {
   //   }
   // })
 
-  console.log(subscription);
-
   const value = {
     state,
     login,
