@@ -14,6 +14,8 @@ function DraftRegisterPage() {
   const handleClick = (event) => {
     event.preventDefault();
     const data = {
+      firstName: "โดน",
+      lastName: "ลบแน่",
       email: "pacharadanaipinake@gmail.com",
       password: "123456789",
     };
