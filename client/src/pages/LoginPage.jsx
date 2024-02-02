@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { facebooklogo } from "../../assets/images";
-import { GeneralNav } from "../common";
+import { facebookLogo } from "../assets/images";
+import { GeneralNav } from "../components/common";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -43,7 +43,7 @@ function LoginPage() {
   return (
     <>
       <GeneralNav />
-      <div className="bg-base w-screen min-h-screen flex justify-center items-center">
+      <div className=" font-prompt bg-base w-screen min-h-screen flex justify-center items-center">
         <div
           className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
           id="register-form-container"
@@ -102,7 +102,7 @@ function LoginPage() {
             <div className="mt-5 w-full">
               <button className="w-full h-11 px-6 py-2.5 rounded-lg border border-blue-600 justify-center items-center gap-2 inline-flex ">
                 <img
-                  src={facebooklogo}
+                  src={facebookLogo}
                   alt="facebook logo"
                   className="w-[23px] h-[23px]"
                 />

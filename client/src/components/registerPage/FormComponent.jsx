@@ -1,5 +1,5 @@
-import facebookLogo from "../assets/images/facebook-logo.png";
-import exclamation from "../assets/icons/exclamation-circle-solid.svg";
+import { facebookLogo } from "../../assets/images/index.js";
+import exclamation from "../../assets/icons/exclamation-circle-solid.svg";
 import { useState } from "react";
 import { useAuth } from "../../contexts/authentication"; // รอเขียน auth
 import { validateForm } from "./ValidateForm";
@@ -31,7 +31,7 @@ function FormComponent() {
   };
 
   return (
-    <div className="bg-base w-screen min-h-screen flex justify-center items-center">
+    <div className="font-prompt bg-base w-screen min-h-screen flex justify-center items-center">
       <div
         className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
         id="register-form-container"
