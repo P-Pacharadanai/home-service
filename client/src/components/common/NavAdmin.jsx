@@ -3,7 +3,7 @@ import { ButtonAdmin } from "../../components/common";
 
 const NavAdmin = () => {
   return (
-    <section className="leading-none padding-x absolute z-40 w-full px-20 py-2 bg-white">
+    <section className="leading-none padding-x relative z-10 w-full px-20 py-2 bg-white">
       <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-28">
         <a href="/" className="mt-3 flex text-lg gap-1 font-medium text-blue-600">
           <img src={houseXs} alt="Logo" width={32} height={32} className="-mt-1" />

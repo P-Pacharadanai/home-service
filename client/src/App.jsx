@@ -1,12 +1,12 @@
-import { Home, Services, JobInformation, HomeAdminUser } from "./components/landingPage";
+import { Home, Services, JobInformation } from "./components/landingPage";
 import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 
 const App = () => (
   <main className="relative">
-    <NavUser />
+    <GeneralNav />
 
     <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
-      <HomeAdminUser/>
+      <Home/>
     </section>
 
     <section className="padding-x py-10 xl:padding-r">
