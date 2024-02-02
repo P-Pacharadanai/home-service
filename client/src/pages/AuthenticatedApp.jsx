@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "../contexts/authentication";
 import "../App.css";
+import LandingPage from "./LandingPage";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -8,9 +9,15 @@ function AuthenticatedApp() {
   return (
     <div className="App">
       {isAuthenticated.role === "authenticated_admin" ? (
-        <Routes></Routes>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<LandingPage />} />
+        </Routes>
       ) : (
-        <Routes></Routes>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<LandingPage />} />
+        </Routes>
       )}
     </div>
   );

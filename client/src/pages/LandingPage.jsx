@@ -1,11 +1,14 @@
 import { Home, Services, JobInformation } from "../components/landingPage";
-import { Footer, NavAdmin, NavUser, GeneralNav } from "../components/common";
+import { Footer, NavUser, GeneralNav } from "../components/common";
+import { useAuth } from "../contexts/authentication";
 
 function LandingPage() {
+  const { isAuthenticated } = useAuth();
   return (
     <>
       <main className="relative">
-        <GeneralNav />
+        {isAuthenticated.status ? <NavUser /> : <GeneralNav />}
+
         <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
           <Home />
         </section>

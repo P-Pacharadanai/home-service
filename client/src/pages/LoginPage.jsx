@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authentication";
 import { facebookLogo } from "../assets/images";
 import { GeneralNav } from "../components/common";
 
@@ -6,12 +8,24 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
+
+  const navigate = useNavigate();
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login({
+      email,
+      password,
+    });
   };
 
   //validate login ตรวจว่า กรอกข้อมูลหรือไม่
@@ -29,21 +43,12 @@ function LoginPage() {
       alert("ยังไม่ได้กรอก Password");
       return false;
     }
-
-    const handleSubmit = (event) => {
-      event.preventDefault();
-
-      // Validate login
-      if (validateLogin()) {
-        // เรียกใช้ฟังก์ชันหรือ API ที่เกี่ยวข้องกับการเข้าสู่ระบบ
-      }
-    };
   };
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <GeneralNav />
-      <div className=" font-prompt bg-base w-screen min-h-screen flex justify-center items-center">
+      <div className="flex-1 font-prompt bg-base w-screen flex justify-center items-center">
         <div
           className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
           id="register-form-container"
@@ -55,7 +60,11 @@ function LoginPage() {
           {/* <div className="flex flex-col items-center ">
               
             </div> */}
-          <form className="flex flex-col items-start " id="form-container">
+          <form
+            className="flex flex-col items-start "
+            id="form-container"
+            onSubmit={handleSubmit}
+          >
             <div className="mt-5 w-full">
               <label className="text-gray-900">
                 อีเมล
@@ -90,7 +99,10 @@ function LoginPage() {
             </div>
 
             <div className="mt-5 w-full">
-              <button className="rounded-lg bg-blue-600 text-white px-8 py-3 w-full">
+              <button
+                type="submit"
+                className="rounded-lg bg-blue-600 text-white px-8 py-3 w-full"
+              >
                 เข้าสู่ระบบ
               </button>
             </div>
@@ -115,18 +127,18 @@ function LoginPage() {
             <div className="mt-5 mb-8 w-full  h-6 justify-center items-center gap-2 inline-flex">
               <p className="text-center text-gray-600  font-normal ">
                 ยังไม่มีบัญชีผู้ใช้ HomeService? &nbsp;
-                <a
-                  href="#"
-                  className="text-blue-600 text-lg font-semibold leading-6 underline"
+                <span
+                  onClick={() => navigate("/register")}
+                  className="text-blue-600 text-lg font-semibold leading-6 underline hover:cursor-pointer"
                 >
                   ลงทะเบียน
-                </a>
+                </span>
               </p>
             </div>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default LoginPage;

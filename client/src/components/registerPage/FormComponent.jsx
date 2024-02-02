@@ -1,6 +1,7 @@
 import { facebookLogo } from "../../assets/images/index.js";
 import exclamation from "../../assets/icons/exclamation-circle-solid.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication"; // รอเขียน auth
 import { validateForm } from "./ValidateForm";
 
@@ -12,7 +13,9 @@ function FormComponent() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const { register } = useAuth(); // รอเขียน auth
+  const navigate = useNavigate();
+
+  const { register } = useAuth();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -176,7 +179,10 @@ function FormComponent() {
             </span>
           </div>
           <div className="mt-5 w-full">
-            <button className="flex items-center justify-center  bg-white text-blue-600 rounded-md border border-blue-600 p-2 md:p-4 lg:p-6 font-semibold w-full relative">
+            <button
+              onClick={() => navigate("/login")}
+              className="flex items-center justify-center  bg-white text-blue-600 rounded-md border border-blue-600 p-2 md:p-4 lg:p-6 font-semibold w-full relative"
+            >
               <img
                 src={facebookLogo}
                 alt="facebook logo"
@@ -186,12 +192,12 @@ function FormComponent() {
             </button>
           </div>
 
-          <a
-            href="#"
-            className="text-blue-600 text-lg font-semibold leading-6 underline block mt-5 text-center w-full mb-11"
+          <div
+            onClick={() => navigate("/login")}
+            className="text-blue-600 text-lg font-semibold leading-6 underline block mt-5 text-center w-full mb-11 hover:cursor-pointer"
           >
             กลับไปหน้าเข้าสู่ระบบ
-          </a>
+          </div>
         </form>
       </div>
     </div>
