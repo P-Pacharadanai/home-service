@@ -9,7 +9,7 @@ const Services = () => {
       <h3 className="font-prompt font-semibold text-2xl flex justify-center mt-12 mb-9">บริการยอดฮิตของเรา</h3>
       </div>
 
-      <div className=" max-container flex justify-center flex-wrap gap-9">
+      <div className=" max-container gap-4 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-9">
         {ourServices.map((service, index) => (
           <ServiceLists key={index} {...service} />
         ))}
