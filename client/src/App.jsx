@@ -1,4 +1,4 @@
-import { Home, Services, JobInformation, HomeAdminUser } from "./components/landingPage";
+import { Home, Services, JobInformation } from "./components/landingPage";
 import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
 import DraftRegisterPage from "./pages/DraftRegister";
 
