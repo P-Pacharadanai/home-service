@@ -35,7 +35,7 @@ function AuthProvider(props) {
       //check whether the user has previously registered or not
       if (data.user.identities.length ?? 0 !== 0) {
         //if the user does not exist, create user profile in database
-        await axios.post("http://localhost:4000/users", {
+        const result = await axios.post("http://localhost:4000/users", {
           authUserId: data.user.id,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -77,10 +77,13 @@ function AuthProvider(props) {
       //access authenticated user id
       const authId = user.id;
 
+      const profileApi =
+        user.role === "authenticated"
+          ? `http://localhost:4000/users/${authId}`
+          : `http://localhost:4000/admin/${authId}`;
+
       //retrieve user profile by authenticated user id from database
-      const userProfile = await axios.get(
-        `http://localhost:4000/users/${authId}`
-      );
+      const userProfile = await axios.get(profileApi);
 
       //extract user profile from the response
       const userData = userProfile.data.data;
@@ -95,7 +98,8 @@ function AuthProvider(props) {
           email: user.email,
         },
       });
-      // navigate("/");
+
+      navigate("/");
     } catch (error) {
       console.error("An error occurred during login:", error);
     }
@@ -113,7 +117,13 @@ function AuthProvider(props) {
 
       //removing user information
       setState({ ...state, user: null });
-      // navigate("/login");
+
+      setIsAuthenticated({
+        status: false,
+        role: "unAuthenticated",
+      });
+
+      navigate("/login");
     } catch (error) {
       console.error("An error occurred during logout:", error);
     }

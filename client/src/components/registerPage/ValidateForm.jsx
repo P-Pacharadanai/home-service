@@ -21,7 +21,7 @@ export const validateForm = (data) => {
   //validate real email
   if (data.email.trim() === "") {
     errors.email = "กรุณากรอกอีเมล";
-  } else if (!email_pattern.test(data.password)) {
+  } else if (!email_pattern.test(data.email)) {
     errors.email = "อีเมลไม่ถูกต้องกรุณาตรวจสอบอีกครั้ง";
   }
 
