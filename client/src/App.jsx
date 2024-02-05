@@ -1,25 +1,11 @@
-import { Home, Services, JobInformation } from "./components/landingPage";
-import { Footer, NavAdmin, NavUser, GeneralNav } from "./components/common";
+import "./App.css";
+import { useAuth } from "./contexts/authentication.jsx";
+import AuthenticatedApp from "./pages/AuthenticatedApp.jsx";
+import UnauthenticatedApp from "./pages/UnauthenticatedApp.jsx";
 
-const App = () => (
-  <main className="relative">
-    <NavUser />
+function App() {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated.status ? <AuthenticatedApp /> : <UnauthenticatedApp />;
+}
 
-    <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
-      <Home />
-    </section>
-
-    <section className="padding-x py-10">
-      <Services />
-    </section>
-
-    <section className="padding py-10">
-      <JobInformation />
-    </section>
-
-    <section className=" padding-x padding-t pb-8">
-      <Footer />
-    </section>
-  </main>
-);
 export default App;

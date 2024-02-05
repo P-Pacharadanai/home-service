@@ -1,6 +1,7 @@
-import facebookLogo from "../assets/images/facebook-logo.png";
-import exclamation from "../assets/icons/exclamation-circle-solid.svg";
+import { facebookLogo } from "../../assets/images/index.js";
+import exclamation from "../../assets/icons/exclamation-circle-solid.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication"; // รอเขียน auth
 import { validateForm } from "./ValidateForm";
 
@@ -12,7 +13,9 @@ function FormComponent() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  const { register } = useAuth(); // รอเขียน auth
+  const navigate = useNavigate();
+
+  const { register } = useAuth();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -31,7 +34,7 @@ function FormComponent() {
   };
 
   return (
-    <div className="bg-base w-screen min-h-screen flex justify-center items-center">
+    <div className="font-prompt bg-base w-screen min-h-screen flex justify-center items-center">
       <div
         className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
         id="register-form-container"
@@ -176,7 +179,10 @@ function FormComponent() {
             </span>
           </div>
           <div className="mt-5 w-full">
-            <button className="flex items-center justify-center  bg-white text-blue-600 rounded-md border border-blue-600 p-2 md:p-4 lg:p-6 font-semibold w-full relative">
+            <button
+              onClick={() => navigate("/login")}
+              className="flex items-center justify-center  bg-white text-blue-600 rounded-md border border-blue-600 p-2 md:p-4 lg:p-6 font-semibold w-full relative"
+            >
               <img
                 src={facebookLogo}
                 alt="facebook logo"
@@ -186,12 +192,12 @@ function FormComponent() {
             </button>
           </div>
 
-          <a
-            href="#"
-            className="text-blue-600 text-lg font-semibold leading-6 underline block mt-5 text-center w-full mb-11"
+          <div
+            onClick={() => navigate("/login")}
+            className="text-blue-600 text-lg font-semibold leading-6 underline block mt-5 text-center w-full mb-11 hover:cursor-pointer"
           >
             กลับไปหน้าเข้าสู่ระบบ
-          </a>
+          </div>
         </form>
       </div>
     </div>
