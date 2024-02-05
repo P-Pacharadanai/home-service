@@ -13,6 +13,13 @@ function FormComponent() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
+  const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsPolicyAccepted(!isPolicyAccepted);
+    setShowWarning(false);
+  };
+
   const navigate = useNavigate();
 
   const { register } = useAuth();
@@ -30,6 +37,7 @@ function FormComponent() {
       register(data);
     } else {
       setErrors(formErrors);
+      setShowWarning(true);
     }
   };
 
@@ -58,23 +66,26 @@ function FormComponent() {
                     name="firstName"
                     type="text"
                     className={`w-full rounded-md border ${
-                      errors.firstName ? "border-red-500" : "border-gray-300"
-                    } bg-white flex p-2 items-center gap-2 self-stretch mt-1`}
+                      errors.firstName ? "border-red" : "border-gray-300"
+                    } bg-white flex p-2 items-center gap-2 self-stretch mt-1 `}
                     onChange={(event) => {
                       setFirstName(event.target.value);
                     }}
                     value={firstName}
                   />
                   {errors.firstName && (
-                    <div className="flex items-center">
+                    <div className="flex items-center relative">
                       <p className="text-red">{errors.firstName}</p>
-                      <img src={exclamation} alt="exclamation-circle" />
+                      <img
+                        src={exclamation}
+                        alt="exclamation-circle"
+                        className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                      />
                     </div>
                   )}
                 </label>
               </div>
               <div className="flex-1  ">
-                {/* <div className="text-red mt-2">{errors.firstName}</div> */}
                 <label className="text-gray-900">
                   นามสกุล
                   <span className="text-red ml-1">*</span>
@@ -83,17 +94,23 @@ function FormComponent() {
                     name="lastName"
                     type="text"
                     className={`w-full rounded-md border ${
-                      errors.lastName ? "border-red-500" : "border-gray-300"
-                    } bg-white flex p-2 items-center gap-2 self-stretch mt-1`}
+                      errors.lastName ? "border-red" : "border-gray-300"
+                    } bg-white flex p-2 items-center gap-2 self-stretch mt-1 relative`}
                     onChange={(event) => {
                       setLastName(event.target.value);
                     }}
                     value={lastName}
                   />
-                  {errors.firstName && (
-                    <p className="text-red">{errors.firstName}</p>
+                  {errors.lastName && (
+                    <div className="flex items-center relative">
+                      <p className="text-red">{errors.lastName}</p>
+                      <img
+                        src={exclamation}
+                        alt="exclamation-circle"
+                        className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                      />
+                    </div>
                   )}
-                  {/* <div className="text-red mt-2">{errors.firstName}</div> */}
                 </label>
               </div>
             </div>
@@ -107,12 +124,24 @@ function FormComponent() {
                 name="phoneNumber"
                 type="tel"
                 placeholder="กรุณากรอกเบอร์โทรศัพท์"
-                className="text-gray-700 border-gray rounded-md border border-gray-300 bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1"
+                className={`text-gray-700   rounded-md border ${
+                  errors.phoneNumber ? "border-red" : "border-gray-300"
+                } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
                 onChange={(event) => {
                   setPhoneNumber(event.target.value);
                 }}
                 value={phoneNumber}
               />
+              {errors.phoneNumber && (
+                <div className="flex items-center relative">
+                  <p className="text-red">{errors.phoneNumber}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                  />
+                </div>
+              )}
             </label>
           </div>
           <div className="mt-5 w-full">
@@ -124,12 +153,24 @@ function FormComponent() {
                 name="email"
                 type="email"
                 placeholder="กรุณากรอกอีเมล"
-                className="text-gray-700 rounded-md border border-gray-300 bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1"
+                className={`text-gray-700 rounded-md border ${
+                  errors.email ? "border-red" : "border-gray-300"
+                } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
                 value={email}
               />
+              {errors.email && (
+                <div className="flex items-center relative">
+                  <p className="text-red">{errors.email}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                  />
+                </div>
+              )}
             </label>
           </div>
           <div className="mt-5 w-full">
@@ -141,17 +182,31 @@ function FormComponent() {
                 name="password"
                 type="password"
                 placeholder="กรุณากรอกรหัสผ่าน"
-                className="text-gray-700 rounded-md border border-gray-300 bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1"
+                className={`text-gray-700 rounded-md border ${
+                  errors.phoneNumber ? "border-red" : "border-gray-300"
+                } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
                 value={password}
               />
+              {errors.password && (
+                <div className="flex items-center relative">
+                  <p className="text-red">{errors.password}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                  />
+                </div>
+              )}
             </label>
           </div>
           <div className="mt-5 w-full flex flex-row items-center">
             <input
               type="checkbox"
+              onChange={handleCheckboxChange}
+              checked={isPolicyAccepted}
               className="w-4 h-4 cursor-pointer   border- border-gray-300  transition-colors duration-300 hover:border-blue-600"
             />
             <label className="cursor-pointer hover:text-blue-600  flex flex-row justify-center items-center">
@@ -168,10 +223,18 @@ function FormComponent() {
           <div className="mt-5 w-full">
             <button
               type="submit"
-              className="rounded-lg bg-blue-600 text-white px-8 py-3 w-full"
+              className={`rounded-lg ${
+                isPolicyAccepted ? "bg-blue-600" : "bg-gray-400"
+              } text-white px-8 py-3 w-full`}
             >
               ลงทะเบียน
             </button>
+            {showWarning && (
+              <p className="text-red">
+                Please accept the policy and fill in all required fields before
+                registering.
+              </p>
+            )}
           </div>
           <div className="relative w-full h-px bg-gray-300 my-9">
             <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-gray-500 px-4">
