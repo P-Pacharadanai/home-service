@@ -98,7 +98,7 @@ const FormLoginComponent = () => {
                 className="w-[23px] h-[23px]"
               />
               &nbsp;&nbsp;
-              <p className="text-blue-600  font-medium leading-normal">
+              <p className="text-blue-600  font-medium leading-normal ">
                 เข้าสู่ระบบด้วย Facebook
               </p>
             </button>
