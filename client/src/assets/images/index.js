@@ -5,6 +5,7 @@ import partMaleConstructor from "./part-male-construction-worker.png";
 import plumber from "./plumber-pointing.png";
 import washing from "./washing-machine-repair.png";
 import facebookLogo from "./facebook-logo.png";
+import writeUp from "./write-up.jpg";
 
 export {
   acCleaning,
@@ -14,4 +15,5 @@ export {
   plumber,
   washing,
   facebookLogo,
+  writeUp,
 };

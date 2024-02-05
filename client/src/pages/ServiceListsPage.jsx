@@ -1,7 +1,7 @@
 import { NavUser, Footer } from "../components/common";
 import { JobInformation } from "../components/landingPage";
 import {
-  Description,
+  WriteUp,
   ServiceLists,
   SearchTab,
 } from "../components/serviceListPage";
@@ -10,7 +10,7 @@ function ServiceListsPage() {
   return (
     <>
       <NavUser />
-      <Description />
+      <WriteUp />
       <SearchTab />
       <ServiceLists />
       <JobInformation />

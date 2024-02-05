@@ -1,5 +1,5 @@
 import SearchTab from "./SearchTab";
 import ServiceLists from "./ServiceLists";
-import Description from "./Description";
+import WriteUp from "./WriteUp";
 
-export { SearchTab, ServiceLists, Description };
+export { SearchTab, ServiceLists, WriteUp };
