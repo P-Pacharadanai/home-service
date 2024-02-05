@@ -9,7 +9,8 @@ import vectorChart from "./VectorChart.png";
 import vectorLogout from "./VectorLogout.png";
 import vectorHuman from "./VectorHuman.png";
 import vectorHistoryBlack from "./vectorHistoryBlack.png";
-
+import ShowPasswordIcon from "./eye-solid.svg";
+import HidePasswordIcon from "./eye-slash-solid.svg";
 export {
   houseXs,
   bellHuman,
@@ -21,5 +22,7 @@ export {
   vectorChart,
   vectorHistoryBlack,
   vectorHuman,
-  vectorLogout
-}
+  vectorLogout,
+  ShowPasswordIcon,
+  HidePasswordIcon,
+};

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication"; // รอเขียน auth
 import { validateForm } from "./ValidateForm";
-
+import { HidePasswordIcon } from "../../assets/icons";
+import { ShowPasswordIcon } from "../../assets/icons";
 function FormComponent() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -12,6 +13,7 @@ function FormComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -66,7 +68,9 @@ function FormComponent() {
                     name="firstName"
                     type="text"
                     className={`w-full rounded-md border ${
-                      errors.firstName ? "border-red" : "border-gray-300"
+                      errors.firstName
+                        ? "border-red focus:outline-none"
+                        : "border-gray-300"
                     } bg-white flex p-2 items-center gap-2 self-stretch mt-1 `}
                     onChange={(event) => {
                       setFirstName(event.target.value);
@@ -94,7 +98,9 @@ function FormComponent() {
                     name="lastName"
                     type="text"
                     className={`w-full rounded-md border ${
-                      errors.lastName ? "border-red" : "border-gray-300"
+                      errors.lastName
+                        ? "border-red focus:outline-none"
+                        : "border-gray-300"
                     } bg-white flex p-2 items-center gap-2 self-stretch mt-1 relative`}
                     onChange={(event) => {
                       setLastName(event.target.value);
@@ -125,7 +131,9 @@ function FormComponent() {
                 type="tel"
                 placeholder="กรุณากรอกเบอร์โทรศัพท์"
                 className={`text-gray-700   rounded-md border ${
-                  errors.phoneNumber ? "border-red" : "border-gray-300"
+                  errors.phoneNumber
+                    ? "border-red focus:outline-none"
+                    : "border-gray-300"
                 } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
                 onChange={(event) => {
                   setPhoneNumber(event.target.value);
@@ -154,7 +162,9 @@ function FormComponent() {
                 type="email"
                 placeholder="กรุณากรอกอีเมล"
                 className={`text-gray-700 rounded-md border ${
-                  errors.email ? "border-red" : "border-gray-300"
+                  errors.email
+                    ? "border-red focus:outline-none"
+                    : "border-gray-300"
                 } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -174,30 +184,48 @@ function FormComponent() {
             </label>
           </div>
           <div className="mt-5 w-full">
-            <label className="text-gray-900">
+            <label className="text-gray-900 ">
               รหัสผ่าน
               <span className="text-red ml-1">*</span>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="กรุณากรอกรหัสผ่าน"
-                className={`text-gray-700 rounded-md border ${
-                  errors.phoneNumber ? "border-red" : "border-gray-300"
-                } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-                value={password}
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="กรุณากรอกรหัสผ่าน"
+                  className={`text-gray-700 rounded-md border ${
+                    errors.phoneNumber
+                      ? "border-red focus:outline-none"
+                      : "border-gray-300"
+                  } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                  value={password}
+                />
+                <button
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  className="absolute right-3 top-2/4 -translate-y-2/4 transform focus:outline-none"
+                >
+                  {passwordVisible ? (
+                    <img
+                      src={ShowPasswordIcon}
+                      alt="Show Password"
+                      className="w-5 h-5"
+                    />
+                  ) : (
+                    <img
+                      src={HidePasswordIcon}
+                      alt="Hide Password"
+                      className="w-5 h-5"
+                    />
+                  )}
+                </button>
+              </div>
               {errors.password && (
                 <div className="flex items-center relative">
                   <p className="text-red">{errors.password}</p>
-                  <img
-                    src={exclamation}
-                    alt="exclamation-circle"
-                    className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
-                  />
                 </div>
               )}
             </label>
@@ -231,8 +259,7 @@ function FormComponent() {
             </button>
             {showWarning && (
               <p className="text-red">
-                Please accept the policy and fill in all required fields before
-                registering.
+                กรุณากดยอมรับข้อตกลงและกรอกข้อมูลให้ครบถ้วน
               </p>
             )}
           </div>

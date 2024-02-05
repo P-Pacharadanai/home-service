@@ -2,10 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 import { facebookLogo } from "../../assets/images";
 import { useState } from "react";
+import validateFormLogin from "./ValidateFormLogin";
+import exclamation from "../../assets/icons/exclamation-circle-solid.svg";
+import { HidePasswordIcon } from "../../assets/icons";
+import { ShowPasswordIcon } from "../../assets/icons";
 
 const FormLoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -20,19 +26,17 @@ const FormLoginComponent = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    login({
-      email,
-      password,
-    });
+    const formErrors = validateFormLogin({ email, password });
+    if (Object.keys(formErrors).length === 0) {
+      login({ email, password });
+    } else {
+      setErrors(formErrors);
+    }
   };
 
   return (
     <div className="flex-1 font-prompt bg-base w-screen flex justify-center items-center">
-      <div
-        className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
-        id="register-form-container"
-      >
+      <div className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]">
         <h1 className="text-center text-blue-950 text-[32px] font-medium  leading-[48px] mt-8">
           เข้าสู่ระบบ
         </h1>
@@ -51,27 +55,66 @@ const FormLoginComponent = () => {
                 name="email"
                 type="email"
                 placeholder="กรุณากรอกอีเมล"
-                required
                 value={email}
                 onChange={handleEmailChange}
-                className="text-gray-700 rounded-md border border-gray-300 bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1"
+                className={`text-gray-700 rounded-md border focus:outline-none ${
+                  errors.email ? "border-red" : "border-gray-300"
+                } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
               />
+              {errors.email && (
+                <div className="flex items-center relative">
+                  <p className="text-red">{errors.email}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[-30px] "
+                  />
+                </div>
+              )}
             </label>
           </div>
           <div className="mt-5 w-full">
             <label className="text-gray-900">
               รหัสผ่าน
               <span className="text-red ml-1">*</span>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="กรุณากรอกรหัสผ่าน"
-                className="text-gray-700 rounded-md border border-gray-300 bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1"
-                required
-                value={password}
-                onChange={handlePasswordChange}
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="กรุณากรอกรหัสผ่าน"
+                  className={`text-gray-700 rounded-md border focus:outline-none ${
+                    errors.password ? "border-red" : "border-gray-300"
+                  } bg-white flex p-2 items-center gap-2 self-stretch w-full mt-1`}
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  className="absolute right-3 top-2/4 -translate-y-2/4 transform "
+                >
+                  {passwordVisible ? (
+                    <img
+                      src={ShowPasswordIcon}
+                      alt="Show Password"
+                      className="w-5 h-5"
+                    />
+                  ) : (
+                    <img
+                      src={HidePasswordIcon}
+                      alt="Hide Password"
+                      className="w-5 h-5"
+                    />
+                  )}
+                </button>
+              </div>
+              {errors.password && (
+                <div className="flex items-center relative">
+                  <p className="text-red">{errors.password}</p>
+                </div>
+              )}
             </label>
           </div>
 
