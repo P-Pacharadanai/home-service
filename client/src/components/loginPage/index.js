@@ -1,3 +1,3 @@
 import FormLoginComponent from "../loginPage/FormLoginComponent";
-
-export { FormLoginComponent };
+import ValidateFormLogin from "../loginPage/FormLoginComponent";
+export { FormLoginComponent, ValidateFormLogin };
