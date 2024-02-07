@@ -11,11 +11,13 @@ function AuthenticatedApp() {
       {isAuthenticated.role === "authenticated_admin" ? (
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/service-list" element={<ServiceListsPage />} />
           <Route path="*" element={<LandingPage />} />
         </Routes>
       ) : (
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/service-list" element={<ServiceListsPage />} />
           <Route path="*" element={<LandingPage />} />
         </Routes>
       )}
