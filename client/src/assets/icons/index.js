@@ -11,6 +11,7 @@ import vectorHuman from "./vectorHuman.png";
 import vectorHistoryBlack from "./vectorHistoryBlack.png";
 import ShowPasswordIcon from "./eye-solid.svg";
 import HidePasswordIcon from "./eye-slash-solid.svg";
+
 export {
   houseXs,
   bellHuman,
