@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import userRouter from "./apps/users.js";
 import adminRouter from "./apps/admin.js";
+import serviceRouter from "./apps/services.js";
 
 async function init() {
   const app = express();
@@ -12,7 +13,7 @@ async function init() {
   app.use(bodyParser.json());
   app.use("/users", userRouter);
   app.use("/admin", adminRouter);
-  // app.use("/service", serviceRouter);
+  app.use("/service", serviceRouter);
 
   app.get("*", (req, res) => {
     res.status(404).send("Not found");
