@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "../contexts/authentication";
 import "../App.css";
 import LandingPage from "./LandingPage";
+import ServiceDetailPage from "./ServiceDetailPage";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -17,6 +18,10 @@ function AuthenticatedApp() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="*" element={<LandingPage />} />
+          <Route
+            path="/service-detail/:serviceId"
+            element={<ServiceDetailPage />}
+          />
         </Routes>
       )}
     </div>
