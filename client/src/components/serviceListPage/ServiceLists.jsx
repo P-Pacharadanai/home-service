@@ -18,10 +18,13 @@ function ServiceLists() {
   console.log(serviceList);
   return (
     <>
-      <section>
+      <section className="max-container flex justify-center flex-wrap py-20">
         <div className=" max-container gap-4 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-9">
           {serviceList.map((service) => (
-            <div className="flex-1 sm:w-[300px] sm:min-w-[340px] w-full rounded-[8px] border-solid border-2 border-gray-300  pb-4 bg-white font-prompt">
+            <div
+              key={service.id}
+              className="flex-1 sm:w-[300px] sm:min-w-[340px] w-full rounded-[8px] border-solid border-2 border-gray-300  pb-4 bg-white font-prompt"
+            >
               <div className=" justify-center items-center rounded-full">
                 <img src={service.image} className="w-full h-[180px] " />
                 <div className="mt-4 flex gap-2.5 pl-4">

@@ -8,14 +8,14 @@ import {
 
 function ServiceListsPage() {
   return (
-    <>
+    <div className="font-prompt">
       <NavUser />
       <WriteUp />
       <SearchTab />
       <ServiceLists />
       <JobInformation />
       <Footer />
-    </>
+    </div>
   );
 }
 
