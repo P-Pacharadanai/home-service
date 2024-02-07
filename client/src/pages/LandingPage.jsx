@@ -1,7 +1,6 @@
 import { Home, Services, JobInformation } from "../components/landingPage";
 import { Footer, NavUser, GeneralNav } from "../components/common";
 import { useAuth } from "../contexts/authentication";
-import ServiceList from "./ServiceListsPage";
 
 function LandingPage() {
   const { isAuthenticated } = useAuth();

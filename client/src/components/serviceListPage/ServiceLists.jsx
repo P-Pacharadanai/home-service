@@ -15,7 +15,6 @@ function ServiceLists() {
     getServiceList();
   }, []);
 
-  console.log(serviceList);
   return (
     <>
       <section className="max-container flex justify-center flex-wrap py-20">
@@ -29,7 +28,7 @@ function ServiceLists() {
                 <img src={service.image} className="w-full h-[180px] " />
                 <div className="mt-4 flex gap-2.5 pl-4">
                   <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">
-                    {service.type}
+                    {service.category}
                   </p>
                 </div>
                 <h3 className="mt-2 text-xl leading-normal font-semibold pl-4 text-gray-950">

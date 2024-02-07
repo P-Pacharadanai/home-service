@@ -5,8 +5,16 @@ const serviceRouter = Router();
 
 serviceRouter.get("/", async (req, res) => {
   try {
-    //retrieve all user profile from the "users" table
+    const keywords = req.query.keywords;
+    const category = req.query.category;
+    const minPrice = req.query.minPrice;
+    const maxPrice = req.query.maxPrice;
+    const sortBy = req.query.sortBy;
+    // retrieve all user profile from the "services" table
     let { data: services, error } = await supabase.from("services").select("*");
+    // .eq("category", category)
+    // .gte("price", minPrice)
+    // .lte("price", maxPrice);
 
     //check if there's an error during the data retrieval
     console.log(services);
@@ -14,7 +22,7 @@ serviceRouter.get("/", async (req, res) => {
       return res.json({ message: error });
     }
 
-    //send the retrieved user profile as a JSON response
+    //send the retrieved services profile as a JSON response
     return res.json({ data: services });
   } catch (error) {
     return res.json({ message: error });
