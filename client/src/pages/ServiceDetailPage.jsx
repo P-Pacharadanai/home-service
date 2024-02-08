@@ -4,12 +4,16 @@ import {
   ServiceDetailList,
   SummaryDetail,
   FooterDetail,
+  PaymentDetail,
 } from "../components/serviceDetailPage";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 function ServiceDetailPage() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(3);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCVV] = useState("");
 
   const params = useParams();
 
@@ -26,7 +30,7 @@ function ServiceDetailPage() {
             /*change Informantion Component here!!*/ <ServiceDetailList />
           )}
           {currentStep === 3 && (
-            /*change Payment Component here!!*/ <ServiceDetailList />
+            /*change Payment Component here!!*/ <PaymentDetail />
           )}
         </div>
         <div className="basis-[350px]">
