@@ -12,14 +12,12 @@ function ServiceLists(props) {
     const result = await axios.get(apiUrl);
     let serviceListData = result.data.data;
     setServiceList(serviceListData);
-    console.log(`run`);
   };
 
   useEffect(() => {
     getServiceList();
   }, [min, max, keyword, category, sortBy]);
 
-  console.log(keyword);
   return (
     <>
       <section className="max-container flex justify-center flex-wrap py-20">

@@ -15,38 +15,44 @@ import { GeneralBtn } from "../../components/common";
 import { useState } from "react";
 
 function SearchTab(props) {
-  const {
-    min,
-    setMin,
-    max,
-    setMax,
-    keyword,
-    setKeyword,
-    category,
-    setCategory,
-    sortBy,
-    setSortBy,
-  } = props;
+  const [searchMin, setSearchMin] = useState(0);
+  const [searchMax, setSearchMax] = useState(2000);
+  const [searchWord, setSearchWord] = useState("");
+  const [searchCategory, setSearchCategory] = useState("");
+  const [searchSortBy, setSearchSortBy] = useState("");
+
+  const { setMin, setMax, setKeyword, setCategory, setSortBy } = props;
 
   const handleSliderChange = (value) => {
-    setMin(value[0]);
-    setMax(value[1]);
+    setSearchMin(value[0]);
+    setSearchMax(value[1]);
   };
 
   const handleKeywordChange = (event) => {
-    setKeyword(event.target.value);
+    setSearchWord(event.target.value);
   };
 
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-    console.log(category);
+    setSearchCategory(event.target.value);
   };
 
   const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
+    setSearchSortBy(event.target.value);
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    setMin(searchMin);
+    setMax(searchMax);
+    setKeyword(searchWord);
+    setCategory(searchCategory);
+    setSortBy(searchSortBy);
+    resetSlider();
+  };
+
+  const resetSlider = () => {
+    setSearchMin(0);
+    setSearchMax(2000);
+  };
 
   return (
     <>
@@ -77,7 +83,7 @@ function SearchTab(props) {
           <p>ราคา</p>
           <Menu className="relative">
             <MenuButton as={Button}>
-              {min} - {max}
+              {searchMin} - {searchMax}
             </MenuButton>
             <MenuList className="absolute top-full -left-[3.8rem] translate-x-1/2">
               <MenuItem>
@@ -94,10 +100,10 @@ function SearchTab(props) {
                     <RangeSliderFilledTrack />
                   </RangeSliderTrack>
                   <RangeSliderThumb boxSize={10} index={0}>
-                    {min}
+                    {searchMin}
                   </RangeSliderThumb>
                   <RangeSliderThumb boxSize={10} index={1}>
-                    {max}
+                    {searchMax}
                   </RangeSliderThumb>
                 </RangeSlider>
               </MenuItem>
@@ -120,7 +126,7 @@ function SearchTab(props) {
           </div>
         </div>
         <div className="w-[200px] h-[83px] flex items-center justify-center">
-          <GeneralBtn onclick={handleSearch} label="ค้นหา"></GeneralBtn>
+          <Button onClick={handleSearch}>ค้นหา</Button>
         </div>
       </section>
     </>

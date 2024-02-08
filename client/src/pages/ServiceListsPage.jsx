@@ -19,15 +19,10 @@ function ServiceListsPage() {
       <NavUser />
       <WriteUp />
       <SearchTab
-        min={min}
         setMin={setMin}
-        max={max}
         setMax={setMax}
-        keyword={keyword}
         setKeyword={setKeyword}
-        category={category}
         setCategory={setCategory}
-        sortBy={sortBy}
         setSortBy={setSortBy}
       />
       <ServiceLists
