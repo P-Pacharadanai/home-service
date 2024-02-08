@@ -1,23 +1,32 @@
-import { Router } from "express";
+import { Router, query } from "express";
 import supabase from "../utils/db.js";
 
 const serviceRouter = Router();
 
 serviceRouter.get("/", async (req, res) => {
   try {
-    const keywords = req.query.keywords;
-    const category = req.query.category;
-    const minPrice = req.query.minPrice;
-    const maxPrice = req.query.maxPrice;
-    const sortBy = req.query.sortBy;
+    const { keyword, category, min, max, sortBy } = req.query;
     // retrieve all user profile from the "services" table
-    let { data: services, error } = await supabase.from("services").select("*");
-    // .eq("category", category)
-    // .gte("price", minPrice)
-    // .lte("price", maxPrice);
+
+    let asc;
+    if (sortBy === "ASC") {
+      asc = true;
+    } else {
+      asc = false;
+    }
+
+    let { data: services, error } = await supabase
+      .from("services")
+      .select(`*`)
+      .like("name", `%${keyword}%` || "%")
+      .like("category", category || "%")
+      .gte("price", min)
+      .lte("price", max)
+      .order("price", { ascending: asc });
 
     //check if there's an error during the data retrieval
-    console.log(services);
+    // console.log(`req`, req.query);
+    console.log(`service:`, services);
     if (error) {
       return res.json({ message: error });
     }
