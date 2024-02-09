@@ -15,7 +15,7 @@ function AuthProvider(props) {
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState({
-    status: false,
+    status: true,
     role: "unAuthenticated",
   });
 
