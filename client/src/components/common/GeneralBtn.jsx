@@ -11,7 +11,6 @@ const GeneralBtn = ({
   const navigate = useNavigate();
   return (
     <button
-      onClick={() => navigate("/login")}
       className={`flex justify-center gap-2 px-7 py-4 border text-lg leading-none font-prompt 
     ${backgroundColor ? `${backgroundColor} ${borderColor}` : "bg-blue-600"}
     ${textColor ? `${textColor}` : `text-white`}
