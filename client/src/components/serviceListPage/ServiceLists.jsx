@@ -28,7 +28,10 @@ function ServiceLists(props) {
               className="flex-1 sm:w-[300px] sm:min-w-[340px] w-full rounded-[8px] border-solid border-2 border-gray-300  pb-4 bg-white font-prompt"
             >
               <div className=" justify-center items-center rounded-full">
-                <img src={service.image} className="w-full h-[180px] " />
+                <img
+                  src={service.image}
+                  className="w-full h-[180px] object-cover "
+                />
                 <div className="mt-4 flex gap-2.5 pl-4">
                   <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">
                     บริการ{service.category}

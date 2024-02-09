@@ -11,15 +11,14 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import { GeneralBtn } from "../../components/common";
 import { useState } from "react";
 
 function SearchTab(props) {
   const [searchMin, setSearchMin] = useState(0);
-  const [searchMax, setSearchMax] = useState(2000);
+  const [searchMax, setSearchMax] = useState(3000);
   const [searchWord, setSearchWord] = useState("");
-  const [searchCategory, setSearchCategory] = useState("");
-  const [searchSortBy, setSearchSortBy] = useState("");
+  // const [searchCategory, setSearchCategory] = useState("");
+  // const [searchSortBy, setSearchSortBy] = useState("");
 
   const { setMin, setMax, setKeyword, setCategory, setSortBy } = props;
 
@@ -28,31 +27,36 @@ function SearchTab(props) {
     setSearchMax(value[1]);
   };
 
+  const handleSliderChangeEnd = (value) => {
+    setMin(value[0]);
+    setMax(value[1]);
+  };
+
   const handleKeywordChange = (event) => {
     setSearchWord(event.target.value);
   };
 
   const handleCategoryChange = (event) => {
-    setSearchCategory(event.target.value);
+    setCategory(event.target.value);
   };
 
   const handleSortByChange = (event) => {
-    setSearchSortBy(event.target.value);
+    setSortBy(event.target.value);
   };
 
   const handleSearch = () => {
     setMin(searchMin);
     setMax(searchMax);
     setKeyword(searchWord);
-    setCategory(searchCategory);
-    setSortBy(searchSortBy);
-    resetSlider();
+    // setCategory(searchCategory);
+    // setSortBy(searchSortBy);
+    // resetSlider();
   };
 
-  const resetSlider = () => {
-    setSearchMin(0);
-    setSearchMax(2000);
-  };
+  // const resetSlider = () => {
+  //   setSearchMin(0);
+  //   setSearchMax(3000);
+  // };
 
   return (
     <>
@@ -62,15 +66,19 @@ function SearchTab(props) {
             onChange={handleKeywordChange}
             placeholder="ค้นหาบริการ"
           ></Input>
+          <Button onClick={handleSearch} colorScheme="messenger">
+            ค้นหา
+          </Button>
         </div>
 
         <div className="w-[200px] h-[60px] ml-10 flex flex-col justify-around items-start border-r border-gray-300 ">
-          <p>หมวดหมู่บริการ</p>
+          <p className="text-xs">หมวดหมู่บริการ</p>
           <div className="w-[150px]">
             <Select
               onChange={handleCategoryChange}
               variant="unstyled"
               placeholder="บริการทั้งหมด"
+              className="font-semibold"
             >
               <option value="ทั่วไป">บริการทั่วไป</option>
               <option value="ห้องครัว">บริการห้องครัว</option>
@@ -79,8 +87,8 @@ function SearchTab(props) {
           </div>
         </div>
 
-        <div className="w-[300px] h-[60px] flex flex-col justify-around items-center border-r border-gray-300 ">
-          <p>ราคา</p>
+        <div className="w-[200px] h-[60px] flex flex-col justify-around items-center border-r border-gray-300 ">
+          <p className="text-xs">ราคา</p>
           <Menu className="relative">
             <MenuButton as={Button}>
               {searchMin} - {searchMax}
@@ -90,11 +98,12 @@ function SearchTab(props) {
                 {""}
                 <RangeSlider
                   aria-label={["min", "max"]}
-                  defaultValue={[0, 2000]}
+                  defaultValue={[0, 3000]}
                   min={0}
-                  max={2000}
+                  max={3000}
                   step={10}
                   onChange={(val) => handleSliderChange(val)}
+                  onChangeEnd={(val) => handleSliderChangeEnd(val)}
                 >
                   <RangeSliderTrack>
                     <RangeSliderFilledTrack />
@@ -111,13 +120,14 @@ function SearchTab(props) {
           </Menu>
         </div>
 
-        <div className="w-[200px] h-[83px] ml-10 flex flex-col items-start justify-center">
-          <p>เรียงตาม</p>
+        <div className="w-[200px] ml-10 flex flex-col items-start justify-center">
+          <p className="text-xs mb-3">เรียงตาม</p>
           <div className="w-[150px]">
             <Select
               onChange={handleSortByChange}
               variant="unstyled"
-              placeholder="-"
+              placeholder="บริการแนะนำ"
+              className="font-semibold"
             >
               <option value="ASC">ราคา น้อย-มาก</option>
               <option value="DESC">ราคา มาก-น้อย</option>
@@ -125,9 +135,7 @@ function SearchTab(props) {
             </Select>
           </div>
         </div>
-        <div className="w-[200px] h-[83px] flex items-center justify-center">
-          <Button onClick={handleSearch}>ค้นหา</Button>
-        </div>
+        <div className="flex items-center justify-end"></div>
       </section>
     </>
   );

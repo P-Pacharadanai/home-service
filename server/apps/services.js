@@ -7,12 +7,17 @@ serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
     // retrieve all user profile from the "services" table
-
-    let asc;
-    if (sortBy === "ASC") {
-      asc = true;
-    } else {
-      asc = false;
+    let query, asc;
+    switch (sortBy) {
+      case "":
+        (query = "service_id"), (asc = true);
+        break;
+      case "ASC":
+        (query = "price"), (asc = true);
+        break;
+      case "DESC":
+        (query = "price"), (asc = false);
+        break;
     }
 
     let { data: services, error } = await supabase
@@ -22,10 +27,9 @@ serviceRouter.get("/", async (req, res) => {
       .like("category", category || "%")
       .gte("price", min)
       .lte("price", max)
-      .order("price", { ascending: asc });
+      .order(query, { ascending: asc });
 
     //check if there's an error during the data retrieval
-    // console.log(`req`, req.query);
     console.log(`service:`, services);
     if (error) {
       return res.json({ message: error });
