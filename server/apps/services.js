@@ -61,4 +61,26 @@ serviceRouter.get("/:serviceId", async (req, res) => {
   }
 });
 
+serviceRouter.get("/:serviceId/list", async (req, res) => {
+  try {
+    const serviceId = req.params.serviceId;
+
+    const { data: service_list, error } = await supabase
+      .from("service_list")
+      .select(`*, services(name,image)`)
+      .eq("service_id", serviceId)
+      .order("price", { ascending: true });
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: service_list,
+    });
+  } catch (error) {
+    return res.json({ message: error });
+  }
+});
+
 export default serviceRouter;

@@ -8,6 +8,7 @@ import CustomerServiceHistory from "./CustomerServiceHistory";
 import ServiceListsPage from "./ServiceListsPage";
 import PaymentSuccess from "./PaymentSuccess";
 
+
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
 
