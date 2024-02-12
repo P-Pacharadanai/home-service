@@ -1,12 +1,31 @@
-function SummaryDetail() {
+function SummaryDetail(props) {
+  const { serviceOrder } = props;
+
+  const totalOrderPrice = serviceOrder
+    .reduce((acc, curr) => (acc += curr.price * curr.quantity), 0)
+    .toLocaleString("th-TH", {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
   return (
     <div className="max-w-[350px] px-6 pt-4 pb-9 bg-white border border-gray-300 rounded-lg sticky top-28">
       <h3 className="text-xl text-gray-700">สรุปรายการ</h3>
       <div className="text-sm mt-5">
-        <div className="flex justify-between">
-          <p>9,000 - 18,000 BTU, แบบติดผนัง</p>
-          <p>2 เครื่อง</p>
+        <div className="flex flex-col gap-4">
+          {serviceOrder.map((item) => {
+            return (
+              <div key={item.service_list_id} className="flex justify-between">
+                <p>{item.title}</p>
+                <p>
+                  {item.quantity} {item.unit}
+                </p>
+              </div>
+            );
+          })}
         </div>
+
         <hr className="my-6 border-1 border-gray-300" />
         <div className="flex justify-between">
           <p>วันที่</p>
@@ -26,7 +45,7 @@ function SummaryDetail() {
       </div>
       <div className="flex justify-between">
         <p>รวม</p>
-        <p className="font-semibold">1,600.00 ฿</p>
+        <p className="font-semibold">{totalOrderPrice} ฿</p>
       </div>
     </div>
   );
