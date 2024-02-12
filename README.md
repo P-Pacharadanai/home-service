@@ -1,10 +1,11 @@
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [General info](#general-info)
 - [Tech](#tech)
 - [Setup](#setup)
-- [Features](#feature)
-- [Additional resources](#Additional-resources)
+- [Features](#features)
+- [Additional resources](#additional-resources)
 - [Contributors](#contributors)
 - [Team Members](#team-members)
 
@@ -68,7 +69,7 @@ This service is demo that contains the following:
 
 ## Contributors
 
-<!--https://www.linkedin.com/in/r-sripen/-->
+- https://www.linkedin.com/in/r-sripen/
 
 ## Team Members
 
