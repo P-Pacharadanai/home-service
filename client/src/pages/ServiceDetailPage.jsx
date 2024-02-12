@@ -7,6 +7,7 @@ import {
 } from "../components/serviceDetailPage";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import ServiceDetailForm from "../components/serviceDetailPage/ServiceDetailForm";
 
 function ServiceDetailPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,9 +23,7 @@ function ServiceDetailPage() {
           {currentStep === 1 && (
             <ServiceDetailList serviceId={params.serviceId} />
           )}
-          {currentStep === 2 && (
-            /*change Informantion Component here!!*/ <ServiceDetailList />
-          )}
+          {currentStep === 2 && <ServiceDetailForm />}
           {currentStep === 3 && (
             /*change Payment Component here!!*/ <ServiceDetailList />
           )}
