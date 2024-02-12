@@ -83,7 +83,7 @@ export const UserAcct = [
 //User account onclick active change to blue icon
 export const UserIconChange = [
  { icon: vectorhumanBlue, text: "ข้อมูลผู้ใช้งาน" },
- { icon: vectorListBlue, text: "รายการคำสั่งซ่อม", path: "/service-list" },
+ { icon: vectorListBlue, text: "รายการคำสั่งซ่อม", path: "/customer-service-list" },
  { icon: historyBlue, text: "ประวัติการซ่อม" , path: "/service-history" },
 ];
 
