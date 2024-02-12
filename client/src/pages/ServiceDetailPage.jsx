@@ -8,6 +8,7 @@ import {
   SummaryDetail,
   FooterDetail,
   PaymentDetail,
+  ServiceDetailForm,
 } from "../components/serviceDetailPage";
 
 function ServiceDetailPage() {
@@ -52,8 +53,7 @@ function ServiceDetailPage() {
               setServiceOrder={setServiceOrder}
             />
           )}
-          {currentStep === 2 &&
-            /*change Informantion Component here!!*/ "ServiceForm"}
+          {currentStep === 2 && <ServiceDetailForm />}
           {currentStep === 3 && (
             <PaymentDetail
               creditCard={creditCard}
