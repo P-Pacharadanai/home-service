@@ -1,42 +1,30 @@
-import { useState } from "react";
+import { formatCreditCardInput } from "./CreditCardUtils";
+import exclamation from "../../assets/icons/exclamation-circle-solid.svg";
 
-function PaymentDetail() {
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCVV] = useState("");
-  const [isValid, setIsValid] = useState(false);
+function PaymentDetail(props) {
+  const { creditCard, setCreditCard, errors } = props;
+
+  const { formatCardNumber, formatExpiryDate, formatCVV } =
+    formatCreditCardInput();
 
   const handleCardNumber = (event) => {
-    let inputCardNumber = event.target.value.replace(/\D/g, "");
-    inputCardNumber = inputCardNumber.slice(0, 16).replace(/(.{4})/g, "$1 ");
-    if (inputCardNumber.length > 19) {
-      inputCardNumber = inputCardNumber.slice(0, -1);
-    }
+    const inputCardNumber = formatCardNumber(event.target.value);
+    setCreditCard({ ...creditCard, cardNumber: inputCardNumber });
+  };
 
-    setCardNumber(inputCardNumber);
+  const handleCardName = (event) => {
+    let inputCardName = event.target.value;
+    setCreditCard({ ...creditCard, cardName: inputCardName });
   };
 
   const handleExpiryDate = (event) => {
-    let inputExpiryDate = event.target.value.replace(/\D/g, "");
-    let month = inputExpiryDate.slice(0, 2);
-    month = Number(month) <= 12 ? month : "12";
-    if (inputExpiryDate.length > 2) {
-      let year = inputExpiryDate.slice(2, 4);
-      inputExpiryDate = month + year;
-      inputExpiryDate = inputExpiryDate.slice(0, 4);
-      setExpiryDate(inputExpiryDate.replace(/(\d{2})(\d{0,2})/, "$1/$2"));
-    } else {
-      setExpiryDate(inputExpiryDate);
-    }
+    let inputExpiryDate = formatExpiryDate(event.target.value);
+    setCreditCard({ ...creditCard, expiryDate: inputExpiryDate });
   };
 
   const handleCVV = (event) => {
-    let inputCVV = event.target.value.replace(/\D/g, "");
-    inputCVV = inputCVV.slice(0, 4);
-    const isValidCVV = /^[0-9]{3,4}$/.test(inputCVV);
-
-    setCVV(inputCVV);
-    setIsValid(isValidCVV);
+    let inputCVV = formatCVV(event.target.value);
+    setCreditCard({ ...creditCard, cvv: inputCVV });
   };
 
   return (
@@ -72,27 +60,57 @@ function PaymentDetail() {
           >
             หมายเลขบัตรเครดิต<span className="text-red">*</span>
           </label>
-          <input
-            id="creditNumber"
-            name="creditNumber"
-            type="text"
-            className="w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 outline-gray-300 rounded-lg"
-            placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
-            value={cardNumber}
-            onChange={handleCardNumber}
-          />
+          <div className="relative">
+            <input
+              id="creditNumber"
+              name="creditNumber"
+              type="text"
+              className={`w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 rounded-lg ${
+                errors.cardNumber ? "outline-red" : "outline-gray-300"
+              }`}
+              placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
+              value={creditCard.cardNumber}
+              onChange={handleCardNumber}
+            />
+            {errors.cardNumber && (
+              <div>
+                <p className="text-red text-sm mt-2">{errors.cardNumber}</p>
+                <img
+                  src={exclamation}
+                  alt="exclamation-circle"
+                  className="w-[20px] h-[20px] absolute right-3 top-[16px] "
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div>
           <label htmlFor="name" className="block font-medium text-gray-900">
             ชื่อบนบัตร<span className="text-red">*</span>
           </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            className="w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 outline-gray-300 rounded-lg"
-            placeholder="กรุณากรอกชื่อบนบัตร"
-          />
+          <div className="relative">
+            <input
+              id="name"
+              name="name"
+              type="text"
+              className={`w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 rounded-lg ${
+                errors.cardName ? "outline-red" : "outline-gray-300"
+              }`}
+              placeholder="กรุณากรอกชื่อบนบัตร"
+              value={creditCard.cardName}
+              onChange={handleCardName}
+            />
+            {errors.cardName && (
+              <div>
+                <p className="text-red text-sm mt-2">{errors.cardName}</p>
+                <img
+                  src={exclamation}
+                  alt="exclamation-circle"
+                  className="w-[20px] h-[20px] absolute right-3 top-[16px] "
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex justify-between gap-7">
           <div className="flex-1">
@@ -102,29 +120,57 @@ function PaymentDetail() {
             >
               วันหมดอายุ<span className="text-red">*</span>
             </label>
-            <input
-              id="expiryDate"
-              name="cexpiryDate"
-              type="text"
-              className="w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 outline-gray-300 rounded-lg"
-              placeholder="MM/YY"
-              value={expiryDate}
-              onChange={handleExpiryDate}
-            />
+            <div className="relative">
+              <input
+                id="expiryDate"
+                name="cexpiryDate"
+                type="text"
+                className={`w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 rounded-lg ${
+                  errors.expiryDate ? "outline-red" : "outline-gray-300"
+                }`}
+                placeholder="MM/YY"
+                value={creditCard.expiryDate}
+                onChange={handleExpiryDate}
+              />
+              {errors.expiryDate && (
+                <div>
+                  <p className="text-red text-sm mt-2">{errors.expiryDate}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[16px] "
+                  />
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex-1">
             <label htmlFor="cvv" className="block font-medium text-gray-900">
               รหัส CVC / CVV<span className="text-red">*</span>
             </label>
-            <input
-              id="cvv"
-              name="cvv"
-              type="text"
-              className="w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 outline-gray-300 rounded-lg"
-              placeholder="xxx"
-              value={cvv}
-              onChange={handleCVV}
-            />
+            <div className="relative">
+              <input
+                id="cvv"
+                name="cvv"
+                type="text"
+                className={`w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 rounded-lg ${
+                  errors.cvv ? "outline-red" : "outline-gray-300"
+                }`}
+                placeholder="xxx"
+                value={creditCard.cvv}
+                onChange={handleCVV}
+              />
+              {errors.cvv && (
+                <div>
+                  <p className="text-red text-sm mt-2">{errors.cvv}</p>
+                  <img
+                    src={exclamation}
+                    alt="exclamation-circle"
+                    className="w-[20px] h-[20px] absolute right-3 top-[16px] "
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
