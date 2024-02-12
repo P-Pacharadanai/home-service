@@ -1,7 +1,9 @@
 import React, { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-const GeneralBtn = forwardRef(({ className, label, backgroundColor, textColor, borderColor, fullWidth = false }, ref) => {
+const GeneralBtn = forwardRef(({ onClick , className, label, backgroundColor, textColor, borderColor, fullWidth = false }, ref) => {
+ 
+
   return (
     <button
       className={twMerge(
@@ -11,6 +13,7 @@ const GeneralBtn = forwardRef(({ className, label, backgroundColor, textColor, b
         fullWidth ? "w-full" : "", className
       )}
       ref={ref}
+      onClick={onClick} 
     >
       {label}
     </button>
@@ -22,6 +25,7 @@ GeneralBtn.defaultProps = {
   textColor: null,
   borderColor: null,
   fullWidth: false,
+  onClick: () => {} 
 };
 
 export default GeneralBtn;

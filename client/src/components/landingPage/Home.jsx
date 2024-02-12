@@ -1,8 +1,15 @@
 import React from "react";
 import { GeneralBtn } from "../../components/common";
 import { plumber } from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/service-list"); // Navigate to wherever you want
+  };
+
   return (
     <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] gap-6 max-container bg-blue-100 ">
       <div className="relative xl:w-3/5 flex flex-col justify-center items-start w-full max-xl:padding-x pt-10 left-20 px-9">
@@ -18,7 +25,7 @@ const Home = () => {
           โดยพนักงานแม่บ้าน และช่างมืออาชีพ
         </p>
 
-        <GeneralBtn label="เช็คราคาบริการ" />
+        <GeneralBtn onClick={handleLoginClick} label="เช็คราคาบริการ" />
       </div>
       <div className="relative h-[540px] flex-1 flex justify-center items-center max-xl:py-20 right-24 max-xl:hidden">
         <img

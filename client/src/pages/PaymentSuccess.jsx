@@ -37,11 +37,11 @@ const PaymentSuccess = () => {
             </div>
             
             <div className="py-4 mb-6 -mt-1max-sm:justify-center items-center flex">
-              < GeneralBtn label="เช็ครายการซ่อม" fullWidth />
+              < GeneralBtn  onClick={console.log('Button clicked!')} label="เช็ครายการซ่อม" fullWidth />
             </div>
         </div>
     </div>
-  </div>
+      </div>
 
     </section>
   )
