@@ -1,26 +1,21 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 
-const GeneralBtn = ({
-  label,
-  backgroundColor,
-  textColor,
-  borderColor,
-  fullWidth,
-}) => {
-  const navigate = useNavigate();
+const GeneralBtn = forwardRef(({ className, label, backgroundColor, textColor, borderColor, fullWidth = false }, ref) => {
   return (
     <button
-      onClick={() => navigate("/login")}
-      className={`flex left-0 gap-2 px-7 py-4 border text-lg leading-none font-prompt 
-    ${backgroundColor ? `${backgroundColor} ${borderColor}` : "bg-blue-600"}
-    ${textColor ? `${textColor}` : `text-white`}
-    rounded-xl ${fullWidth ? "w-full" : ""}`}
+      className={twMerge(
+        `flex justify-center gap-2 px-7 py-4 border text-lg leading-none font-prompt rounded-xl`,
+        backgroundColor ? `${backgroundColor} ${borderColor}` : "bg-blue-600",
+        textColor ? `${textColor}` : `text-white`,
+        fullWidth ? "w-full" : "", className
+      )}
+      ref={ref}
     >
       {label}
     </button>
   );
-};
+});
 
 GeneralBtn.defaultProps = {
   backgroundColor: null,
