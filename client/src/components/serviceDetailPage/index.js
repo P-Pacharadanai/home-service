@@ -12,5 +12,4 @@ export {
   FooterDetail,
   PaymentDetail,
   ServiceDetailForm,
-
 };
