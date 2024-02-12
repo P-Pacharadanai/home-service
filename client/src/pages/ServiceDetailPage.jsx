@@ -23,6 +23,15 @@ function ServiceDetailPage() {
   });
   const [errors, setErrors] = useState({});
 
+  const [fullAddress, setFullAddress] = useState({
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+  });
+  const [bookingDateAndTime, setBookingDateAndTime] = useState();
+  const [note, setNote] = useState();
+
   const { serviceId } = useParams();
 
   const getServiceList = async () => {
@@ -53,7 +62,16 @@ function ServiceDetailPage() {
               setServiceOrder={setServiceOrder}
             />
           )}
-          {currentStep === 2 && <ServiceDetailForm />}
+          {currentStep === 2 && (
+            <ServiceDetailForm
+              fullAddress={fullAddress}
+              setFullAddress={setFullAddress}
+              bookingDateAndTime={bookingDateAndTime}
+              setBookingDateAndTime={setBookingDateAndTime}
+              note={note}
+              setNote={setNote}
+            />
+          )}
           {currentStep === 3 && (
             <PaymentDetail
               creditCard={creditCard}
