@@ -29,7 +29,8 @@ function ServiceDetailPage() {
     district: "",
     province: "",
   });
-  const [bookingDateAndTime, setBookingDateAndTime] = useState();
+  const [bookingDate, setBookingDate] = useState();
+  const [bookingTime, setBookingTime] = useState();
   const [note, setNote] = useState();
 
   const { serviceId } = useParams();
@@ -66,8 +67,10 @@ function ServiceDetailPage() {
             <ServiceDetailForm
               fullAddress={fullAddress}
               setFullAddress={setFullAddress}
-              bookingDateAndTime={bookingDateAndTime}
-              setBookingDateAndTime={setBookingDateAndTime}
+              bookingDate={bookingDate}
+              setBookingDate={setBookingDate}
+              bookingTime={bookingTime}
+              setBookingTime={setBookingTime}
               note={note}
               setNote={setNote}
             />

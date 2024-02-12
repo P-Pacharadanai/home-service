@@ -5,16 +5,22 @@ import { useState } from "react";
 import "./ServiceDetailForm.css";
 
 function ServiceDetailForm(props) {
-  const { fullAddress, setFullAddress, note, setNote, setBookingDateAndTime } =
-    props;
+  const {
+    fullAddress,
+    setFullAddress,
+    note,
+    setNote,
+    setBookingDate,
+    setBookingTime,
+  } = props;
 
   const changeDate = (_, dateString) => {
-    setBookingDateAndTime(dayjs(dateString, "DD/MM/YYYY").toISOString());
+    setBookingDate(dateString);
     console.log("Date String  : ", dateString);
   };
 
   const changeTime = (_, timeString) => {
-    setBookingDateAndTime(dayjs(timeString, " HH:mm").toISOString());
+    setBookingTime(timeString);
     console.log("Time String  : ", timeString);
   };
 
