@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage";
 import ServiceDetailPage from "./ServiceDetailPage";
 import CustomerServiceList from "./CustomerServiceList";
 import CustomerServiceHistory from "./CustomerServiceHistory";
-
+import ServiceListsPage from "./ServiceListsPage";
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
 
@@ -26,8 +26,8 @@ function AuthenticatedApp() {
             path="/service-detail/:serviceId"
             element={<ServiceDetailPage />}
           />
-          <Route path="/service-history" element={<CustomerServiceHistory/>} />
-          <Route path="/service-list" element={<CustomerServiceList/>} />
+          <Route path="/service-history" element={<CustomerServiceHistory />} />
+          <Route path="/service-list" element={<CustomerServiceList />} />
         </Routes>
       )}
     </div>

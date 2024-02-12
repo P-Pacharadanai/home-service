@@ -10,8 +10,16 @@ import { useParams } from "react-router-dom";
 import ServiceDetailForm from "../components/serviceDetailPage/ServiceDetailForm";
 
 function ServiceDetailPage() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
 
+  const [fullAddress, setFullAddress] = useState({
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+  });
+  const [bookingDateAndTime, setBookingDateAndTime] = useState();
+  const [note, setNote] = useState();
   const params = useParams();
 
   return (
@@ -23,7 +31,16 @@ function ServiceDetailPage() {
           {currentStep === 1 && (
             <ServiceDetailList serviceId={params.serviceId} />
           )}
-          {currentStep === 2 && <ServiceDetailForm />}
+          {currentStep === 2 && (
+            <ServiceDetailForm
+              fullAddress={fullAddress}
+              setFullAddress={setFullAddress}
+              bookingDateAndTime={bookingDateAndTime}
+              setBookingDateAndTime={setBookingDateAndTime}
+              note={note}
+              setNote={setNote}
+            />
+          )}
           {currentStep === 3 && (
             /*change Payment Component here!!*/ <ServiceDetailList />
           )}
