@@ -1,6 +1,6 @@
 import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
-import InputAddress from "react-thailand-address-autocomplete";
+import AddressAutocomplete from "react-thailand-address-autocomplete";
 import { useState } from "react";
 import "./ServiceDetailForm.css";
 
@@ -152,10 +152,9 @@ function ServiceDetailForm(props) {
                   ที่อยู่
                   <span className="text-red"> *</span>
                 </h5>
-                <input
+                <AddressAutocomplete
                   id="address"
                   value={fullAddress.address}
-                  type="text"
                   placeholder="กรุณากรอกที่อยู่"
                   onChange={(e) => {
                     handleChangeAddress(e.target.value);
@@ -173,9 +172,8 @@ function ServiceDetailForm(props) {
                   แขวง / ตำบล
                   <span className="text-red"> *</span>
                 </h5>
-                <InputAddress
+                <AddressAutocomplete
                   id="subdistrict"
-                  address="subdistrict"
                   value={fullAddress.subdistrict}
                   placeholder="กรุณากรอกแขวง / ตำบล"
                   onChange={(e) => {
@@ -198,11 +196,9 @@ function ServiceDetailForm(props) {
                   เขต / อำเภอ
                   <span className="text-red"> *</span>
                 </h5>
-                <InputAddress
+                <AddressAutocomplete
                   id="district"
-                  address="district"
                   value={fullAddress.district}
-                  type="text"
                   placeholder="กรุณากรอกเขต / อำเภอ"
                   onChange={(e) => {
                     handleChangeDistrict(e.target.value);
@@ -220,11 +216,9 @@ function ServiceDetailForm(props) {
                   จังหวัด
                   <span className="text-red"> *</span>
                 </h5>
-                <InputAddress
+                <AddressAutocomplete
                   id="province"
-                  address="province"
                   value={fullAddress.province}
-                  type="text"
                   placeholder="กรุณากรอกจังหวัด"
                   onChange={(e) => {
                     handleChangeProvince(e.target.value);
@@ -247,11 +241,9 @@ function ServiceDetailForm(props) {
                   รหัสไปรษณีย์
                   <span className="text-red"> *</span>
                 </h5>
-                <InputAddress
+                <AddressAutocomplete
                   id="zipcode"
-                  address="zipcode"
                   value={fullAddress.zipcode}
-                  type="text"
                   placeholder="กรุณากรอกรหัสไปรษณีย์"
                   onChange={(e) => {
                     handleChangeZipcode(e.target.value);
