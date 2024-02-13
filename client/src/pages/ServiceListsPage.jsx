@@ -1,4 +1,4 @@
-import { NavUser, Footer } from "../components/common";
+import { NavUser, Footer, GeneralNav } from "../components/common";
 import { JobInformation } from "../components/landingPage";
 import {
   WriteUp,
