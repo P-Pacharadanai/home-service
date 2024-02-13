@@ -33,7 +33,7 @@ const Home = () => {
           alt="man"
           width={520}
           height={722}
-          className="object-contain z-10 -mt-26 -mb-10 "
+          className="object-contain z-10 -mt-26 -mb-14"
         />
       </div>
     </section>
