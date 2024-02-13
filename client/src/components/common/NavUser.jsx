@@ -27,7 +27,7 @@ const NavUser = () => {
           </a>
         </div>
 
-        <div className="flex flex-wrap p-2 leading-none mr-10 justify-end max-lg:hidden">
+        <div className="flex flex-wrap p-2 leading-none justify-end max-lg:hidden">
           {isAuthenticated.role === "authenticated_admin" ? (
             <ButtonAdmin />
           ) : (

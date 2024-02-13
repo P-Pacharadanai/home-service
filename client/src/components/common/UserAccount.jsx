@@ -13,9 +13,9 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="h-[200px] bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt">
-      <div className="px-5 py-4 text-sm dark:text-white">
-        <p className="text-gray-700 text-lg justify-start flex">บัญชีผู้ใช้</p>
+    <div className="h-[250px] bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt">
+      <div className="px-4 py-4 text-sm dark:text-white">
+        <p className="text-gray-700 text-lg justify-start flex m-auto mt-3">บัญชีผู้ใช้</p>
         <hr className="border-gray-300 mt-4" />
       </div>
       <ul className="text-sm text-gray-300 dark:text-gray-950">
@@ -28,9 +28,9 @@ const UserAccount = () => {
               <img 
                  src={item.text === activeItem.text ? UserInfor.find(user => user.text === item.text)?.icon : UserAcct.find(user => user.text === item.text)?.icon}
                 alt="icon"
-                className={`ml-5 w-[22px] h-[24px] me-1 p-1  ${item.text === activeItem.text ? 'bg-gray-100' : 'dark:hover:text-gray-500'}`}
+                className={`ml-5 w-[22px] h-[26px] me-1 p-1  ${item.text === activeItem.text ? 'bg-gray-100' : 'dark:hover:text-gray-500'}`}
               />
-              <span className={`block py-2 hover:bg-gray-100 dark:hover:bg-base ${item.text === activeItem.text ? 'text-blue-700' : 'dark:hover:text-gray-500'}`} >
+              <span className={`block py-3 hover:bg-gray-100 dark:hover:bg-base ${item.text === activeItem.text ? 'text-blue-700' : 'dark:hover:text-gray-500'}`} >
                 {item.text}
               </span>
             </Link>
