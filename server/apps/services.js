@@ -7,16 +7,16 @@ serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
     // retrieve all user profile from the "services" table
-    let query, asc;
+    let sort, asc;
     switch (sortBy) {
       case "":
-        (query = "service_id"), (asc = true);
+        (sort = "service_id"), (asc = true);
         break;
       case "ASC":
-        (query = "price"), (asc = true);
+        (sort = "price"), (asc = true);
         break;
       case "DESC":
-        (query = "price"), (asc = false);
+        (sort = "price"), (asc = false);
         break;
     }
 
@@ -27,7 +27,7 @@ serviceRouter.get("/", async (req, res) => {
       .like("category", category || "%")
       .gte("price", min)
       .lte("price", max)
-      .order(query, { ascending: asc });
+      .order(sort, { ascending: asc });
 
     //check if there's an error during the data retrieval
     console.log(`service:`, services);
