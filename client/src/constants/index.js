@@ -57,8 +57,8 @@ export const menuItemsAdmin = [
 //Dropdown User
 export const menuItemsUser = [
  { icon: vectorHuman, text: "ข้อมูลผู้ใช้งาน" },
- { icon: vectorChart, text: "รายการคำสั่งซ่อม" },
- { icon: vectorHistoryBlack, text: "ประวัติการซ่อม" },
+ { icon: vectorChart, text: "รายการคำสั่งซ่อม", path: "/customer-service-list"  },
+ { icon: vectorHistoryBlack, text: "ประวัติการซ่อม", path: "/service-history" },
 ];
 
 //Footer

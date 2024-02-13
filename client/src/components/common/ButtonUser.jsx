@@ -59,7 +59,7 @@ const ButtonUser = () => {
                     className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
                   />
                   <a
-                    href="#"
+                    href={menuItem.path || "#"}
                     className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
