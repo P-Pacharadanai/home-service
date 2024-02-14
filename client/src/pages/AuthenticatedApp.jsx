@@ -35,8 +35,7 @@ function AuthenticatedApp() {
             path="/customer-service-list"
             element={<CustomerServiceList />}
           />
-          /payment-success
-          <Route path="" element={<PaymentSuccess />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
       )}
     </div>
