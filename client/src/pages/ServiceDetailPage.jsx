@@ -1,39 +1,99 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import { NavUser } from "../components/common";
 import {
   HeaderDetail,
   ServiceDetailList,
   SummaryDetail,
   FooterDetail,
+  PaymentDetail,
+  ServiceDetailForm,
 } from "../components/serviceDetailPage";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 function ServiceDetailPage() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [serviceList, setServiceList] = useState([]);
+  const [serviceOrder, setServiceOrder] = useState([]);
+  const [creditCard, setCreditCard] = useState({
+    cardNumber: "",
+    cardName: "",
+    expiryDate: "",
+    cvv: "",
+  });
+  const [errors, setErrors] = useState({});
 
-  const params = useParams();
+  const [fullAddress, setFullAddress] = useState({
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+  });
+  const [bookingDate, setBookingDate] = useState();
+  const [bookingTime, setBookingTime] = useState();
+  const [note, setNote] = useState();
+
+  const { serviceId } = useParams();
+
+  const getServiceList = async () => {
+    const { data } = await axios.get(
+      `http://localhost:4000/service/${serviceId}/list`
+    );
+    setServiceList(data.data);
+  };
+
+  useEffect(() => {
+    getServiceList();
+  }, []);
 
   return (
     <div className="min-h-screen bg-base font-prompt">
       <NavUser />
-      <HeaderDetail currentStep={currentStep} />
+      <HeaderDetail
+        currentStep={currentStep}
+        serviceName={serviceList[0]?.services.name}
+        serviceImageUrl={serviceList[0]?.services.image}
+      />
       <div className="max-w-[1440px] mx-auto mt-28 px-28 flex justify-between gap-9 ">
         <div className="basis-[735px] mb-44">
           {currentStep === 1 && (
-            <ServiceDetailList serviceId={params.serviceId} />
+            <ServiceDetailList
+              serviceList={serviceList}
+              serviceOrder={serviceOrder}
+              setServiceOrder={setServiceOrder}
+            />
           )}
           {currentStep === 2 && (
-            /*change Informantion Component here!!*/ <ServiceDetailList />
+            <ServiceDetailForm
+              fullAddress={fullAddress}
+              setFullAddress={setFullAddress}
+              bookingDate={bookingDate}
+              setBookingDate={setBookingDate}
+              bookingTime={bookingTime}
+              setBookingTime={setBookingTime}
+              note={note}
+              setNote={setNote}
+            />
           )}
           {currentStep === 3 && (
-            /*change Payment Component here!!*/ <ServiceDetailList />
+            <PaymentDetail
+              creditCard={creditCard}
+              setCreditCard={setCreditCard}
+              errors={errors}
+            />
           )}
         </div>
         <div className="basis-[350px]">
-          <SummaryDetail />
+          <SummaryDetail serviceOrder={serviceOrder} />
         </div>
       </div>
-      <FooterDetail currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      <FooterDetail
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
+        serviceOrder={serviceOrder}
+        creditCard={creditCard}
+        setErrors={setErrors}
+      />
     </div>
   );
 }

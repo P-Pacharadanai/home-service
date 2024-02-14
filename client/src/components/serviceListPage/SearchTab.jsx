@@ -17,8 +17,6 @@ function SearchTab(props) {
   const [searchMin, setSearchMin] = useState(0);
   const [searchMax, setSearchMax] = useState(3000);
   const [searchWord, setSearchWord] = useState("");
-  // const [searchCategory, setSearchCategory] = useState("");
-  // const [searchSortBy, setSearchSortBy] = useState("");
 
   const { setMin, setMax, setKeyword, setCategory, setSortBy } = props;
 
@@ -48,15 +46,7 @@ function SearchTab(props) {
     setMin(searchMin);
     setMax(searchMax);
     setKeyword(searchWord);
-    // setCategory(searchCategory);
-    // setSortBy(searchSortBy);
-    // resetSlider();
   };
-
-  // const resetSlider = () => {
-  //   setSearchMin(0);
-  //   setSearchMax(3000);
-  // };
 
   return (
     <>

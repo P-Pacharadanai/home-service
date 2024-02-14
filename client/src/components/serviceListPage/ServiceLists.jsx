@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { iconTag, iconTagCircle } from "../../assets/icons";
+import { useAuth } from "../../contexts/authentication";
 
 function ServiceLists(props) {
   const { min, max, keyword, category, sortBy } = props;
@@ -13,6 +14,8 @@ function ServiceLists(props) {
     let serviceListData = result.data.data;
     setServiceList(serviceListData);
   };
+
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     getServiceList();
@@ -59,7 +62,11 @@ function ServiceLists(props) {
                   </p>
                 </div>
                 <a
-                  href="/"
+                  href={
+                    isAuthenticated.status
+                      ? `/service-detail/${service.service_id}`
+                      : "/login"
+                  }
                   className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4"
                 >
                   เลือกบริการ

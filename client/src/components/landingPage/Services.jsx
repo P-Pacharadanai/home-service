@@ -1,8 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 import { ourServices } from "../../constants";
 import ServiceLists from "./ServiceLists";
 import { GeneralBtn } from "../../components/common";
 
 const Services = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/service-list"); // Navigate to wherever you want
+  };
+
   return (
     <section className="max-container flex justify-center flex-wrap">
       <div className="container flex flex-col justify-start gap-5">
@@ -18,7 +26,7 @@ const Services = () => {
       </div>
 
       <div className="container flex justify-center items-center p-12 mt-2 mb-15">
-        <GeneralBtn label="ดูบริการท้ังหมด" />
+        <GeneralBtn onClick={handleLoginClick} label="ดูบริการท้ังหมด" />
       </div>
     </section>
   );

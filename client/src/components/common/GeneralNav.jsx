@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 const GeneralNav = () => {
   const navigate = useNavigate();
 
+  const handleLoginClick = () => {
+    navigate("/login"); // Navigate to wherever you want
+  };
+
   return (
     <section className="leading-none padding-x z-10 w-full px-20 py-2 bg-white">
       <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-12">
@@ -29,7 +33,7 @@ const GeneralNav = () => {
         </div>
 
         <div className="flex flex-wrap p-2 leading-none mr-10 justify-end max-lg:hidden">
-          <GeneralBtn
+          <GeneralBtn onClick={handleLoginClick}
             label="เข้าสู่ระบบ"
             backgroundColor="bg-white"
             borderColor="border-blue-600"

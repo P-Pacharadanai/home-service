@@ -1,8 +1,36 @@
+import React, { useState, useEffect } from 'react';
+
 import { NavUser, Footer, UserAccount } from "../components/common";
-import {repairHistory } from "../constants";
 import { calenderIcon, frameIcon } from "../assets/icons";
 
+//import {repairHistory } from "../constants";
+
 const CustomerServiceHistory = () => {
+  const [orders, setOrders] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://gjmjphpjtksranfvtdqg.supabase.co/rest/v1/orders?select=*', {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqbWpwaHBqdGtzcmFuZnZ0ZHFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY3NTMwMjIsImV4cCI6MjAyMjMyOTAyMn0.UoNWiRsbAyyDDEaV5T07t7vYQHaSfzOs5lYFL64KvQM'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const successfulOrders = data.filter(order => order.status === 'ดำเนินการสำเร็จ');
+     
+        setOrders(successfulOrders);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
   return (
     <section className="font-prompt max-container mb-20 ">
       < NavUser />
@@ -11,10 +39,10 @@ const CustomerServiceHistory = () => {
         <UserAccount/>
 
         <div className="flex flex-col gap-8 w-[990px]">
-          {repairHistory.map((order, index) => (
+          {orders.map((order, index) => (
             <div key={index} className="pb-8 p-6 rounded-lg border border-gray-300 bg-white">
               <div className="flex justify-between mb-4">
-                <h4 className="font-medium">คำสั่งการซ่อมรหัส : {order.id}</h4>
+                <h4 className="font-medium">คำสั่งการซ่อมรหัส : {order.service_information_id}</h4>
                 <div className="flex gap-2">
                   <p className="text-gray-700">สถานะ:</p>
                   <p className="bg-green-100 rounded-full text-green-900 leading-1 px-2 py-1 text-sm ">
@@ -27,7 +55,7 @@ const CustomerServiceHistory = () => {
                 <ul>
                   <li className="flex gap-3 mb-2">
                     <img src={calenderIcon} alt="calender icon"/>
-                    <p className="text-gray-700">วันเวลาดำเนินการ: {order.dateTime}</p>
+                    <p className="text-gray-700">วันเวลาดำเนินการ: {order.availble_time}</p>
                   </li>
                   <li className="flex gap-3 mb-4">
                     <img src={frameIcon} alt="frame icon" />
@@ -42,7 +70,7 @@ const CustomerServiceHistory = () => {
               <div className="flex justify-between">
                 <div>
                   <p className="text-gray-700">รายการ:</p>
-                  <p>{order.details}</p>
+                  <p>{order.detail}</p>
                 </div>
               
               </div>
@@ -52,7 +80,6 @@ const CustomerServiceHistory = () => {
       </div> 
       <Footer />
     </section>   
-    
   )
 }
 

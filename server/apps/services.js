@@ -7,16 +7,16 @@ serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
     // retrieve all user profile from the "services" table
-    let query, asc;
+    let sort, asc;
     switch (sortBy) {
       case "":
-        (query = "service_id"), (asc = true);
+        (sort = "service_id"), (asc = true);
         break;
       case "ASC":
-        (query = "price"), (asc = true);
+        (sort = "price"), (asc = true);
         break;
       case "DESC":
-        (query = "price"), (asc = false);
+        (sort = "price"), (asc = false);
         break;
     }
 
@@ -27,7 +27,7 @@ serviceRouter.get("/", async (req, res) => {
       .like("category", category || "%")
       .gte("price", min)
       .lte("price", max)
-      .order(query, { ascending: asc });
+      .order(sort, { ascending: asc });
 
     //check if there's an error during the data retrieval
     console.log(`service:`, services);
@@ -56,6 +56,28 @@ serviceRouter.get("/:serviceId", async (req, res) => {
     }
 
     return res.json({ data: data[0] });
+  } catch (error) {
+    return res.json({ message: error });
+  }
+});
+
+serviceRouter.get("/:serviceId/list", async (req, res) => {
+  try {
+    const serviceId = req.params.serviceId;
+
+    const { data: service_list, error } = await supabase
+      .from("service_list")
+      .select(`*, services(name,image)`)
+      .eq("service_id", serviceId)
+      .order("price", { ascending: true });
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: service_list,
+    });
   } catch (error) {
     return res.json({ message: error });
   }

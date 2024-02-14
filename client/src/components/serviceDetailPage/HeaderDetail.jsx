@@ -2,7 +2,8 @@ import ProgressBar from "./ProgressBar";
 import { acCleaning } from "../../assets/images";
 
 function HeaderDetail(props) {
-  const { currentStep } = props;
+  const { currentStep, serviceName, serviceImageUrl } = props;
+
   return (
     <div className="max-w-full h-60 relative ">
       <div className="h-full">
@@ -18,7 +19,7 @@ function HeaderDetail(props) {
           <span className="text-gray-700">บริการของเรา</span>
           <span className="text-gray-400">&gt;</span>
           <span className="text-3xl text-blue-600 h-fit font-medium">
-            ล้างแอร์
+            {serviceName}
           </span>
         </div>
         <ProgressBar currentStep={currentStep} />
