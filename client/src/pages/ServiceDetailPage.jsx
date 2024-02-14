@@ -9,6 +9,7 @@ import {
   FooterDetail,
   PaymentDetail,
   ServiceDetailForm,
+  StripePayment,
 } from "../components/serviceDetailPage";
 
 function ServiceDetailPage() {
@@ -76,11 +77,12 @@ function ServiceDetailPage() {
             />
           )}
           {currentStep === 3 && (
-            <PaymentDetail
-              creditCard={creditCard}
-              setCreditCard={setCreditCard}
-              errors={errors}
-            />
+            <StripePayment getServiceList={getServiceList} />
+            // <PaymentDetail
+            //   creditCard={creditCard}
+            //   setCreditCard={setCreditCard}
+            //   errors={errors}
+            // />
           )}
         </div>
         <div className="basis-[350px]">
