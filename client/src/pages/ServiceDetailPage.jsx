@@ -8,6 +8,7 @@ import {
   SummaryDetail,
   FooterDetail,
   PaymentDetail,
+  ServiceDetailForm,
 } from "../components/serviceDetailPage";
 
 function ServiceDetailPage() {
@@ -21,6 +22,16 @@ function ServiceDetailPage() {
     cvv: "",
   });
   const [errors, setErrors] = useState({});
+
+  const [fullAddress, setFullAddress] = useState({
+    address: "",
+    subdistrict: "",
+    district: "",
+    province: "",
+  });
+  const [bookingDate, setBookingDate] = useState();
+  const [bookingTime, setBookingTime] = useState();
+  const [note, setNote] = useState();
 
   const { serviceId } = useParams();
 
@@ -52,8 +63,18 @@ function ServiceDetailPage() {
               setServiceOrder={setServiceOrder}
             />
           )}
-          {currentStep === 2 &&
-            /*change Informantion Component here!!*/ "ServiceForm"}
+          {currentStep === 2 && (
+            <ServiceDetailForm
+              fullAddress={fullAddress}
+              setFullAddress={setFullAddress}
+              bookingDate={bookingDate}
+              setBookingDate={setBookingDate}
+              bookingTime={bookingTime}
+              setBookingTime={setBookingTime}
+              note={note}
+              setNote={setNote}
+            />
+          )}
           {currentStep === 3 && (
             <PaymentDetail
               creditCard={creditCard}

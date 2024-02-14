@@ -1,4 +1,4 @@
-import { NavUser, Footer } from "../components/common";
+import { NavUser, Footer, GeneralNav } from "../components/common";
 import { JobInformation } from "../components/landingPage";
 import {
   WriteUp,
@@ -6,6 +6,7 @@ import {
   SearchTab,
 } from "../components/serviceListPage";
 import { useState } from "react";
+import { useAuth } from "../contexts/authentication";
 
 function ServiceListsPage() {
   const [min, setMin] = useState(0);
@@ -14,9 +15,11 @@ function ServiceListsPage() {
   const [category, setCategory] = useState("");
   const [sortBy, setSortBy] = useState("");
 
+  const { isAuthenticated } = useAuth();
+
   return (
     <div className="font-prompt">
-      <NavUser />
+      {isAuthenticated.status ? <NavUser /> : <GeneralNav />}
       <WriteUp />
       <SearchTab
         setMin={setMin}
