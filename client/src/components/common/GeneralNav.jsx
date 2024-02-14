@@ -6,12 +6,12 @@ const GeneralNav = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login"); // Navigate to wherever you want
+    navigate("/login");
   };
 
   return (
-    <section className="leading-none padding-x z-10 w-full px-20 py-2 bg-white">
-      <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-12">
+    <section className="leading-none padding-x z-10 w-full px-16 py-2 bg-white">
+      <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-28">
         <a
           href="/"
           className="mt-3 flex text-lg font-medium gap-1 text-blue-600"
@@ -27,7 +27,7 @@ const GeneralNav = () => {
         </a>
 
         <div className="flex justify-start items-start absolute left-64 max-lg:hidden">
-          <a href="/" className="mt-3 ml-8 font-medium">
+          <a href="/" className="mt-3 ml-24 font-medium">
             บริการของเรา
           </a>
         </div>

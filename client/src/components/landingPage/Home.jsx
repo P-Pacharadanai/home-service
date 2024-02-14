@@ -11,7 +11,7 @@ const Home = () => {
   };
 
   return (
-    <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] gap-6 max-container bg-blue-100 ">
+    <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] px-12 gap-6 max-container bg-blue-100 ">
       <div className="relative xl:w-3/5 flex flex-col justify-center items-start w-full max-xl:padding-x pt-10 left-20 px-9">
         <h1 className=" -mt-16 justify-center items-center text-blue-600 font-prompt text-6xl font-bold max-sm:text-[30px] max-sm:leading-[140px] ">
           เรื่องบ้าน...ให้เราช่วยดูแลคุณ
@@ -33,7 +33,7 @@ const Home = () => {
           alt="man"
           width={520}
           height={722}
-          className="object-contain z-10 -mt-26 -mb-10 "
+          className="object-contain z-10 -mt-26 -mb-14"
         />
       </div>
     </section>

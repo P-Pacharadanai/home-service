@@ -1,12 +1,15 @@
 import React, { useState, useEffect  } from 'react';
 import { useNavigate } from "react-router-dom";
-import { NavUser, Footer, UserAccount , GeneralBtn } from "../components/common";
+import { NavUser, Footer, UserAccount , GeneralBtn ,Modal} from "../components/common";
 import { calenderIcon, frameIcon } from "../assets/icons";
 //import {repairOrders } from "../constants";
+
 
 const CustomerServiceList = () => {
   const [processItem] = useState("กำลังดำเนินการ");
   const [orders, setOrders] = useState([]);
+
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,22 +35,16 @@ const CustomerServiceList = () => {
   
     fetchData();
   }, []);
-
-  const navigate = useNavigate();
-
-  const handleLoginClick = () => {
-    navigate("/service-list");
-  }
     
   return (
     <section className="font-prompt max-container mb-20 ">
       < NavUser />
 
-      <div className="bg-blue-600 flex w-full py-6 justify-center text-white text-2xl font-prompt font-medium">รายการคำสั่งซ่อม</div>
-      <div className="flex gap-10 px-28 py-14 bg-gray-100 w-full">
+      <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium">รายการคำสั่งซ่อม</div>
+      <div className="flex gap-9 justify-center py-8 bg-gray-100 w-full">
         <UserAccount/>
 
-        <div className="flex flex-col gap-8 w-[990px]">
+        <div className="flex flex-col gap-4 w-[831px]">
           {orders.map((order, index) => (
             <div key={index} className="pb-8 p-6 rounded-lg border border-gray-300 bg-white">
               <div className="flex justify-between mb-4">
@@ -80,7 +77,8 @@ const CustomerServiceList = () => {
                   <p className="text-gray-700">รายการ:</p>
                   <p>{order.detail}</p>
                 </div>
-                <GeneralBtn onClick={handleLoginClick} label="ดูรายละเอียด" />
+                <GeneralBtn onClick={() => setShowModal(true)} label="ดูรายละเอียด" />
+                {showModal && <Modal onClose={() => setShowModal(false)} />}
               </div>
             </div>
           ))}

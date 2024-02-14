@@ -18,18 +18,18 @@ const ButtonUser = () => {
         <button
           id="dropdownAvatarNameButton"
           onClick={toggleDropdown}
-          className="flex items-center text-sm pe-1 text-gray-900 p-2 rounded-lg whitespace-nowrap px-6 pb-2 pt-2.5 leading-normal"
+          className="flex items-center text-sm pe-1 text-gray-900 rounded-lg whitespace-nowrap px-8 pb-2 pt-2.5 leading-normal -mr-4"
           type="button"
         >
           <span className="sr-only">เข้าสู่ระบบ</span>
           สมศรี จันทร์อังคารพุธ
           <img
-            className="ml-3 w-8 h-8 me-1 rounded-full"
+            className="ml-4 w-8 h-8 me-2 rounded-full"
             src={bellHuman}
             alt="user photo"
           />
           <img
-            className="ml-2 w-8 h-8 p-2 bg-slate-300 me-6 rounded-full"
+            className="w-8 h-8 p-2 bg-slate-300 rounded-full"
             src={iconrBell}
             alt="user photo"
           />
@@ -59,7 +59,7 @@ const ButtonUser = () => {
                     className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
                   />
                   <a
-                    href="#"
+                    href={menuItem.path || "#"}
                     className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
