@@ -24,7 +24,7 @@ export const ourServices = [
      iconTag: iconTag,
      circle: iconTagCircle,
      price: "ค่าบริการประมาณ 500.00 ฿",
-     btnGhost: "เลือกบริการ",
+     btnGhost: "เลือกบริการ", path: "/service-detail/:serviceId",
  },
  {
      photo: acCleaning,

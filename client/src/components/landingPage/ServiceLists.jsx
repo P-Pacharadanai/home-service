@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
 const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) => {
+  const handleSelectService = () => {
+    // Handle service selection logic here
+    console.log("Service selected!");
+  };
   
   return (
     <>
@@ -16,7 +20,7 @@ const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) =
           <img src={circle} width={4} height={4} className="absolute -mb-3 mt-1 ml-1" />
           <p className="leading-normal text-gray-700 tracking-wide text-sm pb-6">{price}</p>
         </div>
-        <Link to="" className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4">เลือกบริการ</Link>
+        <a onClick={handleSelectService} className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4">{btnGhost}</a>
 
       </div>
       
