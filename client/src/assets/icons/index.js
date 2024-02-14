@@ -19,7 +19,16 @@ import frameIcon from "./frameIcon.jpeg";
 import vectorChecked from "./vectorChecked.jpeg";
 import historyBlue from "./historyBlue.png";
 import vectorhumanBlue from "./vectorhumunBlue.png";
-
+import ExitIcon from "./arrow-right-from-bracket-solid.png";
+import CopyIcon from "./copy-regular.png";
+import GripVerticalIcon from "./grip-vertical-solid.svg";
+import ListIcon from "./list-solid.png";
+import PenSquareIcon from "./pen-to-square-regular.svg";
+import TicketIcon from "./ticket-solid.png";
+import TrashIcon from "./trash-can-solid.svg";
+import ExclamationIcon from "./exclamation-circle-solid.svg";
+import XmarkIcon from "./xmark-solid.svg";
+import Magnifying from "./magnifying-glass-solid.svg";
 
 export {
   houseXs,
@@ -42,5 +51,15 @@ export {
   vectorChecked,
   frameIcon,
   historyBlue,
-  vectorhumanBlue
+  vectorhumanBlue,
+  ExitIcon,
+  CopyIcon,
+  GripVerticalIcon,
+  ListIcon,
+  PenSquareIcon,
+  TicketIcon,
+  TrashIcon,
+  ExclamationIcon,
+  XmarkIcon,
+  Magnifying,
 };

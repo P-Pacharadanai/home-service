@@ -7,6 +7,7 @@ import CustomerServiceList from "./CustomerServiceList";
 import CustomerServiceHistory from "./CustomerServiceHistory";
 import ServiceListsPage from "./ServiceListsPage";
 import PaymentSuccess from "./PaymentSuccess";
+import AdminCategory from "./AdminCategory";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -18,6 +19,7 @@ function AuthenticatedApp() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/service-list" element={<ServiceListsPage />} />
           <Route path="*" element={<LandingPage />} />
+          <Route path="/admin-category" element={<AdminCategory />} />
         </Routes>
       ) : (
         <Routes>
@@ -33,7 +35,8 @@ function AuthenticatedApp() {
             path="/customer-service-list"
             element={<CustomerServiceList />}
           />
-          <Route path="/payment-success" element={<PaymentSuccess />} />
+          /payment-success
+          <Route path="" element={<PaymentSuccess />} />
         </Routes>
       )}
     </div>
