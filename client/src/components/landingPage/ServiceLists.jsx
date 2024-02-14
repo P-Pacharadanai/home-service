@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
+
 const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) => {
+  
   return (
     <>
     <div className="flex-1 sm:w-[300px] sm:min-w-[340px] w-full rounded-[8px] border-solid border-2 border-gray-300  pb-4 bg-white font-prompt">
@@ -13,7 +16,7 @@ const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) =
           <img src={circle} width={4} height={4} className="absolute -mb-3 mt-1 ml-1" />
           <p className="leading-normal text-gray-700 tracking-wide text-sm pb-6">{price}</p>
         </div>
-        <a href="/" className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4">{btnGhost}</a>
+        <Link to="" className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4">เลือกบริการ</Link>
 
       </div>
       
@@ -23,4 +26,7 @@ const ServiceLists = ({ photo, title, price, tag, btnGhost, iconTag, circle }) =
   )
 };
 
-export default ServiceLists;
+export default ServiceLists
+
+
+
