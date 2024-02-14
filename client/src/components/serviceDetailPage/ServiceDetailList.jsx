@@ -55,6 +55,8 @@ function ServiceDetailList(props) {
     return 0;
   };
 
+  console.log("it's working!!!!!!");
+
   return (
     <div className="max-w-[735px] px-6 pt-8 pb-14 bg-white border border-gray-300 rounded-lg">
       <h3 className="text-xl text-gray-700">

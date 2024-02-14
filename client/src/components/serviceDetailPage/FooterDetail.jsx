@@ -9,9 +9,12 @@ function FooterDetail(props) {
   const navigate = useNavigate();
 
   const isNextAvailable = () => {
-    if (currentStep === 1 && serviceOrder.length > 0) {
+    if (currentStep === 1) {
       return true;
     }
+    // if (currentStep === 1 && serviceOrder.length > 0) {
+    //   return true;
+    // }
     if (currentStep === 2) {
       return true;
     }
