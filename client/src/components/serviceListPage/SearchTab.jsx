@@ -83,7 +83,6 @@ function SearchTab(props) {
             </MenuButton>
             <MenuList className="absolute top-full -left-[3.8rem] translate-x-1/2">
               <MenuItem>
-                {""}
                 <RangeSlider
                   aria-label={["min", "max"]}
                   defaultValue={[0, 3000]}

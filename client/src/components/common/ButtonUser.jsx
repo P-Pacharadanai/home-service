@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ButtonUser = () => {
   const [isOpen, setIsOpen] = useState(false);
