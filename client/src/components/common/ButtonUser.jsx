@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
+import { Link } from 'react-router-dom';
 
 const ButtonUser = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,12 +59,12 @@ const ButtonUser = () => {
                     alt="icon"
                     className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
                   />
-                  <a
+                  <Link
                     href={menuItem.path || "#"}
                     className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

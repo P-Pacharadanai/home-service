@@ -3,10 +3,10 @@ import { vectorChecked } from "../assets/icons";
 
 const PaymentSuccess = () => {
   return (
-    <section className="font-prompt max-container">
+    <section className="font-prompt max-container bg-gray-100 w-screen-full h-screen">
       <NavUser />
       
-      <div className="w-[500px] mx-auto mt-14 mb-20 rounded-lg border-gray-300 border" >
+      <div className="w-[500px]  mx-auto mt-14 mb-20 rounded-lg border-gray-300 border " >
       <div className="bg-white w-full px-12 ">
         <img src={vectorChecked} width={50} alt="check icon" className="m-auto mb-6 mt-4"/>
         <div className="text-center">

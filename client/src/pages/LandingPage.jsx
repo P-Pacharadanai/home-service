@@ -12,10 +12,10 @@ function LandingPage() {
         <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">
           <Home />
         </section>
-        <section className="padding-x py-10 xl:padding-r">
+        <section className="padding-x xl:padding-r">
           <Services />
         </section>
-        <section className="padding py-10">
+        <section className="padding ">
           <JobInformation />
         </section>
         <section className=" padding-x padding-t">

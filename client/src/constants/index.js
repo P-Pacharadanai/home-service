@@ -24,7 +24,7 @@ export const ourServices = [
      iconTag: iconTag,
      circle: iconTagCircle,
      price: "ค่าบริการประมาณ 500.00 ฿",
-     btnGhost: "เลือกบริการ",
+     btnGhost: "เลือกบริการ", path: "/service-detail/:serviceId",
  },
  {
      photo: acCleaning,
@@ -75,17 +75,10 @@ export const footerContacts = [
 
 //User account 
 export const UserAcct = [
- { icon: vectorHumanMd, text: "ข้อมูลผู้ใช้งาน" },
- { icon: vectorChart, text: "รายการคำสั่งซ่อม" },
- { icon: vectorHistoryGray, text: "ประวัติการซ่อม" },
+ { icon: vectorhumanBlue, icon: vectorHumanMd, text: "ข้อมูลผู้ใช้งาน" },
+ { icon: vectorListBlue, icon: vectorChart, text: "รายการคำสั่งซ่อม", path: "/customer-service-list" },
+ { icon: historyBlue, icon: vectorHistoryGray, text: "ประวัติการซ่อม", path: "/service-history" },
 ];
-
-//User account onclick active change to blue icon
-export const UserInfor = [
-  { icon: vectorhumanBlue, text: "ข้อมูลผู้ใช้งาน", path: "/" },
-  { icon: vectorListBlue, text: "รายการคำสั่งซ่อม", path: "/customer-service-list" },
-  { icon: historyBlue, text: "ประวัติการซ่อม" , path: "/service-history" },
- ];
 
 //Service Lists
 export const repairOrders = [

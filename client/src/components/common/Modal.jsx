@@ -15,7 +15,7 @@ const Modal = ({ onClose }) => {
     <div
       ref={modalRef}
       onClick={closeModal}
-      className="fixed inset-0 flex justify-center items-center bg-stone-100 bg-opacity-30 backdrop-blur-sm"
+      className="fixed inset-0 flex justify-center items-center bg-gray-100 bg-opacity-30 backdrop-blur-sm"
     >
       <div className="mt-16 flex flex-col text-gray-900">
         <button
@@ -24,15 +24,15 @@ const Modal = ({ onClose }) => {
         >
           <Minimize2 size={25} />
         </button>
-        <div className="flex flex-col pb-4 w-[600px] bg-blue-200 rounded-lg ">
-          <div className="flex items-center text-2xl px-20 py-4 font-medium tracking-wide">
-            <h2>รายการ</h2>
+        <div className="flex flex-col pb-14 w-[600px] bg-blue-500 rounded-lg">
+          <div className="flex items-center justify-center text-white text-2xl px-14 py-6 font-medium tracking-wide">
+            <h2 className="text-gray-200">รายการ</h2>
           </div>
-          <div className="flex flex-col justify-between px-20 gap-1 w-[600px]">
+          <div className="flex flex-col justify-between px-20 gap-2 w-[600px]">
             {popupdetails.map((service, index) => (
               <ul
                 key={index}
-                className="text-md gap-2 py-2 px-4 flex flex-col text-zinc-600 bg-stone-100 shadow-md rounded hover:bg-gray-100"
+                className="text-md gap-2 py-2 px-4 flex flex-col text-zinc-600 bg-gray-200 shadow-md rounded hover:bg-gray-100"
               >
                 <li className="font-medium flex flex-wrap justify-between ">
                   {service.title}

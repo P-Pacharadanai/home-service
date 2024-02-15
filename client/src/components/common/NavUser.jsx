@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/authentication";
 const NavUser = () => {
   const { isAuthenticated } = useAuth();
   return (
-    <section className="leading-none padding-x relative z-10 w-full px-16 py-2 bg-white ">
+    <section className="leading-none padding-x relative z-10 w-full px-16 py-2 bg-white shadow-md">
       <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-28">
         <a
           href="/"
