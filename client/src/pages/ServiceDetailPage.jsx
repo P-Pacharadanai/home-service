@@ -7,7 +7,6 @@ import {
   ServiceDetailList,
   SummaryDetail,
   FooterDetail,
-  PaymentDetail,
   ServiceDetailForm,
   StripePayment,
 } from "../components/serviceDetailPage";
@@ -16,23 +15,17 @@ function ServiceDetailPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [serviceList, setServiceList] = useState([]);
   const [serviceOrder, setServiceOrder] = useState([]);
-  const [creditCard, setCreditCard] = useState({
-    cardNumber: "",
-    cardName: "",
-    expiryDate: "",
-    cvv: "",
-  });
-  const [errors, setErrors] = useState({});
-
   const [fullAddress, setFullAddress] = useState({
     address: "",
     subdistrict: "",
     district: "",
     province: "",
   });
-  const [bookingDate, setBookingDate] = useState();
-  const [bookingTime, setBookingTime] = useState();
-  const [note, setNote] = useState();
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [note, setNote] = useState("");
+  const [confirmPayment, setConfirmPayment] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { serviceId } = useParams();
 
@@ -77,12 +70,12 @@ function ServiceDetailPage() {
             />
           )}
           {currentStep === 3 && (
-            <StripePayment getServiceList={getServiceList} />
-            // <PaymentDetail
-            //   creditCard={creditCard}
-            //   setCreditCard={setCreditCard}
-            //   errors={errors}
-            // />
+            <StripePayment
+              serviceOrder={serviceOrder}
+              confirmPayment={confirmPayment}
+              setConfirmPayment={setConfirmPayment}
+              setLoading={setLoading}
+            />
           )}
         </div>
         <div className="basis-[350px]">
@@ -91,10 +84,10 @@ function ServiceDetailPage() {
       </div>
       <FooterDetail
         currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
         serviceOrder={serviceOrder}
-        creditCard={creditCard}
-        setErrors={setErrors}
+        loading={loading}
+        setCurrentStep={setCurrentStep}
+        setConfirmPayment={setConfirmPayment}
       />
     </div>
   );

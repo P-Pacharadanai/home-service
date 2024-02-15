@@ -1,35 +1,16 @@
-import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
-import axios from "axios";
 
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY);
 
-function StripePayment() {
-  const [clientSecret, setClientSecret] = useState();
+function StripePayment(props) {
+  const { serviceOrder, confirmPayment, setConfirmPayment, setLoading } = props;
 
-  const createPayment = async () => {
-    const requestData = { item: [{ id: "xl-tshirt" }] };
-
-    try {
-      const result = await axios.post(
-        "http://localhost:4000/payment/create",
-        requestData,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      setClientSecret(result.data.clientSecret);
-    } catch (error) {
-      console.error("Error creating payment:", error);
-    }
-  };
-
-  useEffect(() => {
-    createPayment();
-  }, []);
+  const totalOrderPrice = serviceOrder.reduce(
+    (acc, curr) => (acc += curr.price * curr.quantity),
+    0
+  );
 
   const appearance = {
     theme: "stripe",
@@ -45,18 +26,22 @@ function StripePayment() {
   };
 
   const options = {
-    clientSecret,
+    mode: "payment",
+    amount: totalOrderPrice * 100,
+    currency: "thb",
+    payment_method_types: ["promptpay", "card"],
     appearance,
   };
 
   return (
-    <div>
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
-      )}
-    </div>
+    <Elements options={options} stripe={stripePromise}>
+      <CheckoutForm
+        totalOrderPrice={totalOrderPrice}
+        confirmPayment={confirmPayment}
+        setConfirmPayment={setConfirmPayment}
+        setLoading={setLoading}
+      />
+    </Elements>
   );
 }
 

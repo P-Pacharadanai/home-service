@@ -1,100 +1,77 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   PaymentElement,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 
-function CheckoutForm() {
+function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { confirmPayment, setConfirmPayment, totalOrderPrice, setLoading } =
+    props;
 
-  const fetchData = async () => {
+  const [errorMessage, setErrorMessage] = useState();
+
+  const handleError = (error) => {
+    setLoading(false);
+    setErrorMessage(error.message);
+  };
+
+  const handleSubmit = async () => {
+    setConfirmPayment(false);
+
     if (!stripe) {
       return;
     }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+    setLoading(true);
 
-    if (!clientSecret) {
+    // Trigger form validation and wallet collection
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      handleError(submitError);
       return;
     }
 
-    try {
-      const { paymentIntent } = await stripe.retrievePaymentIntent(
-        clientSecret
-      );
+    const result = await axios.post("http://localhost:4000/payment/create", {
+      totalOrderPrice,
+    });
 
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
-    } catch (error) {
-      console.error("Error retrieving Payment Intent:", error);
-      setMessage("Something went wrong.");
-    }
-  };
+    const clientSecret = result.data.clientSecret;
 
-  useEffect(() => {
-    fetchData();
-  }, [stripe]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setIsLoading(true);
-
+    // Confirm the PaymentIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmPayment({
       elements,
+      clientSecret,
       confirmParams: {
-        return_url: "http://localhost:5173/payment-success",
+        return_url: `${window.location.origin}/payment-success`,
       },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-      console.log(error);
-    } else {
-      setMessage("An unexpected error occurred.");
+    if (error) {
+      handleError(error);
     }
 
-    setIsLoading(false);
+    setLoading(false);
+    console.log("confirmPayment is working!!!");
   };
 
+  useEffect(() => {
+    if (confirmPayment) {
+      handleSubmit();
+    }
+  }, [confirmPayment]);
+
   const paymentElementOptions = {
-    // layout: "tabs",
     layout: {
       type: "tabs",
       defaultCollapsed: false,
     },
   };
+
   return (
     <form
       id="payment-form"
@@ -103,12 +80,11 @@ function CheckoutForm() {
     >
       <h3 className="text-xl text-gray-700 mb-8">ชำระเงิน</h3>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      {message && (
-        <div id="payment-message" className="text-red mt-1">
-          {message}
+      {errorMessage && (
+        <div id="payment-message" className="text-[#df1b41] mt-1">
+          {errorMessage}
         </div>
       )}
-
       <div>
         <hr className="mt-8 mb-8 border-1 border-gray-300" />
         <div className="flex items-end gap-7">
@@ -130,19 +106,6 @@ function CheckoutForm() {
           <div className="flex-1 flex justify-between">
             <button className="px-6 py-2.5 rounded-md font-medium bg-blue-600 text-white ">
               ใช้โค้ด
-            </button>
-            <button
-              className="ml-10 px-6 py-2.5 rounded-md font-medium bg-blue-600 text-white"
-              disabled={isLoading || !stripe || !elements}
-              id="submit"
-            >
-              <span id="button-text">
-                {isLoading ? (
-                  <div className="spinner" id="spinner"></div>
-                ) : (
-                  "Pay now"
-                )}
-              </span>
             </button>
           </div>
         </div>

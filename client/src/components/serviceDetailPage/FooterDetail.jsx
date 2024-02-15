@@ -1,27 +1,20 @@
-import { validateCreditCard } from "./CreditCardUtils";
-import { useNavigate } from "react-router-dom";
-
 function FooterDetail(props) {
-  const { currentStep, setCurrentStep, serviceOrder, creditCard, setErrors } =
-    props;
-
-  const formErrors = validateCreditCard(creditCard);
-  const navigate = useNavigate();
+  const {
+    currentStep,
+    setCurrentStep,
+    serviceOrder,
+    setConfirmPayment,
+    loading,
+  } = props;
 
   const isNextAvailable = () => {
-    if (currentStep === 1) {
+    if (currentStep === 1 && serviceOrder.length > 0) {
       return true;
     }
-    // if (currentStep === 1 && serviceOrder.length > 0) {
-    //   return true;
-    // }
     if (currentStep === 2) {
       return true;
     }
-    if (
-      currentStep === 3 &&
-      Object.values(creditCard).every((value) => value !== "")
-    ) {
+    if (currentStep === 3) {
       return true;
     }
 
@@ -38,13 +31,7 @@ function FooterDetail(props) {
   const nextStep = () => {
     if (isNextAvailable()) {
       if (currentStep === 3) {
-        if (Object.keys(formErrors).length === 0) {
-          alert("ชำระเงินสำเร็จ");
-          // navigate("/");
-          // window.scrollTo(0, 0);
-        } else {
-          setErrors(formErrors);
-        }
+        setConfirmPayment(true);
       } else {
         setCurrentStep(currentStep + 1);
         window.scrollTo(0, 0);
@@ -68,12 +55,18 @@ function FooterDetail(props) {
         <button
           className={`px-11 py-2.5 rounded-md font-medium ${
             isNextAvailable()
-              ? "bg-blue-600 text-white"
+              ? loading
+                ? "bg-blue-400 text-white hover:cursor-default"
+                : "bg-blue-600 text-white"
               : "bg-gray-300 text-gray-100 hover:cursor-default"
           }`}
           onClick={nextStep}
         >
-          {currentStep === 3 ? "ยืนยันการชำระเงิน >" : "ดำเนินการ >"}
+          {currentStep === 3
+            ? loading
+              ? "กำลังดำเนินการ"
+              : "ยืนยันการชำระเงิน >"
+            : "ดำเนินการ >"}
         </button>
       </div>
     </div>
