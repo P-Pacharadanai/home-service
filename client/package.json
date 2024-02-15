@@ -21,8 +21,6 @@
     "dayjs": "^1.11.10",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.330.0",
-    "moment": "^2.30.1",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-data-table-component": "^7.6.2",
     "react-datepicker": "^6.1.0",

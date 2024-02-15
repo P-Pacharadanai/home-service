@@ -79,7 +79,12 @@ function ServiceDetailPage() {
           )}
         </div>
         <div className="basis-[350px]">
-          <SummaryDetail serviceOrder={serviceOrder} />
+          <SummaryDetail
+            serviceOrder={serviceOrder}
+            fullAddress={fullAddress}
+            bookingDate={bookingDate}
+            bookingTime={bookingTime}
+          />
         </div>
       </div>
       <FooterDetail
