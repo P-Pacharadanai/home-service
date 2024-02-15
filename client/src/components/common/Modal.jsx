@@ -18,7 +18,10 @@ const Modal = ({ onClose }) => {
       className="fixed inset-0 flex justify-center items-center bg-stone-100 bg-opacity-30 backdrop-blur-sm"
     >
       <div className="mt-16 flex flex-col text-gray-900">
-        <button onClick={onClose} className="place-self-end hover:text-gray-300">
+        <button
+          onClick={onClose}
+          className="place-self-end hover:text-gray-300"
+        >
           <Minimize2 size={25} />
         </button>
         <div className="flex flex-col pb-4 w-[600px] bg-blue-200 rounded-lg ">
@@ -38,7 +41,8 @@ const Modal = ({ onClose }) => {
                 <li>{service.description}</li>
                 <li>{`จำนวน : ${service.quantity}`}</li>
                 <li className="font-medium flex flex-wrap gap-2">
-                  <span className="font-normal">ราคารวม :</span> {service.totalPrice}
+                  <span className="font-normal">ราคารวม :</span>{" "}
+                  {service.totalPrice}
                   <p className="text-zinc-300 font-light">(tax included)</p>
                 </li>
               </ul>
@@ -50,4 +54,4 @@ const Modal = ({ onClose }) => {
   );
 };
 
-export default Modal
+export default Modal;

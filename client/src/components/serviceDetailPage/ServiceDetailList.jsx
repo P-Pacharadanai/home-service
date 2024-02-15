@@ -1,6 +1,5 @@
 function ServiceDetailList(props) {
   const { serviceList, serviceOrder, setServiceOrder } = props;
-  // console.log(serviceOrder);
 
   const addOrder = (list) => {
     const tempOrder = [...serviceOrder];
