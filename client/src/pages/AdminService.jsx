@@ -1,7 +1,8 @@
 import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import Topbar from "../components/adminCategoryPage/Topbar";
-import CategoryTable from "../components/adminCategoryPage/CategoryTable";
-function AdminCategory() {
+import CategoryService from "../components/adminServicePage/CategoryService";
+
+function AdminService() {
   return (
     <div className="flex h-screen ">
       <div className="h-full">
@@ -10,17 +11,17 @@ function AdminCategory() {
 
       <div className="flex-1 flex flex-col">
         <Topbar
-          title="หมวดหมู่"
-          searchText="ค้นหาหมวดหมู่..."
-          buttonAdd="เพิ่มหมวดหมู่ +"
+          title="บริการ"
+          searchText="ค้นหาบริการ..."
+          buttonAdd="เพิ่มบริการ +"
         />
 
         <div className="flex-1 p-4 overflow-y-auto bg-base">
-          <CategoryTable />
+          <CategoryService />
         </div>
       </div>
     </div>
   );
 }
 
-export default AdminCategory;
+export default AdminService;
