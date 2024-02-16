@@ -29,7 +29,7 @@ function ServiceLists() {
 
   return (
     <>
-        <div className="flex flex-wrap flex-1 justify-center gap-8 sm:w-[349px] sm:min-w-[340px] w-full rounded-[8px] font-promp">
+        <div className="flex flex-wrap flex-1 justify-center gap-8 sm:w-[349px] sm:min-w-[340px] w-full rounded-[8px] font-prompt">
         {serviceList.map((service, index) => (
           <div key={index} className="flex flex-col mt-4 w-[349px]" style={{ backgroundColor: 'rgba(255, 255, 255, 1)', borderRadius: '8px', border: '1px solid rgba(204, 208, 215, 1)' }}>
             <img src={service.image} className="w-full h-[180px] rounded-tl-lg rounded-tr-lg" />

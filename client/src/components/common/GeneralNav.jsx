@@ -10,24 +10,15 @@ const GeneralNav = () => {
   };
 
   return (
-    <section className="leading-none padding-x z-10 w-full px-16 py-2 bg-white">
+    <section className="leading-none padding-x z-50 w-full px-18 py-2 bg-white shadow-md">
       <nav className="relative flex flex-wrap max-container justify-between items-center font-prompt px-28">
-        <a
-          href="/"
-          className="mt-3 flex text-lg font-medium gap-1 text-blue-600"
-        >
-          <img
-            src={houseXs}
-            alt="Logo"
-            width={32}
-            height={32}
-            className="-mt-1"
-          />
+        <a href="/" className="mt-3 ml-12 flex text-lg font-medium gap-1 text-blue-600">
+          <img src={houseXs} alt="Logo" width={32} height={32} className="-mt-1" />
           HomeServices
         </a>
 
         <div className="flex justify-start items-start absolute left-64 max-lg:hidden">
-          <a href="/" className="mt-3 ml-24 font-medium">
+          <a href="/" className="mt-3 ml-40 font-medium">
             บริการของเรา
           </a>
         </div>
