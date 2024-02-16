@@ -6,11 +6,11 @@ const orderRouter = Router();
 orderRouter.get("/", async (req, res) => {
   try {
     const { user_id } = req.query;
-  
+
     let { data: orders, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('user_id', 20)
+      .from("orders")
+      .select("*")
+      .eq("user_id", 20);
 
     //check if there's an error during the data retrieval
     if (error) {
