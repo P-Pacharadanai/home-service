@@ -1,42 +1,40 @@
 import React, { useState, useEffect  } from 'react';
 import { NavUser, Footer, UserAccount , GeneralBtn ,Modal} from "../components/common";
 import { calenderIcon, frameIcon } from "../assets/icons";
-//import {repairOrders } from "../constants";
-
+import axios from 'axios';
+import { useAuth } from "../contexts/authentication";
 
 const CustomerServiceList = () => {
+  const { isAuthenticated, state } = useAuth(); 
+  console.log('state:', state);
+
   const [processItem] = useState("กำลังดำเนินการ");
   const [orders, setOrders] = useState([]);
-
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getOrders = async () => {
       try {
-        const response = await fetch('https://gjmjphpjtksranfvtdqg.supabase.co/rest/v1/orders?select=*', {
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqbWpwaHBqdGtzcmFuZnZ0ZHFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY3NTMwMjIsImV4cCI6MjAyMjMyOTAyMn0.UoNWiRsbAyyDDEaV5T07t7vYQHaSfzOs5lYFL64KvQM'
-          }
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-      
-        // Filter orders to include only those with status 'กำลังดำเนินการ' and 'รอดำเนินการ'
-        const filteredOrders = data.filter(order => order.status === 'กำลังดำเนินการ' || order.status === 'รอดำเนินการ');
-        
+        const apiUrl = `http://localhost:4000/order?user_id=${state.user?.user_id}`;
+        const result = await axios.get(apiUrl);
+        const filteredOrders = result.data.data.filter(order => order.status === "รอดำเนินการ" || order.status === "กำลังดำเนินการ");
         setOrders(filteredOrders);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching orders:", error);
       }
     };
   
-    fetchData();
-  }, []);
+    getOrders();
+  }, [state]);
+
+  const handleChooseService = (service_id) => {
+    isAuthenticated.status
+      ? navigate(`/service-detail/${service_id}`)
+      : navigate("/login");
+  };
     
   return (
-    <section className="font-prompt max-container mb-20 ">
+    <section className="font-prompt max-container mb-20">
       < NavUser />
 
       <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium">รายการคำสั่งซ่อม</div>

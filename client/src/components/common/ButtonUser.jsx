@@ -22,7 +22,7 @@ const ButtonUser = () => {
           className="flex items-center text-sm pe-1 text-gray-900 rounded-lg whitespace-nowrap px-8 pb-2 pt-2.5 leading-normal -mr-4"
           type="button"
         >
-          <span className="sr-only">เข้าสู่ระบบ</span>
+          
           สมศรี จันทร์อังคารพุธ
           <img
             className="ml-4 w-8 h-8 me-2 rounded-full"
