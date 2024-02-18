@@ -1,7 +1,15 @@
 import { GeneralBtn, NavUser } from "../components/common";
 import { vectorChecked } from "../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 const PaymentSuccess = () => {
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/customer-service-list");
+  };
+
   return (
     <section className="font-prompt max-container bg-gray-100 w-svw h-svh">
       <NavUser />
@@ -37,7 +45,7 @@ const PaymentSuccess = () => {
             </div>
             
             <div className="py-4 mb-6 -mt-1max-sm:justify-center items-center flex">
-              < GeneralBtn  onClick={console.log('Button clicked!')} label="เช็ครายการซ่อม" fullWidth />
+              < GeneralBtn  onClick={handleButtonClick} label="เช็ครายการซ่อม" fullWidth />
             </div>
         </div>
     </div>

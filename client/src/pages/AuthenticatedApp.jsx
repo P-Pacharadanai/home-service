@@ -26,15 +26,9 @@ function AuthenticatedApp() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/service-list" element={<ServiceListsPage />} />
           <Route path="*" element={<LandingPage />} />
-          <Route
-            path="/service-detail/:serviceId"
-            element={<ServiceDetailPage />}
-          />
+          <Route path="/service-detail/:serviceId" element={<ServiceDetailPage />} />
+          <Route path="/customer-service-list" element={<CustomerServiceList />} />
           <Route path="/service-history" element={<CustomerServiceHistory />} />
-          <Route
-            path="/customer-service-list"
-            element={<CustomerServiceList />}
-          />
           <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
       )}
