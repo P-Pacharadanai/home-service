@@ -10,8 +10,13 @@ function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const { confirmPayment, setConfirmPayment, totalOrderPrice, setLoading } =
-    props;
+  const {
+    confirmPayment,
+    setConfirmPayment,
+    totalOrderPrice,
+    setLoading,
+    totalOrderData,
+  } = props;
 
   const [errorMessage, setErrorMessage] = useState();
 
@@ -19,44 +24,50 @@ function CheckoutForm(props) {
     setLoading(false);
     setErrorMessage(error.message);
   };
+  console.log(totalOrderData);
 
   const handleSubmit = async () => {
     setConfirmPayment(false);
 
-    if (!stripe) {
-      return;
+    try {
+      if (!stripe) {
+        return;
+      }
+
+      setLoading(true);
+
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        handleError(submitError);
+        return;
+      }
+
+      const result = await axios.post("http://localhost:4000/payment/create", {
+        totalOrderPrice,
+      });
+
+      const clientSecret = result.data.clientSecret;
+
+      await axios.post("http://localhost:4000/order", totalOrderData);
+
+      // Confirm the PaymentIntent using the details collected by the Payment Element
+      const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+        },
+      });
+
+      if (error) {
+        handleError(error);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      return console.error(error);
     }
-
-    setLoading(true);
-
-    // Trigger form validation and wallet collection
-    const { error: submitError } = await elements.submit();
-    if (submitError) {
-      handleError(submitError);
-      return;
-    }
-
-    const result = await axios.post("http://localhost:4000/payment/create", {
-      totalOrderPrice,
-    });
-
-    const clientSecret = result.data.clientSecret;
-
-    // Confirm the PaymentIntent using the details collected by the Payment Element
-    const { error } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
-      },
-    });
-
-    if (error) {
-      handleError(error);
-    }
-
-    setLoading(false);
-    console.log("confirmPayment is working!!!");
   };
 
   useEffect(() => {

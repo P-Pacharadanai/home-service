@@ -5,7 +5,13 @@ import CheckoutForm from "./CheckoutForm";
 const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY);
 
 function StripePayment(props) {
-  const { serviceOrder, confirmPayment, setConfirmPayment, setLoading } = props;
+  const {
+    serviceOrder,
+    confirmPayment,
+    setConfirmPayment,
+    setLoading,
+    totalOrderData,
+  } = props;
 
   const totalOrderPrice = serviceOrder.reduce(
     (acc, curr) => (acc += curr.price * curr.quantity),
@@ -40,6 +46,7 @@ function StripePayment(props) {
         confirmPayment={confirmPayment}
         setConfirmPayment={setConfirmPayment}
         setLoading={setLoading}
+        totalOrderData={totalOrderData}
       />
     </Elements>
   );

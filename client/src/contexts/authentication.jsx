@@ -9,10 +9,12 @@ function AuthProvider(props) {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    loading: null,
-    error: null,
+    loading: false,
+    error: false,
     user: null,
   });
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isAuthenticated, setIsAuthenticated] = useState({
     status: false,
@@ -161,6 +163,8 @@ function AuthProvider(props) {
           email: authUser.email,
         },
       });
+
+      // setIsLoading(false);
     } catch (error) {
       return console.error("An error occurred during get user profile:", error);
     }
@@ -184,6 +188,10 @@ function AuthProvider(props) {
       } else if (event === "SIGNED_OUT") {
         removeUserProfile();
       }
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     });
 
     // call unsubscribe to remove the callback
@@ -198,6 +206,7 @@ function AuthProvider(props) {
     logout,
     register,
     isAuthenticated,
+    isLoading,
   };
 
   return (
