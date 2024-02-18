@@ -19,7 +19,6 @@ async function init() {
   app.use("/users", userRouter);
   app.use("/admin", adminRouter);
   app.use("/service", serviceRouter);
-  app.use("/service", serviceRouter);
   app.use("/payment", paymentRouter);
   app.use("/order", orderRouter);
 

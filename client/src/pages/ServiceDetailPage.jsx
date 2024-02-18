@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../contexts/authentication";
 import { NavUser } from "../components/common";
 import {
   HeaderDetail,
@@ -28,6 +29,17 @@ function ServiceDetailPage() {
   const [loading, setLoading] = useState(false);
 
   const { serviceId } = useParams();
+
+  const { state } = useAuth();
+
+  const totalOrderData = {
+    userId: state.user?.userId,
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    note,
+  };
 
   const getServiceList = async () => {
     const { data } = await axios.get(
@@ -73,6 +85,7 @@ function ServiceDetailPage() {
             <StripePayment
               serviceOrder={serviceOrder}
               confirmPayment={confirmPayment}
+              totalOrderData={totalOrderData}
               setConfirmPayment={setConfirmPayment}
               setLoading={setLoading}
             />
