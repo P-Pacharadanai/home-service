@@ -1,5 +1,5 @@
 import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
-import Topbar from "../components/adminCategoryPage/Topbar";
+import TopbarSearch from "../components/adminCategoryPage/TopbarSearch";
 import CategoryTable from "../components/adminCategoryPage/CategoryTable";
 function AdminCategory() {
   return (
@@ -9,7 +9,7 @@ function AdminCategory() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <Topbar
+        <TopbarSearch
           title="หมวดหมู่"
           searchText="ค้นหาหมวดหมู่..."
           buttonAdd="เพิ่มหมวดหมู่ +"
