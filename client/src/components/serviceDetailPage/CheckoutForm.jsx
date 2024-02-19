@@ -31,6 +31,7 @@ function CheckoutForm(props) {
     setLoading(false);
     setErrorMessage(error.message);
   };
+  console.log(totalOrderData);
 
   const handleSubmit = async () => {
     setConfirmPayment(false);
