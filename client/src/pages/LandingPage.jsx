@@ -6,7 +6,7 @@ function LandingPage() {
   const { isAuthenticated } = useAuth();
   return (
     <>
-      <main className="relative">
+      <main className="relative font-prompt">
         {isAuthenticated.status ? <NavUser /> : <GeneralNav />}
 
         <section className="xl:padding-r xl:padding-l wide:padding-r padding-b">

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
+import { frameIcon, iconrBell, vectorLogout } from "../../assets/icons";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ButtonUser = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { logout } = useAuth();
+  const { logout, state } = useAuth();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -22,11 +21,10 @@ const ButtonUser = () => {
           className="flex items-center text-sm pe-1 text-gray-900 rounded-lg whitespace-nowrap px-8 pb-2 pt-2.5 leading-normal -mr-4"
           type="button"
         >
-          
-          สมศรี จันทร์อังคารพุธ
+          {state.user?.firstName} {state.user?.lastName}
           <img
             className="ml-4 w-8 h-8 me-2 rounded-full"
-            src={bellHuman}
+            src={frameIcon}
             alt="user photo"
           />
           <img
