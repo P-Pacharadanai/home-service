@@ -6,11 +6,11 @@ const orderRouter = Router();
 orderRouter.get("/", async (req, res) => {
   try {
     const { user_id } = req.query;
-  
+
     let { data: orders, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('user_id', 20)
+      .from("orders")
+      .select("*")
+      .eq("user_id", 20);
 
     //check if there's an error during the data retrieval
     if (error) {
@@ -25,15 +25,25 @@ orderRouter.get("/", async (req, res) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { userId, serviceListId } = req.body;
+  const {
+    userId,
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    note,
+    promotionCode,
+  } = req.body;
+
   try {
     const { data: informationData, error: informationError } = await supabase
       .from("service_infomation")
       .insert({
-        house_number: "123/45",
-        sub_district: "ตลาดใหญ่",
-        district: "เมืองใหญ่",
-        provice: "สุวรรณภูมิ",
+        house_number: fullAddress.address,
+        sub_district: fullAddress.subdistrict,
+        district: fullAddress.district,
+        provice: fullAddress.province,
+        zipcode: fullAddress.zipcode,
       })
       .select();
 
@@ -48,10 +58,11 @@ orderRouter.post("/", async (req, res) => {
       .insert({
         user_id: userId,
         service_information_id: informationData[0]?.sevice_information_id,
+        promotion_id: promotionCode.promotion?.promotion_id ?? null,
         status: "รอดำเนินการ",
-        available_date: null,
-        available_time: null,
-        detail: "",
+        available_date: bookingDate,
+        available_time: bookingTime,
+        detail: note,
         employee: "สมาน เยี่ยมยอด",
       })
       .select();
@@ -62,20 +73,24 @@ orderRouter.post("/", async (req, res) => {
 
     console.log("orderData :", orderData);
 
+    const orderServiceList = serviceOrder.map((item) => ({
+      order_id: orderData[0]?.order_id,
+      service_list_id: item.service_list_id,
+      quantity: item.quantity,
+    }));
+
+    console.log(orderServiceList);
+
     const { data, error } = await supabase
       .from("order_service_list")
-      .insert({
-        order_id: orderData[0]?.order_id,
-        service_list_id: serviceListId,
-        quantity: 1,
-      })
+      .insert(orderServiceList)
       .select();
 
     if (error) {
       return res.json({ message: error });
     }
 
-    return res.json({ message: "order has been created" });
+    return res.json({ data: orderData[0] });
   } catch (error) {
     return res.json({ message: error });
   }

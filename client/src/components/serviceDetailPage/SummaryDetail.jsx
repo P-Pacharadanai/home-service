@@ -3,7 +3,14 @@ import "dayjs/locale/th";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
 function SummaryDetail(props) {
-  const { serviceOrder, fullAddress, bookingDate, bookingTime } = props;
+  const {
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    totalOrderPrice,
+    discount,
+  } = props;
 
   // Set locale to Thai
   dayjs.locale("th");
@@ -28,13 +35,26 @@ function SummaryDetail(props) {
       : ""
     ).trim() || "ยังไม่ได้ระบุสถานที่";
 
-  const totalOrderPrice = serviceOrder
-    .reduce((acc, curr) => (acc += curr.price * curr.quantity), 0)
-    .toLocaleString("th-TH", {
+  const totalOrderPriceStr = totalOrderPrice.toLocaleString("th-TH", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const discountStr = discount.toLocaleString("th-TH", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const netOrderPriceStr = (totalOrderPrice - discount).toLocaleString(
+    "th-TH",
+    {
       style: "decimal",
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    });
+    }
+  );
 
   return (
     <div className="max-w-[350px] px-6 pt-4 pb-9 bg-white border border-gray-300 rounded-lg sticky top-28">
@@ -68,9 +88,23 @@ function SummaryDetail(props) {
         </div>
         <hr className="my-6 border-1 border-gray-300" />
       </div>
-      <div className="flex justify-between">
-        <p>รวม</p>
-        <p className="font-semibold">{totalOrderPrice} ฿</p>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between">
+          <p>ยอดรวม</p>
+          <p className="font-semibold">{totalOrderPriceStr} ฿</p>
+        </div>
+        <div className="flex justify-between">
+          <p>คูปองส่วนลด</p>
+          {discount === 0 ? (
+            <p className="font-semibold text-gray-500">{discountStr} ฿</p>
+          ) : (
+            <p className="font-semibold text-[#df1b41]">- {discountStr} ฿</p>
+          )}
+        </div>
+        <div className="flex justify-between">
+          <p>รวมทั้งสิ้น</p>
+          <p className="font-semibold">{netOrderPriceStr} ฿</p>
+        </div>
       </div>
     </div>
   );

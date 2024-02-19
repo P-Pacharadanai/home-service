@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../contexts/authentication";
 import { NavUser } from "../components/common";
 import {
   HeaderDetail,
@@ -26,14 +27,50 @@ function ServiceDetailPage() {
   const [note, setNote] = useState("");
   const [confirmPayment, setConfirmPayment] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [promotionCode, setPromotionCode] = useState({
+    code: "",
+    promotion: {},
+    errorMessage: "",
+  });
 
   const { serviceId } = useParams();
+
+  const { state } = useAuth();
 
   const getServiceList = async () => {
     const { data } = await axios.get(
       `http://localhost:4000/service/${serviceId}/list`
     );
     setServiceList(data.data);
+  };
+
+  const totalOrderPrice = serviceOrder.reduce(
+    (acc, curr) => (acc += curr.price * curr.quantity),
+    0
+  );
+
+  const calculateDiscount = () => {
+    const typeDiscount = promotionCode.promotion?.type ?? "";
+    let discount = 0;
+    if (typeDiscount === "fixed") {
+      discount = promotionCode.promotion?.discount;
+    } else if (typeDiscount === "percent") {
+      discount = (totalOrderPrice * promotionCode.promotion?.discount) / 100;
+    }
+
+    return discount;
+  };
+
+  const discount = calculateDiscount();
+
+  const totalOrderData = {
+    userId: state.user?.userId,
+    promotionCode,
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    note,
   };
 
   useEffect(() => {
@@ -71,10 +108,14 @@ function ServiceDetailPage() {
           )}
           {currentStep === 3 && (
             <StripePayment
-              serviceOrder={serviceOrder}
               confirmPayment={confirmPayment}
+              totalOrderData={totalOrderData}
               setConfirmPayment={setConfirmPayment}
               setLoading={setLoading}
+              promotionCode={promotionCode}
+              setPromotionCode={setPromotionCode}
+              totalOrderPrice={totalOrderPrice}
+              discount={discount}
             />
           )}
         </div>
@@ -84,6 +125,8 @@ function ServiceDetailPage() {
             fullAddress={fullAddress}
             bookingDate={bookingDate}
             bookingTime={bookingTime}
+            totalOrderPrice={totalOrderPrice}
+            discount={discount}
           />
         </div>
       </div>

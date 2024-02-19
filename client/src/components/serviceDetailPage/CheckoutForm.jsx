@@ -10,53 +10,93 @@ function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const { confirmPayment, setConfirmPayment, totalOrderPrice, setLoading } =
-    props;
+  const {
+    confirmPayment,
+    setConfirmPayment,
+    amount,
+    setLoading,
+    totalOrderData,
+    promotionCode,
+    setPromotionCode,
+  } = props;
 
   const [errorMessage, setErrorMessage] = useState();
+
+  const handlePromotion = (event) => {
+    const promotionInput = event.target.value;
+    setPromotionCode({ ...promotionCode, code: promotionInput.toUpperCase() });
+  };
 
   const handleError = (error) => {
     setLoading(false);
     setErrorMessage(error.message);
   };
+  console.log(totalOrderData);
 
   const handleSubmit = async () => {
     setConfirmPayment(false);
 
-    if (!stripe) {
+    try {
+      if (!stripe) {
+        return;
+      }
+
+      setLoading(true);
+
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        handleError(submitError);
+        return;
+      }
+
+      const result = await axios.post("http://localhost:4000/payment/create", {
+        amount,
+      });
+
+      const clientSecret = result.data.clientSecret;
+
+      const { data } = await axios.post(
+        "http://localhost:4000/order",
+        totalOrderData
+      );
+
+      // Confirm the PaymentIntent using the details collected by the Payment Element
+      const { error } = await stripe.confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success/${data.data.order_id}`,
+        },
+      });
+
+      if (error) {
+        handleError(error);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      return console.error(error);
+    }
+  };
+
+  const usePromotionCode = async (event) => {
+    event.preventDefault();
+    const { data } = await axios.get(
+      `http://localhost:4000/promotion?code=${promotionCode.code}`
+    );
+
+    if (data.message) {
+      setPromotionCode({ ...promotionCode, errorMessage: data.message });
       return;
     }
 
-    setLoading(true);
-
-    // Trigger form validation and wallet collection
-    const { error: submitError } = await elements.submit();
-    if (submitError) {
-      handleError(submitError);
-      return;
-    }
-
-    const result = await axios.post("http://localhost:4000/payment/create", {
-      totalOrderPrice,
+    setPromotionCode({
+      ...promotionCode,
+      promotion: data.data,
+      errorMessage: "",
     });
-
-    const clientSecret = result.data.clientSecret;
-
-    // Confirm the PaymentIntent using the details collected by the Payment Element
-    const { error } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
-      },
-    });
-
-    if (error) {
-      handleError(error);
-    }
-
-    setLoading(false);
-    console.log("confirmPayment is working!!!");
+    console.log(data);
   };
 
   useEffect(() => {
@@ -101,13 +141,21 @@ function CheckoutForm(props) {
               type="text"
               className="w-full h-11 px-4 py-2 mt-1 text-gray-700 outline outline-1 outline-gray-300 rounded-lg"
               placeholder="กรุณากรอกโค้ดส่วนลด (ถ้ามี)"
+              value={promotionCode.code}
+              onChange={handlePromotion}
             />
           </div>
           <div className="flex-1 flex justify-between">
-            <button className="px-6 py-2.5 rounded-md font-medium bg-blue-600 text-white ">
+            <button
+              onClick={usePromotionCode}
+              className="px-6 py-2.5 rounded-md font-medium bg-blue-600 text-white "
+            >
               ใช้โค้ด
             </button>
           </div>
+        </div>
+        <div id="payment-message" className="text-[#df1b41] mt-1">
+          {promotionCode.errorMessage}
         </div>
       </div>
     </form>
