@@ -6,17 +6,17 @@ const stripePromise = loadStripe(import.meta.env.VITE_APP_STRIPE_PUBLIC_KEY);
 
 function StripePayment(props) {
   const {
-    serviceOrder,
     confirmPayment,
     setConfirmPayment,
     setLoading,
     totalOrderData,
+    promotionCode,
+    setPromotionCode,
+    totalOrderPrice,
+    discount,
   } = props;
 
-  const totalOrderPrice = serviceOrder.reduce(
-    (acc, curr) => (acc += curr.price * curr.quantity),
-    0
-  );
+  const amount = totalOrderPrice - discount;
 
   const appearance = {
     theme: "stripe",
@@ -33,7 +33,7 @@ function StripePayment(props) {
 
   const options = {
     mode: "payment",
-    amount: totalOrderPrice * 100,
+    amount: amount * 100,
     currency: "thb",
     payment_method_types: ["promptpay", "card"],
     appearance,
@@ -42,11 +42,13 @@ function StripePayment(props) {
   return (
     <Elements options={options} stripe={stripePromise}>
       <CheckoutForm
-        totalOrderPrice={totalOrderPrice}
+        amount={amount}
         confirmPayment={confirmPayment}
         setConfirmPayment={setConfirmPayment}
         setLoading={setLoading}
         totalOrderData={totalOrderData}
+        promotionCode={promotionCode}
+        setPromotionCode={setPromotionCode}
       />
     </Elements>
   );

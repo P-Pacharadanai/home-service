@@ -6,12 +6,12 @@ const paymentRouter = Router();
 //const router = Router();
 
 paymentRouter.post("/create", async (req, res) => {
-  const { totalOrderPrice } = req.body;
+  const { amount } = req.body;
   try {
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripeInstance.paymentIntents.create({
       payment_method_types: ["promptpay", "card"],
-      amount: totalOrderPrice * 100,
+      amount: amount * 100,
       currency: "thb",
     });
 

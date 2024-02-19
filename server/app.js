@@ -7,6 +7,7 @@ import adminRouter from "./apps/admin.js";
 import serviceRouter from "./apps/services.js";
 import paymentRouter from "./apps/payment.js";
 import orderRouter from "./apps/orders.js";
+import promotionRouter from "./apps/promotion.js";
 
 async function init() {
   const app = express();
@@ -21,6 +22,7 @@ async function init() {
   app.use("/service", serviceRouter);
   app.use("/payment", paymentRouter);
   app.use("/order", orderRouter);
+  app.use("/promotion", promotionRouter);
 
   app.get("*", (req, res) => {
     res.status(404).send("Not found");

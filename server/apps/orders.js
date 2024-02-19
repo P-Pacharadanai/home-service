@@ -25,8 +25,15 @@ orderRouter.get("/", async (req, res) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { userId, serviceOrder, fullAddress, bookingDate, bookingTime, note } =
-    req.body;
+  const {
+    userId,
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    note,
+    promotionCode,
+  } = req.body;
 
   try {
     const { data: informationData, error: informationError } = await supabase
@@ -51,6 +58,7 @@ orderRouter.post("/", async (req, res) => {
       .insert({
         user_id: userId,
         service_information_id: informationData[0]?.sevice_information_id,
+        promotion_id: promotionCode.promotion?.promotion_id ?? null,
         status: "รอดำเนินการ",
         available_date: bookingDate,
         available_time: bookingTime,
@@ -82,7 +90,7 @@ orderRouter.post("/", async (req, res) => {
       return res.json({ message: error });
     }
 
-    return res.json({ message: "order has been created" });
+    return res.json({ data: orderData[0] });
   } catch (error) {
     return res.json({ message: error });
   }
