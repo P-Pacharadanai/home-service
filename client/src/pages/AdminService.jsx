@@ -1,6 +1,6 @@
 import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
-import Topbar from "../components/adminCategoryPage/Topbar";
 import CategoryService from "../components/adminServicePage/CategoryService";
+import TopbarSearch from "../components/adminCategoryPage/TopbarSearch";
 
 function AdminService() {
   return (
@@ -10,7 +10,7 @@ function AdminService() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <Topbar
+        <TopbarSearch
           title="บริการ"
           searchText="ค้นหาบริการ..."
           buttonAdd="เพิ่มบริการ +"
