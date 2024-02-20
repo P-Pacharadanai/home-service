@@ -11,7 +11,7 @@ import axios from "axios";
 import { useAuth } from "../contexts/authentication";
 
 const CustomerServiceList = () => {
-  const { isAuthenticated, state } = useAuth();
+  const { state } = useAuth();
 
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);

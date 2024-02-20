@@ -3,49 +3,31 @@ import { NavUser, Footer, UserAccount } from "../components/common";
 import { calenderIcon, frameIcon } from "../assets/icons";
 import axios from "axios";
 import { useAuth } from "../contexts/authentication";
-//import { useNavigate } from "react-router-dom";
 
-const CustomerServiceHistory = () => {
+const CustomerServiceList = () => {
+  const { state } = useAuth();
+
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const apiUrl = `${
-          import.meta.env.VITE_APP_HOME_SERVICE_API
-        }/order?user_id=${state.user?.user_id}`;
-        const result = await axios.get(apiUrl);
-        const successOrders = result.data.data.filter(
-          (order) => order.status === "ดำเนินการสำเร็จ"
-        );
-        setOrders(successOrders);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-      {
-        /*}
-    const getOrders = async () => {
-      try {
-        const apiUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}/order?user_id=${state.user?.user_id}`;
-        const result = await axios.get(apiUrl);
-        setOrders(result.data.data);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      } */
-      }
-    };
+  const getOrders = async () => {
+    try {
+      const apiUrl = `${
+        import.meta.env.VITE_APP_HOME_SERVICE_API
+      }/order?user_id=${state.user?.userId}&status=ดำเนินการสำเร็จ`;
 
-    getOrders(); // เรียกใช้ฟังก์ชันเมื่อ component โหลดครั้งแรก
-  }, []); // ใช้งาน useEffect โดยไม่มีการเรียกฟังก์ชันเมื่อ orders เปลี่ยนแปลง
+      const { data } = await axios.get(apiUrl);
 
-  // ตรวจสอบสถานะการเข้าสู่ระบบและนำผู้ใช้ไปยังหน้ารายละเอียดบริการหรือหน้าเข้าสู่ระบบตามเงื่อนไข
-  const { isAuthenticated, state } = useAuth();
-  console.log("state:", state);
-  const handleChooseService = (service_id) => {
-    isAuthenticated.status
-      ? navigate(`/service-detail/${service_id}`)
-      : navigate("/login");
+      setOrders(data.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
   };
+
+  useEffect(() => {
+    if (state.user?.userId) {
+      getOrders();
+    }
+  }, [state]);
 
   return (
     <section className="font-prompt max-container mb-20">
@@ -55,22 +37,29 @@ const CustomerServiceHistory = () => {
         ประวัติการซ่อม
       </div>
       <div className="flex gap-9 justify-center py-8 bg-gray-100 w-full">
-        <UserAccount />
+        <UserAccount currentPage="ประวัติการซ่อม" />
 
         <div className="flex flex-col gap-4 w-[831px]">
-          {orders &&
-            orders.map((order, index) => (
+          {orders.map((order) => {
+            const totalPriceStr = (order?.total_price ?? 0).toLocaleString(
+              "th-TH",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            return (
               <div
-                key={index}
-                className="pb-8 p-6 rounded-lg border border-gray-300 bg-white"
+                key={order.order_id}
+                className="p-6 rounded-lg border border-gray-300 bg-white"
               >
                 <div className="flex justify-between mb-4">
-                  <h4 className="font-medium">
-                    คำสั่งการซ่อมรหัส : {order.service_information_id}
+                  <h4 className="text-xl font-medium">
+                    คำสั่งการซ่อมรหัส : {order.order_id}
                   </h4>
                   <div className="flex gap-2">
                     <p className="text-gray-700">สถานะ:</p>
-                    <p className="bg-green-100 rounded-full text-green-900 leading-1 px-2 py-1 text-sm ">
+                    <p className="bg-green-100 rounded-full  text-green-900 leading-1 px-2 py-1 text-sm ">
                       {order.status}
                     </p>
                   </div>
@@ -81,7 +70,7 @@ const CustomerServiceHistory = () => {
                     <li className="flex gap-3 mb-2">
                       <img src={calenderIcon} alt="calender icon" />
                       <p className="text-gray-700">
-                        วันเวลาดำเนินการ: {order.availble_time}
+                        วันเวลาดำเนินการ: {order.available_date} น.
                       </p>
                     </li>
                     <li className="flex gap-3 mb-4">
@@ -89,21 +78,27 @@ const CustomerServiceHistory = () => {
                       <p className="text-gray-700">พนักงาน: {order.employee}</p>
                     </li>
                   </ul>
-                  <div className="flex gap-2">
-                    <p className="text-gray-700">ราคารวม: </p>
-                    <p className="text-gray-950 font-medium">
-                      {order.totalPrice}
+                  <div>
+                    <div className="flex items-center gap-4">
+                      <p className="text-gray-700">ราคารวม: </p>
+                      <p className="text-gray-950 text-lg font-medium">
+                        {totalPriceStr} ฿
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-2 text-gray-700">
+                    <p className="text-[1rem]">ที่อยู่:</p>
+                    <p className="text-gray-950">
+                      {" "}
+                      {`${order.service_infomation?.house_number} ${order.service_infomation?.sub_district} ${order.service_infomation?.district} ${order.service_infomation?.provice} ${order.service_infomation?.zipcode}`}
                     </p>
                   </div>
                 </div>
-                <div className="flex justify-between">
-                  <div>
-                    <p className="text-gray-700">รายการ:</p>
-                    <p>{order.detail}</p>
-                  </div>
-                </div>
               </div>
-            ))}
+            );
+          })}
         </div>
       </div>
       <Footer />
@@ -111,4 +106,4 @@ const CustomerServiceHistory = () => {
   );
 };
 
-export default CustomerServiceHistory;
+export default CustomerServiceList;
