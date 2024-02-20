@@ -4,7 +4,7 @@ import { UserAcct } from "../../constants";
 
 const UserAccount = ({ currentPage }) => {
   return (
-    <div className="h-[250px] bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt">
+    <div className="h-[250px] bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt sticky top-28">
       <div className="px-4 py-4 text-sm dark:text-white">
         <p className="text-gray-700 text-lg justify-start flex m-auto mt-3">
           บัญชีผู้ใช้
@@ -23,7 +23,13 @@ const UserAccount = ({ currentPage }) => {
               <img
                 src={item.icon}
                 alt="icon"
-                className="ml-5 w-[22px] h-[26px] me-1 p-1"
+                className={`ml-5 ${
+                  item.text === "ประวัติการซ่อม"
+                    ? "w-[26px]"
+                    : item.text === "ข้อมูลผู้ใช้งาน"
+                    ? "w-[22px]"
+                    : "w-[24px]"
+                } h-auto me-1 p-1`}
                 style={{
                   filter:
                     currentPage === item.text

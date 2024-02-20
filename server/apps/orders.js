@@ -52,6 +52,27 @@ orderRouter.get("/:orderId", async (req, res) => {
   }
 });
 
+orderRouter.get("/:orderId/list", async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    const { data, error } = await supabase
+      .from("order_service_list")
+      .select(`quantity,service_list(title,unit,price)`)
+      .eq("order_id", orderId);
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: data,
+    });
+  } catch (error) {
+    return res.json({ message: error });
+  }
+});
+
 orderRouter.post("/", async (req, res) => {
   const {
     userId,

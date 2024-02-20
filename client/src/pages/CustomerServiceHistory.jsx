@@ -30,13 +30,13 @@ const CustomerServiceList = () => {
   }, [state]);
 
   return (
-    <section className="font-prompt max-container mb-20">
+    <section className="min-h-screen flex flex-col font-prompt max-container mb-20">
       <NavUser />
 
       <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium">
         ประวัติการซ่อม
       </div>
-      <div className="flex gap-9 justify-center py-8 bg-gray-100 w-full">
+      <div className="flex-1 flex gap-9 justify-center py-8 bg-gray-100 w-full">
         <UserAccount currentPage="ประวัติการซ่อม" />
 
         <div className="flex flex-col gap-4 w-[831px]">
@@ -59,7 +59,7 @@ const CustomerServiceList = () => {
                   </h4>
                   <div className="flex gap-2">
                     <p className="text-gray-700">สถานะ:</p>
-                    <p className="bg-green-100 rounded-full  text-green-900 leading-1 px-2 py-1 text-sm ">
+                    <p className="bg-green-100 rounded-full  text-green-900 leading-1 px-4 py-1 text-sm ">
                       {order.status}
                     </p>
                   </div>
@@ -101,7 +101,9 @@ const CustomerServiceList = () => {
           })}
         </div>
       </div>
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </section>
   );
 };

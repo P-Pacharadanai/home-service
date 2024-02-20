@@ -14,7 +14,9 @@ const CustomerServiceList = () => {
   const { state } = useAuth();
 
   const [orders, setOrders] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState({
+    orderId: null,
+  });
 
   const getOrders = async () => {
     try {
@@ -37,13 +39,15 @@ const CustomerServiceList = () => {
   }, [state]);
 
   return (
-    <section className="font-prompt max-container mb-20">
-      <NavUser />
+    <section className="min-h-screen flex flex-col font-prompt max-container mb-20">
+      <div className="relative z-20">
+        <NavUser />
+      </div>
 
-      <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium">
+      <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium relative z-10">
         รายการคำสั่งซ่อม
       </div>
-      <div className="flex gap-9 justify-center py-8 bg-gray-100 w-full">
+      <div className="flex-1 flex gap-9 justify-center py-8 bg-gray-100 w-full">
         <UserAccount currentPage="รายการคำสั่งซ่อม" />
 
         <div className="flex flex-col gap-4 w-[831px]">
@@ -67,7 +71,7 @@ const CustomerServiceList = () => {
                   <div className="flex gap-2">
                     <p className="text-gray-700">สถานะ:</p>
                     <p
-                      className={`bg-gray-200 rounded-full text-gray-950 leading-1 px-2 py-1 text-sm ${
+                      className={`bg-gray-200 rounded-full text-gray-950 leading-1 px-4 py-1 text-sm ${
                         order.status === "กำลังดำเนินการ"
                           ? "bg-yellow-100 text-yellow-900"
                           : ""
@@ -110,13 +114,13 @@ const CustomerServiceList = () => {
                   </div>
                   <div className="">
                     <GeneralBtn
-                      onClick={() => setShowModal(true)}
+                      onClick={() => setShowModal({ orderId: order.order_id })}
                       label="ดูรายละเอียด"
                     />
                   </div>
-                  {showModal && (
+                  {showModal.orderId === order.order_id && (
                     <Modal
-                      onClose={() => setShowModal(false)}
+                      onClose={() => setShowModal({ orderId: null })}
                       orderId={order.order_id}
                     />
                   )}
@@ -126,7 +130,9 @@ const CustomerServiceList = () => {
           })}
         </div>
       </div>
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </section>
   );
 };
