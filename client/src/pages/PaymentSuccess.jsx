@@ -130,13 +130,13 @@ const PaymentSuccess = () => {
                 </div>
                 <div className="flex justify-between">
                   <p>คูปองส่วนลด</p>
-                  {false ? (
-                    <p className="font-semibold text-gray-500">
-                      {discountStr} ฿
-                    </p>
-                  ) : (
+                  {promotion?.discount ? (
                     <p className="font-semibold text-[#df1b41]">
                       - {discountStr} ฿
+                    </p>
+                  ) : (
+                    <p className="font-semibold text-gray-500">
+                      {discountStr} ฿
                     </p>
                   )}
                 </div>

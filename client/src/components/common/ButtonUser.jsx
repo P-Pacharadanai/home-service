@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { frameIcon, iconrBell, vectorLogout } from "../../assets/icons";
+import {
+  frameIcon,
+  iconrBell,
+  vectorLogout,
+  userIcon,
+} from "../../assets/icons";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
 import { Link } from "react-router-dom";
@@ -24,7 +29,7 @@ const ButtonUser = () => {
           {state.user?.firstName} {state.user?.lastName}
           <img
             className="ml-4 w-8 h-8 me-2 rounded-full"
-            src={frameIcon}
+            src={userIcon}
             alt="user photo"
           />
           <img
