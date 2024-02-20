@@ -12,7 +12,9 @@ function ServiceLists(props) {
   const navigate = useNavigate();
 
   const getServiceList = async () => {
-    const apiUrl = `http://localhost:4000/service?min=${min}&max=${max}&keyword=${keyword}&category=${category}&sortBy=${sortBy}`;
+    const apiUrl = `${
+      import.meta.env.VITE_APP_HOME_SERVICE_API
+    }/service?min=${min}&max=${max}&keyword=${keyword}&category=${category}&sortBy=${sortBy}`;
     const result = await axios.get(apiUrl);
     let serviceListData = result.data.data;
     setServiceList(serviceListData);

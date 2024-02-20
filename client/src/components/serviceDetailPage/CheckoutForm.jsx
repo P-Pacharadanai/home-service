@@ -50,14 +50,17 @@ function CheckoutForm(props) {
         return;
       }
 
-      const result = await axios.post("http://localhost:4000/payment/create", {
-        amount,
-      });
+      const result = await axios.post(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/payment/create`,
+        {
+          amount,
+        }
+      );
 
       const clientSecret = result.data.clientSecret;
 
       const { data } = await axios.post(
-        "http://localhost:4000/order",
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/order`,
         totalOrderData
       );
 
@@ -83,7 +86,9 @@ function CheckoutForm(props) {
   const usePromotionCode = async (event) => {
     event.preventDefault();
     const { data } = await axios.get(
-      `http://localhost:4000/promotion?code=${promotionCode.code}`
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion?code=${
+        promotionCode.code
+      }`
     );
 
     if (data.message) {

@@ -39,7 +39,7 @@ function ServiceDetailPage() {
 
   const getServiceList = async () => {
     const { data } = await axios.get(
-      `http://localhost:4000/service/${serviceId}/list`
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${serviceId}/list`
     );
     setServiceList(data.data);
   };

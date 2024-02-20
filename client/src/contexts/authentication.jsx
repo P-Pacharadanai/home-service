@@ -101,7 +101,7 @@ function AuthProvider(props) {
         navigate("/login");
 
         //if the user does not exist, create user profile in database
-        await axios.post("http://localhost:4000/users", {
+        await axios.post(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/users`, {
           authUserId: data.user.id,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -138,8 +138,8 @@ function AuthProvider(props) {
       //determine the API endpoint based on the user's role
       const profileApi =
         authUser.role === "authenticated"
-          ? `http://localhost:4000/users/${authUser.id}`
-          : `http://localhost:4000/admin/${authUser.id}`;
+          ? `${import.meta.env.VITE_APP_HOME_SERVICE_API}/users/${authUser.id}`
+          : `${import.meta.env.VITE_APP_HOME_SERVICE_API}/admin/${authUser.id}`;
 
       //retrieve user profile by authenticated user id from database
       const userProfile = await axios.get(profileApi);
