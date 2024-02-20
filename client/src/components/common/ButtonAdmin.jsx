@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
+import { iconrBell, userIcon, vectorLogout } from "../../assets/icons";
 import { menuItemsAdmin } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
 
@@ -24,7 +24,7 @@ const ButtonAdmin = () => {
           {state.user?.firstName} {state.user?.lastName}
           <img
             className="ml-3 w-8 h-8 me-1 rounded-full"
-            src={bellHuman}
+            src={userIcon}
             alt="user photo"
           />
           <img

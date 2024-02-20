@@ -12,37 +12,29 @@ import { useAuth } from "../contexts/authentication";
 
 const CustomerServiceList = () => {
   const { isAuthenticated, state } = useAuth();
-  console.log("state:", state);
 
-  const [processItem] = useState("กำลังดำเนินการ");
   const [orders, setOrders] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const apiUrl = `${
-          import.meta.env.VITE_APP_HOME_SERVICE_API
-        }/order?user_id=${state.user?.user_id}`;
-        const result = await axios.get(apiUrl);
-        const filteredOrders = result.data.data.filter(
-          (order) =>
-            order.status === "รอดำเนินการ" || order.status === "กำลังดำเนินการ"
-        );
-        setOrders(filteredOrders);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
-    };
+  const getOrders = async () => {
+    try {
+      const apiUrl = `${
+        import.meta.env.VITE_APP_HOME_SERVICE_API
+      }/order?user_id=${state.user?.userId}&status=รอดำเนินการ,กำลังดำเนินการ`;
 
-    getOrders();
-  }, [state]);
+      const { data } = await axios.get(apiUrl);
 
-  const handleChooseService = (service_id) => {
-    isAuthenticated.status
-      ? navigate(`/service-detail/${service_id}`)
-      : navigate("/login");
+      setOrders(data.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
   };
+
+  useEffect(() => {
+    if (state.user?.userId) {
+      getOrders();
+    }
+  }, [state]);
 
   return (
     <section className="font-prompt max-container mb-20">
@@ -52,65 +44,86 @@ const CustomerServiceList = () => {
         รายการคำสั่งซ่อม
       </div>
       <div className="flex gap-9 justify-center py-8 bg-gray-100 w-full">
-        <UserAccount />
+        <UserAccount currentPage="รายการคำสั่งซ่อม" />
 
         <div className="flex flex-col gap-4 w-[831px]">
-          {orders.map((order, index) => (
-            <div
-              key={index}
-              className="pb-8 p-6 rounded-lg border border-gray-300 bg-white"
-            >
-              <div className="flex justify-between mb-4">
-                <h4 className="font-medium">
-                  คำสั่งการซ่อมรหัส : {order.service_information_id}
-                </h4>
-                <div className="flex gap-2">
-                  <p className="text-gray-700">สถานะ:</p>
-                  <p
-                    className={`bg-gray-200 rounded-full text-gray-950 leading-1 px-2 py-1 text-sm ${
-                      order.status === processItem
-                        ? "bg-yellow-100 text-yellow-900"
-                        : ""
-                    }`}
-                  >
-                    {order.status}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-between">
-                <ul>
-                  <li className="flex gap-3 mb-2">
-                    <img src={calenderIcon} alt="calender icon" />
-                    <p className="text-gray-700">
-                      วันเวลาดำเนินการ: {order.available_time}
+          {orders.map((order) => {
+            const totalPriceStr = (order?.total_price ?? 0).toLocaleString(
+              "th-TH",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            return (
+              <div
+                key={order.order_id}
+                className="p-6 rounded-lg border border-gray-300 bg-white"
+              >
+                <div className="flex justify-between mb-4">
+                  <h4 className="text-xl font-medium">
+                    คำสั่งการซ่อมรหัส : {order.order_id}
+                  </h4>
+                  <div className="flex gap-2">
+                    <p className="text-gray-700">สถานะ:</p>
+                    <p
+                      className={`bg-gray-200 rounded-full text-gray-950 leading-1 px-2 py-1 text-sm ${
+                        order.status === "กำลังดำเนินการ"
+                          ? "bg-yellow-100 text-yellow-900"
+                          : ""
+                      }`}
+                    >
+                      {order.status}
                     </p>
-                  </li>
-                  <li className="flex gap-3 mb-4">
-                    <img src={frameIcon} alt="frame icon" />
-                    <p className="text-gray-700">พนักงาน: {order.employee}</p>
-                  </li>
-                </ul>
-                <div className="flex gap-2">
-                  <p className="text-gray-700">ราคารวม: </p>
-                  <p className="text-gray-950 font-medium">
-                    {order.totalPrice}
-                  </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between">
+                  <ul>
+                    <li className="flex gap-3 mb-2">
+                      <img src={calenderIcon} alt="calender icon" />
+                      <p className="text-gray-700">
+                        วันเวลาดำเนินการ: {order.available_date} น.
+                      </p>
+                    </li>
+                    <li className="flex gap-3 mb-4">
+                      <img src={frameIcon} alt="frame icon" />
+                      <p className="text-gray-700">พนักงาน: {order.employee}</p>
+                    </li>
+                  </ul>
+                  <div>
+                    <div className="flex items-center gap-4">
+                      <p className="text-gray-700">ราคารวม: </p>
+                      <p className="text-gray-950 text-lg font-medium">
+                        {totalPriceStr} ฿
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-2 text-gray-700">
+                    <p className="text-[1rem]">ที่อยู่:</p>
+                    <p className="text-gray-950">
+                      {" "}
+                      {`${order.service_infomation?.house_number} ${order.service_infomation?.sub_district} ${order.service_infomation?.district} ${order.service_infomation?.provice} ${order.service_infomation?.zipcode}`}
+                    </p>
+                  </div>
+                  <div className="">
+                    <GeneralBtn
+                      onClick={() => setShowModal(true)}
+                      label="ดูรายละเอียด"
+                    />
+                  </div>
+                  {showModal && (
+                    <Modal
+                      onClose={() => setShowModal(false)}
+                      orderId={order.order_id}
+                    />
+                  )}
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div>
-                  <p className="text-gray-700">รายการ:</p>
-                  <p>{order.detail}</p>
-                </div>
-                <GeneralBtn
-                  onClick={() => setShowModal(true)}
-                  label="ดูรายละเอียด"
-                />
-                {showModal && <Modal onClose={() => setShowModal(false)} />}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       <Footer />

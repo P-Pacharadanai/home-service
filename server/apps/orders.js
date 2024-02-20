@@ -5,22 +5,27 @@ const orderRouter = Router();
 
 orderRouter.get("/", async (req, res) => {
   try {
-    const { user_id } = req.query;
+    const userId = req.query.user_id;
+    const status = req.query.status.split(",");
 
     let { data: orders, error } = await supabase
       .from("orders")
-      .select("*")
-      .eq("user_id", 20);
+      .select(
+        `order_id, available_date, available_time,total_price,employee,status, service_infomation(*)`
+      )
+      .eq("user_id", userId)
+      .in("status", status)
+      .order("order_id", { ascending: false });
 
     //check if there's an error during the data retrieval
     if (error) {
-      return res.json({ message: error });
+      return res.json({ message: error.message });
     }
 
     //send the retrieved services profile as a JSON response
     return res.json({ data: orders });
   } catch (error) {
-    return res.json({ message: error });
+    return res.json({ message: error.message });
   }
 });
 

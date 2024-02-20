@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Minimize2 } from "lucide-react";
 import { popupdetails } from "../../constants";
 
-const Modal = ({ onClose }) => {
+const Modal = ({ onClose, orderId }) => {
   const modalRef = useRef();
 
   const closeModal = (e) => {
