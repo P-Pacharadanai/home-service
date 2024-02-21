@@ -82,6 +82,7 @@ orderRouter.post("/", async (req, res) => {
     bookingTime,
     note,
     promotionCode,
+    amountOrderPrice,
   } = req.body;
 
   try {
@@ -100,8 +101,6 @@ orderRouter.post("/", async (req, res) => {
       return res.json({ message: informationError });
     }
 
-    console.log("informationData :", informationData);
-
     const { data: orderData, error: orderError } = await supabase
       .from("orders")
       .insert({
@@ -113,6 +112,7 @@ orderRouter.post("/", async (req, res) => {
         available_time: bookingTime,
         detail: note,
         employee: "สมาน เยี่ยมยอด",
+        total_price: amountOrderPrice,
       })
       .select();
 
@@ -127,8 +127,6 @@ orderRouter.post("/", async (req, res) => {
       service_list_id: item.service_list_id,
       quantity: item.quantity,
     }));
-
-    console.log(orderServiceList);
 
     const { data, error } = await supabase
       .from("order_service_list")

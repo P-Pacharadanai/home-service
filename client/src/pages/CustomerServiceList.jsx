@@ -87,7 +87,8 @@ const CustomerServiceList = () => {
                     <li className="flex gap-3 mb-2">
                       <img src={calenderIcon} alt="calender icon" />
                       <p className="text-gray-700">
-                        วันเวลาดำเนินการ: {order.available_date} น.
+                        วันเวลาดำเนินการ: {order.available_date}{" "}
+                        {order.available_time} น.
                       </p>
                     </li>
                     <li className="flex gap-3 mb-4">

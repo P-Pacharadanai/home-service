@@ -11,7 +11,7 @@ const Home = () => {
   };
 
   return (
-    <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] px-12 gap-6 max-container bg-blue-100 ">
+    <section className="w-full z-0 relative flex flex-col xl:flex-row justify-start h-[540px] px-12 gap-6 max-container bg-blue-100">
       <div className="relative xl:w-3/5 flex flex-col justify-center items-start w-full max-xl:padding-x pt-10 left-20 px-9">
         <h1 className=" -mt-16 justify-center items-center text-blue-600 font-prompt text-6xl font-bold max-sm:text-[30px] max-sm:leading-[140px] ">
           เรื่องบ้าน...ให้เราช่วยดูแลคุณ
@@ -27,17 +27,15 @@ const Home = () => {
 
         <GeneralBtn onClick={handleLoginClick} label="เช็คราคาบริการ" />
       </div>
-      <div className="relative h-[540px] flex-1 flex justify-center items-center max-xl:py-20 right-24 max-xl:hidden">
+      <div className="relative h-[520px] top-full -translate-y-full right-28 max-xl:hidden">
         <img
           src={plumber}
           alt="man"
-          width={520}
-          height={722}
-          className="object-contain z-10 -mt-26 -mb-14"
+          className="w-full h-full object-cover z-10 border border-red"
         />
       </div>
     </section>
   );
 };
 
-export default Home
+export default Home;

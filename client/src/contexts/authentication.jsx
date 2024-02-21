@@ -164,7 +164,7 @@ function AuthProvider(props) {
         },
       });
 
-      // setIsLoading(false);
+      setIsLoading(false);
     } catch (error) {
       return console.error("An error occurred during get user profile:", error);
     }
@@ -189,11 +189,10 @@ function AuthProvider(props) {
         removeUserProfile();
       }
 
-      setTimeout(() => {
+      if (!session) {
         setIsLoading(false);
-      }, 500);
+      }
     });
-
     // call unsubscribe to remove the callback
     return () => {
       data.subscription.unsubscribe();

@@ -43,7 +43,7 @@ function ServiceLists() {
           >
             <img
               src={service.image}
-              className="w-full h-[180px] rounded-tl-lg rounded-tr-lg"
+              className="w-full h-[180px] rounded-tl-lg rounded-tr-lg object-cover"
             />
             <div className="mt-4 flex gap-2.5 pl-4">
               <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">

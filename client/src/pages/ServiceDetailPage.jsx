@@ -71,6 +71,7 @@ function ServiceDetailPage() {
     bookingDate,
     bookingTime,
     note,
+    amountOrderPrice: totalOrderPrice - discount,
   };
 
   useEffect(() => {
