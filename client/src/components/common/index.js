@@ -5,5 +5,6 @@ import ButtonAdmin from "./ButtonAdmin";
 import NavUser from "./NavUser";
 import Footer from "./Footer";
 import UserAccount from "./UserAccount";
+import Modal from "./Modal";
 
-export { GeneralBtn, GeneralNav, ButtonUser, ButtonAdmin, NavUser, Footer, UserAccount };
+export { GeneralBtn, GeneralNav, ButtonUser, ButtonAdmin, NavUser, Footer, UserAccount, Modal };

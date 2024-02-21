@@ -30,7 +30,6 @@ serviceRouter.get("/", async (req, res) => {
       .order(sort, { ascending: asc });
 
     //check if there's an error during the data retrieval
-    console.log(`service:`, services);
     if (error) {
       return res.json({ message: error });
     }

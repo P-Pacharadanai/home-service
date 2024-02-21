@@ -1,45 +1,77 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../contexts/authentication";
 import { NavUser } from "../components/common";
 import {
   HeaderDetail,
   ServiceDetailList,
   SummaryDetail,
   FooterDetail,
-  PaymentDetail,
   ServiceDetailForm,
+  StripePayment,
 } from "../components/serviceDetailPage";
 
 function ServiceDetailPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [serviceList, setServiceList] = useState([]);
   const [serviceOrder, setServiceOrder] = useState([]);
-  const [creditCard, setCreditCard] = useState({
-    cardNumber: "",
-    cardName: "",
-    expiryDate: "",
-    cvv: "",
-  });
-  const [errors, setErrors] = useState({});
-
   const [fullAddress, setFullAddress] = useState({
     address: "",
     subdistrict: "",
     district: "",
     province: "",
   });
-  const [bookingDate, setBookingDate] = useState();
-  const [bookingTime, setBookingTime] = useState();
-  const [note, setNote] = useState();
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
+  const [note, setNote] = useState("");
+  const [confirmPayment, setConfirmPayment] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [promotionCode, setPromotionCode] = useState({
+    code: "",
+    promotion: {},
+    errorMessage: "",
+  });
 
   const { serviceId } = useParams();
 
+  const { state } = useAuth();
+
   const getServiceList = async () => {
     const { data } = await axios.get(
-      `http://localhost:4000/service/${serviceId}/list`
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${serviceId}/list`
     );
     setServiceList(data.data);
+  };
+
+  const totalOrderPrice = serviceOrder.reduce(
+    (acc, curr) => (acc += curr.price * curr.quantity),
+    0
+  );
+
+  const calculateDiscount = () => {
+    const typeDiscount = promotionCode.promotion?.type ?? "";
+    let discount = 0;
+    if (typeDiscount === "fixed") {
+      discount = promotionCode.promotion?.discount;
+    } else if (typeDiscount === "percent") {
+      discount = (totalOrderPrice * promotionCode.promotion?.discount) / 100;
+    }
+
+    return discount;
+  };
+
+  const discount = calculateDiscount();
+
+  const totalOrderData = {
+    userId: state.user?.userId,
+    promotionCode,
+    serviceOrder,
+    fullAddress,
+    bookingDate,
+    bookingTime,
+    note,
+    amountOrderPrice: totalOrderPrice - discount,
   };
 
   useEffect(() => {
@@ -76,23 +108,35 @@ function ServiceDetailPage() {
             />
           )}
           {currentStep === 3 && (
-            <PaymentDetail
-              creditCard={creditCard}
-              setCreditCard={setCreditCard}
-              errors={errors}
+            <StripePayment
+              confirmPayment={confirmPayment}
+              totalOrderData={totalOrderData}
+              setConfirmPayment={setConfirmPayment}
+              setLoading={setLoading}
+              promotionCode={promotionCode}
+              setPromotionCode={setPromotionCode}
+              totalOrderPrice={totalOrderPrice}
+              discount={discount}
             />
           )}
         </div>
         <div className="basis-[350px]">
-          <SummaryDetail serviceOrder={serviceOrder} />
+          <SummaryDetail
+            serviceOrder={serviceOrder}
+            fullAddress={fullAddress}
+            bookingDate={bookingDate}
+            bookingTime={bookingTime}
+            totalOrderPrice={totalOrderPrice}
+            discount={discount}
+          />
         </div>
       </div>
       <FooterDetail
         currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
         serviceOrder={serviceOrder}
-        creditCard={creditCard}
-        setErrors={setErrors}
+        loading={loading}
+        setCurrentStep={setCurrentStep}
+        setConfirmPayment={setConfirmPayment}
       />
     </div>
   );

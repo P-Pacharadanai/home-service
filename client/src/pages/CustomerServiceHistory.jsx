@@ -1,86 +1,111 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from "react";
 import { NavUser, Footer, UserAccount } from "../components/common";
 import { calenderIcon, frameIcon } from "../assets/icons";
+import axios from "axios";
+import { useAuth } from "../contexts/authentication";
 
-//import {repairHistory } from "../constants";
+const CustomerServiceList = () => {
+  const { state } = useAuth();
 
-const CustomerServiceHistory = () => {
   const [orders, setOrders] = useState([]);
-  
+
+  const getOrders = async () => {
+    try {
+      const apiUrl = `${
+        import.meta.env.VITE_APP_HOME_SERVICE_API
+      }/order?user_id=${state.user?.userId}&status=ดำเนินการสำเร็จ`;
+
+      const { data } = await axios.get(apiUrl);
+
+      setOrders(data.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://gjmjphpjtksranfvtdqg.supabase.co/rest/v1/orders?select=*', {
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqbWpwaHBqdGtzcmFuZnZ0ZHFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY3NTMwMjIsImV4cCI6MjAyMjMyOTAyMn0.UoNWiRsbAyyDDEaV5T07t7vYQHaSfzOs5lYFL64KvQM'
-          }
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const successfulOrders = data.filter(order => order.status === 'ดำเนินการสำเร็จ');
-     
-        setOrders(successfulOrders);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-  
-    fetchData();
-  }, []);
+    if (state.user?.userId) {
+      getOrders();
+    }
+  }, [state]);
 
   return (
-    <section className="font-prompt max-container mb-20 ">
-      < NavUser />
-      <div className="bg-blue-600 flex w-full py-6 justify-center text-white text-2xl font-prompt font-medium">ประวัติการซ่อม</div>
-      <div className="flex gap-10 px-28 py-14 bg-gray-100 w-full">
-        <UserAccount/>
+    <section className="min-h-screen flex flex-col font-prompt max-container mb-20">
+      <NavUser />
 
-        <div className="flex flex-col gap-8 w-[990px]">
-          {orders.map((order, index) => (
-            <div key={index} className="pb-8 p-6 rounded-lg border border-gray-300 bg-white">
-              <div className="flex justify-between mb-4">
-                <h4 className="font-medium">คำสั่งการซ่อมรหัส : {order.service_information_id}</h4>
-                <div className="flex gap-2">
-                  <p className="text-gray-700">สถานะ:</p>
-                  <p className="bg-green-100 rounded-full text-green-900 leading-1 px-2 py-1 text-sm ">
-                    {order.status}
-                  </p>
-                </div>
-              </div>
+      <div className="bg-blue-600 flex py-6 justify-center text-white text-2xl font-medium">
+        ประวัติการซ่อม
+      </div>
+      <div className="flex-1 flex gap-9 justify-center py-8 bg-gray-100 w-full">
+        <UserAccount currentPage="ประวัติการซ่อม" />
 
-              <div className="flex justify-between">
-                <ul>
-                  <li className="flex gap-3 mb-2">
-                    <img src={calenderIcon} alt="calender icon"/>
-                    <p className="text-gray-700">วันเวลาดำเนินการ: {order.availble_time}</p>
-                  </li>
-                  <li className="flex gap-3 mb-4">
-                    <img src={frameIcon} alt="frame icon" />
-                    <p className="text-gray-700">พนักงาน: {order.employee}</p>
-                  </li>
-                </ul>
-                <div className="flex gap-2">
-                  <p className="text-gray-700">ราคารวม: </p>
-                  <p className="text-gray-950 font-medium">{order.totalPrice}</p>
+        <div className="flex flex-col gap-4 w-[831px]">
+          {orders.map((order) => {
+            const totalPriceStr = (order?.total_price ?? 0).toLocaleString(
+              "th-TH",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
+            return (
+              <div
+                key={order.order_id}
+                className="p-6 rounded-lg border border-gray-300 bg-white"
+              >
+                <div className="flex justify-between mb-4">
+                  <h4 className="text-xl font-medium">
+                    คำสั่งการซ่อมรหัส : {order.order_id}
+                  </h4>
+                  <div className="flex gap-2">
+                    <p className="text-gray-700">สถานะ:</p>
+                    <p className="bg-green-100 rounded-full  text-green-900 leading-1 px-4 py-1 text-sm ">
+                      {order.status}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between">
+                  <ul>
+                    <li className="flex gap-3 mb-2">
+                      <img src={calenderIcon} alt="calender icon" />
+                      <p className="text-gray-700">
+                        วันเวลาดำเนินการ: {order.available_date} น.
+                      </p>
+                    </li>
+                    <li className="flex gap-3 mb-4">
+                      <img src={frameIcon} alt="frame icon" />
+                      <p className="text-gray-700">พนักงาน: {order.employee}</p>
+                    </li>
+                  </ul>
+                  <div>
+                    <div className="flex items-center gap-4">
+                      <p className="text-gray-700">ราคารวม: </p>
+                      <p className="text-gray-950 text-lg font-medium">
+                        {totalPriceStr} ฿
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-2 text-gray-700">
+                    <p className="text-[1rem]">ที่อยู่:</p>
+                    <p className="text-gray-950">
+                      {" "}
+                      {`${order.service_infomation?.house_number} ${order.service_infomation?.sub_district} ${order.service_infomation?.district} ${order.service_infomation?.provice} ${order.service_infomation?.zipcode}`}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div>
-                  <p className="text-gray-700">รายการ:</p>
-                  <p>{order.detail}</p>
-                </div>
-              
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      </div> 
-      <Footer />
-    </section>   
-  )
-}
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </section>
+  );
+};
 
-export default CustomerServiceHistory
+export default CustomerServiceList;

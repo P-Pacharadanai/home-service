@@ -9,10 +9,12 @@ function AuthProvider(props) {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
-    loading: null,
-    error: null,
+    loading: false,
+    error: false,
     user: null,
   });
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isAuthenticated, setIsAuthenticated] = useState({
     status: false,
@@ -99,7 +101,7 @@ function AuthProvider(props) {
         navigate("/login");
 
         //if the user does not exist, create user profile in database
-        await axios.post("http://localhost:4000/users", {
+        await axios.post(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/users`, {
           authUserId: data.user.id,
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -136,8 +138,8 @@ function AuthProvider(props) {
       //determine the API endpoint based on the user's role
       const profileApi =
         authUser.role === "authenticated"
-          ? `http://localhost:4000/users/${authUser.id}`
-          : `http://localhost:4000/admin/${authUser.id}`;
+          ? `${import.meta.env.VITE_APP_HOME_SERVICE_API}/users/${authUser.id}`
+          : `${import.meta.env.VITE_APP_HOME_SERVICE_API}/admin/${authUser.id}`;
 
       //retrieve user profile by authenticated user id from database
       const userProfile = await axios.get(profileApi);
@@ -161,6 +163,8 @@ function AuthProvider(props) {
           email: authUser.email,
         },
       });
+
+      setIsLoading(false);
     } catch (error) {
       return console.error("An error occurred during get user profile:", error);
     }
@@ -184,8 +188,11 @@ function AuthProvider(props) {
       } else if (event === "SIGNED_OUT") {
         removeUserProfile();
       }
-    });
 
+      if (!session) {
+        setIsLoading(false);
+      }
+    });
     // call unsubscribe to remove the callback
     return () => {
       data.subscription.unsubscribe();
@@ -198,6 +205,7 @@ function AuthProvider(props) {
     logout,
     register,
     isAuthenticated,
+    isLoading,
   };
 
   return (

@@ -29,6 +29,8 @@ import TrashIcon from "./trash-can-solid.svg";
 import ExclamationIcon from "./exclamation-circle-solid.svg";
 import XmarkIcon from "./xmark-solid.svg";
 import Magnifying from "./magnifying-glass-solid.svg";
+import lessthanIcon from "./less-than-solid.svg";
+import userIcon from "./circle-user-solid.svg";
 
 export {
   houseXs,
@@ -62,4 +64,6 @@ export {
   ExclamationIcon,
   XmarkIcon,
   Magnifying,
+  lessthanIcon,
+  userIcon,
 };

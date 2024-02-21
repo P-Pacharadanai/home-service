@@ -4,6 +4,7 @@ import {
   WriteUp,
   ServiceLists,
   SearchTab,
+  ServiceDescription,
 } from "../components/serviceListPage";
 import { useState } from "react";
 import { useAuth } from "../contexts/authentication";
@@ -35,7 +36,7 @@ function ServiceListsPage() {
         max={max}
         sortBy={sortBy}
       />
-      <JobInformation />
+      <ServiceDescription />
       <Footer />
     </div>
   );

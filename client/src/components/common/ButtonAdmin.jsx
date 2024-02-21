@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
+import { iconrBell, userIcon, vectorLogout } from "../../assets/icons";
 import { menuItemsAdmin } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
 
 const ButtonAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { logout } = useAuth();
+  const { logout, state } = useAuth();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -21,11 +21,10 @@ const ButtonAdmin = () => {
           className="flex items-center text-sm pe-1 text-gray-900 p-2 rounded-lg whitespace-nowrap px-6 pb-2 pt-2.5 leading-normal"
           type="button"
         >
-          <span className="sr-only">เข้าสู่ระบบ</span>
-          สมศรี จันทร์อังคารพุธ
+          {state.user?.firstName} {state.user?.lastName}
           <img
             className="ml-3 w-8 h-8 me-1 rounded-full"
-            src={bellHuman}
+            src={userIcon}
             alt="user photo"
           />
           <img

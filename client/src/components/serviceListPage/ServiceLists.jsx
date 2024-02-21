@@ -2,20 +2,31 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { iconTag, iconTagCircle } from "../../assets/icons";
 import { useAuth } from "../../contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 function ServiceLists(props) {
   const { min, max, keyword, category, sortBy } = props;
 
   const [serviceList, setServiceList] = useState([]);
 
+  const navigate = useNavigate();
+
   const getServiceList = async () => {
-    const apiUrl = `http://localhost:4000/service?min=${min}&max=${max}&keyword=${keyword}&category=${category}&sortBy=${sortBy}`;
+    const apiUrl = `${
+      import.meta.env.VITE_APP_HOME_SERVICE_API
+    }/service?min=${min}&max=${max}&keyword=${keyword}&category=${category}&sortBy=${sortBy}`;
     const result = await axios.get(apiUrl);
     let serviceListData = result.data.data;
     setServiceList(serviceListData);
   };
 
   const { isAuthenticated } = useAuth();
+
+  const handleChooseService = (service_id) => {
+    isAuthenticated.status
+      ? navigate(`/service-detail/${service_id}`)
+      : navigate("/login");
+  };
 
   useEffect(() => {
     getServiceList();
@@ -62,11 +73,9 @@ function ServiceLists(props) {
                   </p>
                 </div>
                 <a
-                  href={
-                    isAuthenticated.status
-                      ? `/service-detail/${service.service_id}`
-                      : "/login"
-                  }
+                  onClick={() => {
+                    handleChooseService(service.service_id);
+                  }}
                   className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4"
                 >
                   เลือกบริการ

@@ -1,5 +1,7 @@
 import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
+import "dayjs/locale/th";
+import "antd/lib/locale/th_TH";
 import AddressAutocomplete from "react-thailand-address-autocomplete";
 import { useState } from "react";
 import "./ServiceDetailForm.css";
@@ -16,12 +18,10 @@ function ServiceDetailForm(props) {
 
   const changeDate = (_, dateString) => {
     setBookingDate(dateString);
-    console.log("Date String  : ", dateString);
   };
 
   const changeTime = (_, timeString) => {
     setBookingTime(timeString);
-    console.log("Time String  : ", timeString);
   };
 
   const range = (start, end) => {
@@ -111,6 +111,7 @@ function ServiceDetailForm(props) {
                 </h5>
                 <DatePicker
                   format="DD/MM/YYYY"
+                  locale={{ lang: { locale: "th" } }}
                   disabledDate={disabledDate}
                   showToday={false}
                   showDate={{

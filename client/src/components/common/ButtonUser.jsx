@@ -1,12 +1,17 @@
 import React, { useState } from "react";
-import { bellHuman, iconrBell, vectorLogout } from "../../assets/icons";
+import {
+  frameIcon,
+  iconrBell,
+  vectorLogout,
+  userIcon,
+} from "../../assets/icons";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
+import { Link } from "react-router-dom";
 
 const ButtonUser = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { logout } = useAuth();
+  const { logout, state } = useAuth();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -18,18 +23,17 @@ const ButtonUser = () => {
         <button
           id="dropdownAvatarNameButton"
           onClick={toggleDropdown}
-          className="flex items-center text-sm pe-1 text-gray-900 p-2 rounded-lg whitespace-nowrap px-6 pb-2 pt-2.5 leading-normal"
+          className="flex items-center text-sm pe-1 text-gray-900 rounded-lg whitespace-nowrap px-8 pb-2 pt-2.5 leading-normal -mr-4"
           type="button"
         >
-          <span className="sr-only">เข้าสู่ระบบ</span>
-          สมศรี จันทร์อังคารพุธ
+          {state.user?.firstName} {state.user?.lastName}
           <img
-            className="ml-3 w-8 h-8 me-1 rounded-full"
-            src={bellHuman}
+            className="ml-4 w-8 h-8 me-2 rounded-full"
+            src={userIcon}
             alt="user photo"
           />
           <img
-            className="ml-2 w-8 h-8 p-2 bg-slate-300 me-6 rounded-full"
+            className="w-8 h-8 p-2 bg-slate-300 rounded-full"
             src={iconrBell}
             alt="user photo"
           />
@@ -58,12 +62,12 @@ const ButtonUser = () => {
                     alt="icon"
                     className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
                   />
-                  <a
-                    href="#"
+                  <Link
+                    to={menuItem.path || "#"}
                     className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
