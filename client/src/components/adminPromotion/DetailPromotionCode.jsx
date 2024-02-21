@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { AlertModal } from "../../components/common";
-
+import { AlertModal, SidebarNavAdmin } from "../../components/common";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus ,Trash2 } from "lucide-react";
 
@@ -34,8 +33,13 @@ function DetailPromotionCode() {
   };
 
   return (
-    <>
-    <nav className="flex justify-between items-center w-full border-b p-4 bg-white font-prompt">
+    <div className="flex">
+      <div className=" top-0 left-0 fixed w-64 min-h-screen">
+        <SidebarNavAdmin /> 
+      </div>
+
+      <div className="pl-[16rem] flex-2 overflow-auto w-full" >
+      <nav className="flex justify-between items-center w-full border-b p-4 bg-white font-prompt">
       <h2 className="text-xl font-medium text-gray-800">Promotion Code</h2>
       <div className="flex gap-6 leading-none">
         <div className="relative flex items-center border-2 border-gray-300 px-4 py-3 rounded-lg w-[350px] bg-white hover:border-gray-500">
@@ -51,9 +55,9 @@ function DetailPromotionCode() {
           <Plus className="w-5 " />
         </button>
       </div>
-    </nav>
-    <section className="font-prompt mt-10 border-gray-200 rounded-lg border w-full">
-        <div className="grid grid-cols-7 bg-gray-100 py-3 px-4 text-md text-start text-gray-700 ">
+      </nav>
+      <section className="font-prompt mt-10 p-6  border-green-800 rounded-t-lg border">
+        <div className="grid grid-cols-7 bg-gray-100 py-3 text-md text-start text-gray-700">
           <div>Promotion Code</div>
           <div>ประเภท</div>
           <div>โควต้าการใช้(ครั้ง)</div>
@@ -62,7 +66,7 @@ function DetailPromotionCode() {
           <div className="ml-8">วันหมดอายุ</div>
           <div className="text-center ml-8">Action</div>
         </div>
-        <div className="divide-y divide-gray-200 ">
+        <div className="divide-y divide-gray-200">
           {promotionCodes.map((promoCode) => (
             <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-4 bg-white hover:bg-gray-50 font-prompt">
               <div>{promoCode.code}</div>
@@ -89,7 +93,8 @@ function DetailPromotionCode() {
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
       /> 
-  </>
+    </div>
+    </div>
   )
 }
 
