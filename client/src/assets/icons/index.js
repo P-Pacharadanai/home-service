@@ -31,6 +31,8 @@ import XmarkIcon from "./xmark-solid.svg";
 import Magnifying from "./magnifying-glass-solid.svg";
 import lessthanIcon from "./less-than-solid.svg";
 import userIcon from "./circle-user-solid.svg";
+import oopsIcon from "./oopsIcon.svg";
+import savefileIcon from "./saveflieIcon.svg";
 
 export {
   houseXs,
@@ -66,4 +68,6 @@ export {
   Magnifying,
   lessthanIcon,
   userIcon,
+  oopsIcon,
+  savefileIcon,
 };
