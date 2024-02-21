@@ -10,6 +10,7 @@ import PaymentSuccess from "./PaymentSuccess";
 import AdminCategory from "./AdminCategory";
 import AdminService from "./AdminService";
 import AdminEditService from "./AdminEditService";
+import AdminAddServicePage from "./AdminAddServicePage";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -24,6 +25,7 @@ function AuthenticatedApp() {
           <Route path="/admin-category" element={<AdminCategory />} />
           <Route path="/admin-service" element={<AdminService />} />
           <Route path="/admin-edit-service" element={<AdminEditService />} />
+          <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>
       ) : (
         <Routes>
