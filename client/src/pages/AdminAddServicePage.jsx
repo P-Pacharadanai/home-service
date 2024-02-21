@@ -7,7 +7,14 @@ function AdminAddServicePage() {
   const [subService, setSubService] = useState([]);
 
   const addSubService = () => {
-    setSubService([...subService, { id: Date.now() }]);
+    const newSubServiceItem = {
+      id: Date.now(),
+      serviceName: "",
+      serviceCost: "",
+      serviceUnit: "",
+    };
+
+    setSubService([...subService, newSubServiceItem]);
   };
 
   const removeSubService = (id) => {
@@ -18,10 +25,19 @@ function AdminAddServicePage() {
     if (!result.destination) return;
 
     const reOrderedSubService = Array.from(subService);
-    const [reorderedItem] = reOrderedSubService.splice(result.source.index, 1);
-    reOrderedSubService.splice(result.destination.index, 0, reorderedItem);
+    const [reOrderedItem] = reOrderedSubService.splice(result.source.index, 1);
+    reOrderedSubService.splice(result.destination.index, 0, reOrderedItem);
 
     setSubService(reOrderedSubService);
+  };
+
+  const handleSubServiceChange = (index, field, value) => {
+    const updatedSubService = [...subService];
+    updatedSubService[index] = {
+      ...updatedSubService[index],
+      [field]: value,
+    };
+    setSubService(updatedSubService);
   };
 
   useEffect(() => {
@@ -98,6 +114,13 @@ function AdminAddServicePage() {
                                   type="text"
                                   placeholder="Enter service name"
                                   className="border w-[400px]"
+                                  onChange={(e) =>
+                                    handleSubServiceChange(
+                                      index,
+                                      "serviceName",
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
                               <div>
@@ -106,6 +129,13 @@ function AdminAddServicePage() {
                                   type="text"
                                   placeholder="฿"
                                   className="text-right border "
+                                  onChange={(e) =>
+                                    handleSubServiceChange(
+                                      index,
+                                      "serviceCost",
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
                               <div>
@@ -114,6 +144,13 @@ function AdminAddServicePage() {
                                   type="text"
                                   placeholder="AAAAAAAAA"
                                   className="border "
+                                  onChange={(e) =>
+                                    handleSubServiceChange(
+                                      index,
+                                      "serviceUnit",
+                                      e.target.value
+                                    )
+                                  }
                                 />
                               </div>
                               <a onClick={() => removeSubService(item.id)}>
