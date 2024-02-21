@@ -10,6 +10,10 @@ import PaymentSuccess from "./PaymentSuccess";
 import AdminCategory from "./AdminCategory";
 import AdminService from "./AdminService";
 import AdminEditService from "./AdminEditService";
+import EditPromotionCode from "../components/adminPromotion/EditPromotionCode";
+import DetailPromotionCode from "../components/adminPromotion/DetailPromotionCode";
+import { CodePromoNav } from "../components/adminPromotion";
+import { FixedPercenPromoNav } from "../components/adminPromotion";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -24,6 +28,10 @@ function AuthenticatedApp() {
           <Route path="/admin-category" element={<AdminCategory />} />
           <Route path="/admin-service" element={<AdminService />} />
           <Route path="/admin-edit-service" element={<AdminEditService />} />
+          <Route path="/admin-promotion-detail" element={< DetailPromotionCode />} />
+          <Route path="/admin-promotion-edit" element={<EditPromotionCode />} />
+          <Route path="/promotion-nav" element={<CodePromoNav />} />
+          <Route path="/fixed-promotion-nav" element={<FixedPercenPromoNav/>} />
         </Routes>
       ) : (
         <Routes>
