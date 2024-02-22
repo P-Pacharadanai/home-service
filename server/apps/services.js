@@ -3,6 +3,37 @@ import supabase from "../utils/db.js";
 
 const serviceRouter = Router();
 
+// serviceRouter.post("/", async (req, res) => {
+//   const { name, category, subService } = req.body;
+//   try {
+//     const { error } = await supabase.from("services_list").insert();
+
+//     return res.json({
+//       clientSecret: paymentIntent.client_secret,
+//     });
+//   } catch (error) {
+//     return res.json({ message: error });
+//   }
+// });
+
+serviceRouter.post("/", async (req, res) => {
+  const image = {
+    name: AbortController,
+    size: 123,
+    type: "image/jpeg",
+    webkitRelativePath: "",
+  };
+  try {
+    const { data, error } = await supabase.storage
+      .from("image")
+      .upload(`services-image/A`, image, {});
+
+    return res.json({ data });
+  } catch (error) {
+    return res.json({ message: error });
+  }
+});
+
 serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
