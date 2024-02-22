@@ -50,9 +50,13 @@ export const ourServices = [
 //Dropdown Admin
 export const menuItemsAdmin = [
   { icon: vectorHuman, text: "ข้อมูลผู้ใช้งาน" },
-  { icon: vectorChart, text: "รายการคำสั่งซ่อม" },
-  { icon: vectorHistoryGray, text: "ประวัติการซ่อม" },
-  { icon: vectorHistoryGray, text: "Admin Dashboard" },
+  {
+    icon: vectorChart,
+    text: "รายการคำสั่งซ่อม",
+    path: "/customer-service-list",
+  },
+  { icon: vectorHistoryGray, text: "ประวัติการซ่อม", path: "/service-history" },
+  { icon: vectorHistoryGray, text: "Admin Dashboard", path: "/admin-category" },
 ];
 
 //Dropdown User
