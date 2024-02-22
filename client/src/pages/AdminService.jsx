@@ -6,7 +6,7 @@ function AdminService() {
   return (
     <div className="flex h-screen ">
       <div className="h-full">
-        <SidebarNavAdmin />
+        <SidebarNavAdmin currentPage="บริการ" />
       </div>
 
       <div className="flex-1 flex flex-col">

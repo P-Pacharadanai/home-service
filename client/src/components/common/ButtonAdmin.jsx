@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { iconrBell, userIcon, vectorLogout } from "../../assets/icons";
 import { menuItemsAdmin } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
@@ -57,12 +59,12 @@ const ButtonAdmin = () => {
                     alt="icon"
                     className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
                   />
-                  <a
-                    href="#"
+                  <Link
+                    to={menuItem.path || "#"}
                     className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

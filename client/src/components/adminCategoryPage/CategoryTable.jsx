@@ -1,76 +1,43 @@
 import { GripVerticalIcon, TrashIcon, PenSquareIcon } from "../../assets/icons";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import React, { useState } from "react";
+import { convertThaiDateTime } from "../common";
+import { ConfirmCancel } from "../common";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const CategoryTable = () => {
-  // const [draggedIndex, setDraggedIndex] = useState(null);
-  const [categories, setCategories] = useState([
-    {
-      order: 1,
-      name: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 2,
-      name: "บริการห้องครัว",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 3,
-      name: "บริการห้องน้ำ",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-  ]);
+const CategoryTable = (props) => {
+  const [categories, setCategories] = useState([]);
 
-  // const moveCategory = (dragIndex, hoverIndex) => {
-  //   const draggedCategory = categories[dragIndex];
-  //   const updatedCategories = [...categories];
-  //   updatedCategories.splice(dragIndex, 1);
-  //   updatedCategories.splice(hoverIndex, 0, draggedCategory);
-  //   setCategories(updatedCategories);
-  // };
+  const navigate = useNavigate();
 
-  // const [, drag] = useDrag({
-  //   type: "ROW",
-  //   item: { index: draggedIndex },
-  // });
+  const getCategoryData = async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category?keyword=${
+        props.inputKeyword
+      }`
+    );
+    setCategories(data.data);
+  };
 
-  // const [, drop] = useDrop({
-  //   accept: "ROW",
-  //   hover: (item) => {
-  //     const dragIndex = item.index;
-  //     const hoverIndex = categories.findIndex(
-  //       (category, index) =>
-  //         index !== draggedIndex && isOverCategory(item, category, index)
-  //     );
+  const handleConfirmDelete = (id, name) => {
+    props.setDeleteCategoryId({
+      id: id,
+      name: "บริการ" + name,
+    });
+  };
 
-  //     if (dragIndex === hoverIndex) return;
-
-  //     setDraggedIndex(dragIndex);
-  //     moveCategory(dragIndex, hoverIndex);
-  //     item.index = hoverIndex;
-  //   },
-  // });
-
-  // const isOverCategory = (item, category, index) => {
-  //   const rect = category.getBoundingClientRect();
-  //   const centerY = rect.top + rect.height / 2;
-  //   const mouseY = item.clientY;
-  //   return index < draggedIndex ? mouseY < centerY : mouseY > centerY;
-  // };
+  useEffect(() => {
+    getCategoryData();
+    console.log("it's working");
+  }, [props.inputKeyword, props.refresh]);
 
   return (
-    // <DndProvider backend={HTML5Backend}>
     <div className="flex mt-10 ml-10">
       <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
         <thead>
           <tr className="bg-gray-100 text-gray-700 text-sm">
-            <th className="py-2.5 px-6 w-[56px]"> </th>{" "}
-            <th className="py-2.5 px-6 w-[80px] ">ลำดับ</th>
+            <th className="py-2.5 px-6 w-[56px]"></th>
+            <th className="py-2.5 px-6 w-[80px]">ลำดับ</th>
             <th className="py-2.5 px-6 w-[262px] text-left">ชื่อหมวดหมู่</th>
             <th className="py-2.5 px-6 w-[245px] text-left">สร้างเมื่อ</th>
             <th className="py-2.5 px-6 w-[357px] text-left">แก้ไขล่าสุด</th>
@@ -78,43 +45,56 @@ const CategoryTable = () => {
           </tr>
         </thead>
         <tbody className="bg-white">
-          {categories.map((category, index) => (
-            <tr
-              // key={index}
-              // ref={(node) => drag(drop(node))}
-              className="border-b"
-            >
-              <td className="py-2 px-4 ">
-                <img
-                  src={GripVerticalIcon}
-                  alt="Grip Icon"
-                  className="h-6 w-6 cursor-move"
-                />
-              </td>
-              <td className="py-8 px-6 text-center ">{category.order}</td>
-              <td className="py-8 px-6 ">{category.name}</td>
-              <td className="py-8 px-6 ">{category.created}</td>
-              <td className="py-8 px-6 ">{category.updated}</td>
-              <td className="py-8 px-6 text-center">
-                <div className="flex flex-row items-center justify-center gap-7">
+          {categories.map((category, index) => {
+            const creatAt = convertThaiDateTime(category.created_at);
+            const updateAt = convertThaiDateTime(category.updated_at);
+
+            return (
+              <tr key={category.id} className="border-b relative">
+                <td className="py-2 px-4 ">
                   <img
-                    src={TrashIcon}
-                    alt="Trash Icon"
-                    className="cursor-pointer h-4 w-4"
+                    src={GripVerticalIcon}
+                    alt="Grip Icon"
+                    className="h-6 w-6 cursor-move"
                   />
-                  <img
-                    src={PenSquareIcon}
-                    alt="Edit Icon"
-                    className="cursor-pointer h-4 w-4"
-                  />
-                </div>
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td className="py-8 px-6 text-center ">{index + 1}</td>
+                <td className="py-8 px-6">
+                  <p
+                    onClick={() => navigate(`/admin-category/${category.id}`)}
+                    className="w-fit hover:cursor-pointer"
+                  >
+                    บริการ{category.name}
+                  </p>
+                </td>
+                <td className="py-8 px-6 ">{creatAt}</td>
+                <td className="py-8 px-6 ">{updateAt}</td>
+                <td className="py-8 px-6 text-center">
+                  <div className="flex flex-row items-center justify-center gap-7">
+                    <img
+                      src={TrashIcon}
+                      alt="Trash Icon"
+                      className="cursor-pointer h-4 w-4"
+                      onClick={() =>
+                        handleConfirmDelete(category.id, category.name)
+                      }
+                    />
+                    <img
+                      src={PenSquareIcon}
+                      alt="Edit Icon"
+                      onClick={() =>
+                        navigate(`/admin-category/edit/${category.id}`)
+                      }
+                      className="cursor-pointer h-4 w-4"
+                    />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
-    // </DndProvider>
   );
 };
 

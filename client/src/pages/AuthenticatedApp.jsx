@@ -14,6 +14,9 @@ import EditPromotionCode from "../components/adminPromotion/EditPromotionCode";
 import DetailPromotionCode from "../components/adminPromotion/DetailPromotionCode";
 import { CodePromoNav } from "../components/adminPromotion";
 import { FixedPercenPromoNav } from "../components/adminPromotion";
+import AdminCategoryCreate from "./AdminCategoryCreate";
+import AdminCategoryDetail from "./AdminCategoryDetail";
+import AdminCategoryEdit from "./AdminCaregoryEdit";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -26,12 +29,30 @@ function AuthenticatedApp() {
           <Route path="/service-list" element={<ServiceListsPage />} />
           <Route path="*" element={<LandingPage />} />
           <Route path="/admin-category" element={<AdminCategory />} />
+          <Route
+            path="/admin-category/:categoryId"
+            element={<AdminCategoryDetail />}
+          />
+          <Route
+            path="/admin-category/create"
+            element={<AdminCategoryCreate />}
+          />
+          <Route
+            path="/admin-category/edit/:categoryId"
+            element={<AdminCategoryEdit />}
+          />
           <Route path="/admin-service" element={<AdminService />} />
           <Route path="/admin-edit-service" element={<AdminEditService />} />
-          <Route path="/admin-promotion-detail" element={< DetailPromotionCode />} />
+          <Route
+            path="/admin-promotion-detail"
+            element={<DetailPromotionCode />}
+          />
           <Route path="/admin-promotion-edit" element={<EditPromotionCode />} />
           <Route path="/promotion-nav" element={<CodePromoNav />} />
-          <Route path="/fixed-promotion-nav" element={<FixedPercenPromoNav/>} />
+          <Route
+            path="/fixed-promotion-nav"
+            element={<FixedPercenPromoNav />}
+          />
         </Routes>
       ) : (
         <Routes>
