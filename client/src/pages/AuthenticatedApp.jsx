@@ -17,6 +17,7 @@ import { FixedPercenPromoNav } from "../components/adminPromotion";
 import AdminCategoryCreate from "./AdminCategoryCreate";
 import AdminCategoryDetail from "./AdminCategoryDetail";
 import AdminCategoryEdit from "./AdminCaregoryEdit";
+import AdminAddServicePage from "./AdminAddServicePage";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -53,6 +54,7 @@ function AuthenticatedApp() {
             path="/fixed-promotion-nav"
             element={<FixedPercenPromoNav />}
           />
+          <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>
       ) : (
         <Routes>
