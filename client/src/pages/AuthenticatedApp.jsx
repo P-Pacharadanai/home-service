@@ -10,7 +10,6 @@ import PaymentSuccess from "./PaymentSuccess";
 import AdminCategory from "./AdminCategory";
 import AdminService from "./AdminService";
 import AdminEditService from "./AdminEditService";
-<<<<<<< HEAD
 import EditPromotionCode from "../components/adminPromotion/EditPromotionCode";
 import DetailPromotionCode from "../components/adminPromotion/DetailPromotionCode";
 import { CodePromoNav } from "../components/adminPromotion";
@@ -18,9 +17,7 @@ import { FixedPercenPromoNav } from "../components/adminPromotion";
 import AdminCategoryCreate from "./AdminCategoryCreate";
 import AdminCategoryDetail from "./AdminCategoryDetail";
 import AdminCategoryEdit from "./AdminCaregoryEdit";
-=======
 import AdminAddServicePage from "./AdminAddServicePage";
->>>>>>> a723cad (feat:add draft admin add service)
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -47,7 +44,6 @@ function AuthenticatedApp() {
           />
           <Route path="/admin-service" element={<AdminService />} />
           <Route path="/admin-edit-service" element={<AdminEditService />} />
-<<<<<<< HEAD
           <Route
             path="/admin-promotion-detail"
             element={<DetailPromotionCode />}
@@ -58,9 +54,7 @@ function AuthenticatedApp() {
             path="/fixed-promotion-nav"
             element={<FixedPercenPromoNav />}
           />
-=======
           <Route path="/admin-add-service" element={<AdminAddServicePage />} />
->>>>>>> a723cad (feat:add draft admin add service)
         </Routes>
       ) : (
         <Routes>
