@@ -1,14 +1,25 @@
 import React from "react";
-import { AlertModal, SidebarNavAdmin } from "../components/common/";
-import AddPromotionNav from "../components/adminAddPromotion/AddPromotionNav";
-import AddPromotionSection from "../components/adminAddPromotion/AddPromotionSection";
+import { useNavigate } from "react-router-dom";
+import { SidebarNavAdmin } from "../components/common/";
+import {
+  AddPromotionDetail,
+  AddPromotionNav,
+} from "../components/adminAddPromotion";
 const AdminAddPromotion = () => {
+  const navigate = useNavigate();
   return (
-    <div className="flex">
-      <div className=" top-0 left-0 fixed w-64 min-h-screen">
+    <div className="flex h-screen ">
+      <div className="h-full">
         <SidebarNavAdmin currentPage={"Promotion Code"} />
       </div>
-      <AddPromotionNav />
+
+      <div className="flex-1 flex flex-col">
+        <AddPromotionNav />
+
+        <div className="flex-1 p-8  overflow-y-auto bg-base relative">
+          <AddPromotionDetail />
+        </div>
+      </div>
     </div>
   );
 };
