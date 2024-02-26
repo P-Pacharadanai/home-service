@@ -5,6 +5,7 @@ import {
   AddPromotionDetail,
   AddPromotionNav,
 } from "../components/adminAddPromotion";
+
 const AdminAddPromotion = () => {
   const navigate = useNavigate();
   return (
@@ -14,7 +15,12 @@ const AdminAddPromotion = () => {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <AddPromotionNav />
+        <AddPromotionNav
+          buttonAdd="สร้าง"
+          buttonCancel="ยกเลิก"
+          //onClickButtonAdd={handleCreateCategory}
+          onClickButtonCancel={() => navigate("/admin-promotion")}
+        />
 
         <div className="flex-1 p-8  overflow-y-auto bg-base relative">
           <AddPromotionDetail />
