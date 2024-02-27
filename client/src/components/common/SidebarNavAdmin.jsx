@@ -15,7 +15,7 @@ export const SidebarNavAdmin = ({ currentPage }) => {
   const items = [
     { icon: ListIcon, text: "หมวดหมู่", path: "/admin-category" },
     { icon: CopyIcon, text: "บริการ", path: "/admin-service" },
-    { icon: TicketIcon, text: "Promotion Code", path: "/admin-promotion-detail" },
+    { icon: TicketIcon, text: "Promotion Code", path: "/admin-promotion" },
   ];
   return (
     <div className="flex font-prompt">
