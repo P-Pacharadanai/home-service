@@ -177,3 +177,11 @@ export const popupdetails = [
     totalPrice: "1800 THB",
   },
 ];
+
+const initialPromotionCodes = [
+  { id: 1, code: 'HOME202', type: 'Fixed', usage: '10/100', discount: '-50.00฿', startDate: '12/02/2024 10:30 PM', endDate: '12/06/2024 10:30 PM' },
+  { id: 2, code: 'HOME10',  type: 'Percent', usage: '5/100', discount: '10.00%', startDate: '12/02/2024 10:30 PM', endDate: '12/06/2024 10:30 PM' },
+  { id: 3, code: 'HOME203', type: 'Fixed', usage: '10/100', discount: '-50.00฿', startDate: '12/02/2024 10:30 PM', endDate: '12/06/2024 10:30 PM' },
+  { id: 4, code: 'HOME204', type: 'Fixed', usage: '10/100', discount: '-50.00฿', startDate: '12/02/2024 10:30 PM', endDate: '12/06/2024 10:30 PM' },
+  { id: 5, code: 'HOME205', type: 'Fixed', usage: '10/100', discount: '-50.00฿', startDate: '12/02/2024 10:30 PM', endDate: '12/06/2024 10:30 PM' },
+];
