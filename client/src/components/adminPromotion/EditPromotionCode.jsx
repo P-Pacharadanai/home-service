@@ -13,7 +13,7 @@ const EditPromotionCode = () => {
         <SidebarNavAdmin /> 
       </div>
 
-      <div className="pl-[14rem] flex-2 overflow-auto w-full bg-gray-100 h-screen" >
+      <div className="pl-[15rem] flex-2 overflow-auto w-full bg-gray-100 h-screen" >
 
       <nav className="flex items-center w-full border-b bg-white font-prompt h-[80px] p-10">
         <div>
@@ -23,14 +23,14 @@ const EditPromotionCode = () => {
           <p className="text-xs flex pr-6 ">Promotion Code</p>
           <h2 className="text-2xl font-medium tracking-wide text-gray-950 leading-8">HOME202</h2>
         </div>  
-        <div className="w-full flex justify-end px-12">
+        <div className="w-full flex justify-end">
           <button className="bg-blue-600 text-white text-lg px-9 py-2 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 border">
             แก้ไข
           </button>
         </div>  
       </nav>
 
-      <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start max-w-[1110px] mx-auto w-full mt-10 overflow-auto">
+      <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1370px] w-full mt-10 overflow-auto">
         <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
           <p className="font-medium max-w-40">Promotion Code</p>
           <p className="flex justify-start items-start -ml-32 max-w-40">HOME202</p>
