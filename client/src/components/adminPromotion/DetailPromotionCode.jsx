@@ -34,35 +34,35 @@ const DetailPromotionCode  = () => {
       </nav>
 
       <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1110px] w-full mt-10  mb-40 overflow-auto">
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-medium max-w-40">Promotion Code</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40">HOME202</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">HOME202</p>
         </div>
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">ประเภท</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40">Fixed</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">Fixed</p>
         </div>
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">ราคาที่ลด</p>
           <p className="flex justify-start items-start -ml-32" style={{color: 'rgba(200, 36, 56, 1)'}}>-50.00฿</p>
         </div>
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">โควต้าการใช้(ครั้ง)</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40">10/100 ครั้ง</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">10/100 ครั้ง</p>
         </div>
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">วันหมดอายุ</p>
-          <p className="flex justify-start items-start -ml-32">12/06/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">12/06/2024 10:30 PM</p>
         </div>
         
         <hr className="border-t border-gray-300 w-full mb-2 mt-2" /> 
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
-          <p className="flex justify-start items-start -ml-32">12/02/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">12/02/2024 10:30 PM</p>
         </div>
-        <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
+        <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
-          <p className="flex justify-start items-start -ml-32">12/02/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">12/02/2024 10:30 PM</p>
         </div>
       </div>
       </div>
