@@ -41,8 +41,8 @@ const CategoryTable = (props) => {
   }, [props.inputKeyword, props.refresh]);
 
   return (
-    <div className="flex mt-10 ml-10">
-      <DragDropContext onDragEnd={handleDragEnd}>
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="flex mt-10 ml-10">
         <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
           <thead>
             <tr className="bg-gray-100 text-gray-700 text-sm">
@@ -75,20 +75,22 @@ const CategoryTable = (props) => {
                         <tr
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="border-b relative bg-white"
+                          className="border-b relative bg-white "
                         >
-                          <td className="py-2 px-4">
+                          <td
+                            className="w-[56px] py-2 px-4"
+                            {...provided.dragHandleProps}
+                          >
                             <img
                               src={GripVerticalIcon}
                               alt="Grip Icon"
                               className="h-6 w-6 cursor-move"
                             />
                           </td>
-                          <td className="py-8 px-6 text-center ">
+                          <td className="w-[80px] py-8 px-6 text-center ">
                             {index + 1}
                           </td>
-                          <td className="py-8 px-6">
+                          <td className="w-[262px] py-8 px-6">
                             <p
                               onClick={() =>
                                 navigate(`/admin-category/${category.id}`)
@@ -98,9 +100,9 @@ const CategoryTable = (props) => {
                               บริการ{category.name}
                             </p>
                           </td>
-                          <td className="py-8 px-6 ">{creatAt}</td>
-                          <td className="py-8 px-6 ">{updateAt}</td>
-                          <td className="py-8 px-6 text-center">
+                          <td className="w-[245px] py-8 px-6 ">{creatAt}</td>
+                          <td className="w-[357px] py-8 px-6 ">{updateAt}</td>
+                          <td className="w-[120px] py-8 px-6 text-center">
                             <div className="flex flex-row items-center justify-center gap-7">
                               <img
                                 src={TrashIcon}
@@ -135,8 +137,8 @@ const CategoryTable = (props) => {
             )}
           </Droppable>
         </table>
-      </DragDropContext>
-    </div>
+      </div>
+    </DragDropContext>
   );
 };
 
