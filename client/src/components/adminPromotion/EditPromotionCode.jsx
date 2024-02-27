@@ -30,7 +30,7 @@ const EditPromotionCode = () => {
         </div>  
       </nav>
 
-      <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1370px] w-full mt-10 overflow-auto">
+      <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1110px] h-screen w-full mt-10 overflow-auto">
         <div className="grid grid-cols-2 p-6 w-[1000px] font-prompt">
           <p className="font-medium max-w-40">Promotion Code</p>
           <p className="flex justify-start items-start -ml-32 max-w-40">HOME202</p>

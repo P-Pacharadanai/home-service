@@ -41,7 +41,7 @@ function DetailPromotionCode() {
 
       <nav className="flex justify-between items-center w-full border-b bg-white font-prompt h-[80px] p-10">
       <h2 className="text-xl font-medium text-gray-800">Promotion Code</h2>
-      <div className="flex gap-6 leading-none mr-20">
+      <div className="flex gap-6 leading-none ">
         <div className="relative flex items-center bg-white hover:border-gray-500">
           <Search className="text-gray-300 absolute left-4" />
           <input
@@ -52,12 +52,12 @@ function DetailPromotionCode() {
         </div>
         <button className="flex items-center gap-2 px-9 py-2 bg-blue-600 text-white rounded-lg hover:bg-white hover:border-blue-600 border hover:text-blue-600">
           เพิ่ม Promotion Code
-          <Plus className="w-5 " />
+          <Plus className="w-5 "/>
         </button>
       </div>
       </nav>
 
-      <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1440px] ml-10 bg-white">
+      <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1110px] ml-10 bg-white">
         <div className="grid grid-cols-7 bg-gray-100 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
           <div>Promotion Code</div>
           <div>ประเภท</div>
@@ -67,9 +67,9 @@ function DetailPromotionCode() {
           <div className="ml-8">วันหมดอายุ</div>
           <div className="text-center ml-8">Action</div>
         </div>
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-gray-200 py-2">
           {promotionCodes.map((promoCode) => (
-            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt border-gray-100 rounded-b-lg border">
+            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
               <div>{promoCode.code}</div>
               <div>{promoCode.type}</div>
               <div>{promoCode.usage}</div>
