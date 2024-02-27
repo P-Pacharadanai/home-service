@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AlertModal, SidebarNavAdmin } from "../common";
+import { AlertModal, SidebarNavAdmin } from "../../components/common";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus ,Trash2 } from "lucide-react";
 import { Link } from 'react-router-dom';
