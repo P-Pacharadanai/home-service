@@ -2,7 +2,7 @@ import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import TopbarSearch from "../components/adminCategoryPage/TopbarSearch";
 import CategoryTable from "../components/adminCategoryPage/CategoryTable";
 import { ConfirmCancel } from "../components/common";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
