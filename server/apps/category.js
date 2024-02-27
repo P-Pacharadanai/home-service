@@ -7,19 +7,34 @@ categoryRouter.get("/", async (req, res) => {
   try {
     const { keyword } = req.query;
 
-    const { data: categories, error } = await supabase
-      .from("categories")
-      .select("*")
-      .ilike("name", `%${keyword}%` || "%")
-      .order("id", { ascending: true });
+    if (req.query.length > 0) {
+      const { data: categories, error } = await supabase
+        .from("categories")
+        .select("*")
+        .ilike("name", `%${keyword}%` || "%")
+        .order("id", { ascending: true });
 
-    if (error) {
-      return res.json({ message: error });
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      return res.json({
+        data: categories,
+      });
+    } else {
+      const { data: categories, error } = await supabase
+        .from("categories")
+        .select("*")
+        .order("id", { ascending: true });
+
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      return res.json({
+        data: categories,
+      });
     }
-
-    return res.json({
-      data: categories,
-    });
   } catch (error) {
     return res.json({ message: error });
   }

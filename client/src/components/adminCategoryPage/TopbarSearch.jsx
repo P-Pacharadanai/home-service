@@ -3,7 +3,8 @@ import { useState } from "react";
 
 const TopbarSearch = (props) => {
   const { inputKeyword, setInputKeyword } = props;
-
+  const onAddClick = props.onAddClick;
+  console.log(props);
   const handleKeywordChange = (event) => {
     setInputKeyword(event.target.value);
   };
@@ -38,7 +39,7 @@ const TopbarSearch = (props) => {
           </button>
         )}
         <button
-          onClick={props.onClickButtonAdd}
+          onClick={onAddClick}
           className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
         >
           {props.buttonAdd}

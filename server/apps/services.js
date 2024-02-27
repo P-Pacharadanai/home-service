@@ -1,7 +1,10 @@
 import { Router, query } from "express";
 import supabase from "../utils/db.js";
+import multer from "multer";
 
 const serviceRouter = Router();
+const multerUpload = multer({ dest: "uploads/" });
+const imageUpload = multerUpload.fields([{ name: "image", maxCount: 2 }]);
 
 // serviceRouter.post("/", async (req, res) => {
 //   const { name, category, subService } = req.body;
@@ -16,19 +19,11 @@ const serviceRouter = Router();
 //   }
 // });
 
-serviceRouter.post("/", async (req, res) => {
-  const image = {
-    name: AbortController,
-    size: 123,
-    type: "image/jpeg",
-    webkitRelativePath: "",
-  };
+serviceRouter.post("/", imageUpload, async (req, res) => {
+  console.log(req.body);
+  console.log(req.files.image);
   try {
-    const { data, error } = await supabase.storage
-      .from("image")
-      .upload(`services-image/A`, image, {});
-
-    return res.json({ data });
+    return res.json({ message: `Success` });
   } catch (error) {
     return res.json({ message: error });
   }
