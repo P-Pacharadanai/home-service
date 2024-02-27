@@ -37,17 +37,17 @@ function DetailPromotionCode() {
       <div className=" top-0 left-0 fixed w-64 min-h-screen">
         <SidebarNavAdmin currentPage={"Promotion Code"}/> 
       </div>
+     <div className="pl-[15rem] flex-2 overflow-auto w-full bg-gray-100 h-screen" >
 
-      <div className="pl-[16rem] flex-2 overflow-auto w-full" >
-      <nav className="flex justify-between items-center w-full border-b p-4 bg-white font-prompt">
+      <nav className="flex justify-between items-center w-full border-b bg-white font-prompt h-[80px] p-10">
       <h2 className="text-xl font-medium text-gray-800">Promotion Code</h2>
-      <div className="flex gap-6 leading-none">
-        <div className="relative flex items-center border-2 border-gray-300 px-4 py-3 rounded-lg w-[350px] bg-white hover:border-gray-500">
-          <Search className="mr-4 text-gray-300 absolute left-4" />
+      <div className="flex gap-6 leading-none mr-20">
+        <div className="relative flex items-center bg-white hover:border-gray-500">
+          <Search className="text-gray-300 absolute left-4" />
           <input
             type="text"
             placeholder="ค้นหา Promotion Code..."
-            className="flex-grow text-mb pl-12 bg-transparent text-gray-700 outline-none focus:border-gray-600 focus:bg-gray-100 focus:ring-1"
+            className="flex-grow text-mb bg-transparent text-gray-700 w-full text-[1rem] focus:outline-none border border-gray-400 p-2 pl-16 pr-16 rounded-lg outline-none focus:border-gray-600 focus:bg-gray-100 focus:ring-1"
           />
         </div>
         <button className="flex items-center gap-2 px-9 py-2 bg-blue-600 text-white rounded-lg hover:bg-white hover:border-blue-600 border hover:text-blue-600">
@@ -56,8 +56,9 @@ function DetailPromotionCode() {
         </button>
       </div>
       </nav>
-      <section className="font-prompt mt-10 p-6  border-green-800 rounded-t-lg border">
-        <div className="grid grid-cols-7 bg-gray-100 py-3 text-md text-start text-gray-700">
+
+      <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1440px] ml-10 bg-white">
+        <div className="grid grid-cols-7 bg-gray-100 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
           <div>Promotion Code</div>
           <div>ประเภท</div>
           <div>โควต้าการใช้(ครั้ง)</div>
@@ -68,11 +69,11 @@ function DetailPromotionCode() {
         </div>
         <div className="divide-y divide-gray-200">
           {promotionCodes.map((promoCode) => (
-            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-4 bg-white hover:bg-gray-50 font-prompt">
+            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt border-gray-100 rounded-b-lg border">
               <div>{promoCode.code}</div>
               <div>{promoCode.type}</div>
               <div>{promoCode.usage}</div>
-              <div className="text-red-600">{promoCode.discount}</div>
+              <div style={{color: 'rgba(200, 36, 56, 1)'}}>{promoCode.discount}</div>
               <div>{promoCode.startDate}</div>
               <div className="ml-8 w-full">{promoCode.endDate}</div>
               <div className="flex justify-center gap-8 ml-8">
