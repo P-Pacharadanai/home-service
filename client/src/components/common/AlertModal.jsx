@@ -8,7 +8,7 @@ const AlertModal = ({ isOpen, onClose, onConfirm, promoCode }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white px-6 py-12 gap-4 rounded-xl shadow-lg flex flex-col justify-center items-center relative font-prompt">
         <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4  hover:text-gray-600" aria-label="Close"> <X className="h-6 w-6" /></button>
-        <img src={oopsIcon} className="w-40"/>
+        <img src={oopsIcon} />
         <h2 className="text-2xl">ยืนยันการลบรายการ?</h2>
         <p className="text-xl text-gray-700">คุณต้องการลบรายการ ‘{promoCode}’ ใช่หรือไม่</p>
         <div className="flex justify-center gap-4 mt-4">
