@@ -22,6 +22,7 @@
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.330.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-data-table-component": "^7.6.2",
     "react-datepicker": "^6.1.0",
     "react-dnd": "^16.0.1",
