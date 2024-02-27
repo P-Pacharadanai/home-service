@@ -1,5 +1,5 @@
-import DetailPromotionCode from "./DetailPromotionCode";
-import EditPromotionCode from "./EditPromotionCode";
+import DetailPromotionCode from "./PromotionCode.jsx";
+import EditPromotionCode from "./DetailPromotionCode.jsx";
 import CodePromoNav from "./CodePromoNav";
 import FixedPercenPromoNav from "./FixedPercentPromoNav.jsx";
 
