@@ -4,12 +4,21 @@ import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import supabase from "../utils/supabaseClient.js";
 import { GripVerticalIcon } from "../assets/icons/index.js";
+import axios from "axios";
 
 function AdminAddServicePage() {
   const [serviceName, setServiceName] = useState("");
   const [subService, setSubService] = useState([]);
-  const [image, setImage] = useState(null);
-  const [category, setCategory] = useState("");
+  const [uploadedImage, setUploadedImage] = useState();
+  const [imageUrl, setImageUrl] = useState();
+  const [categoryId, setCategoryId] = useState();
+  const [categoryData, setCategoryData] = useState([]);
+
+  const getCategory = async () => {
+    const categoryUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category`;
+    const { data } = await axios.get(categoryUrl);
+    setCategoryData(data.data);
+  };
 
   const addSubService = () => {
     const newSubServiceItem = {
@@ -26,8 +35,35 @@ function AdminAddServicePage() {
     setSubService(subService.filter((item) => item.id !== id));
   };
 
-  const handleServiceNameChange = (e) => {
-    setServiceName(e.target.value);
+  const handleSubServiceChange = (index, field, value) => {
+    const updatedSubService = [...subService];
+    updatedSubService[index] = {
+      ...updatedSubService[index],
+      [field]: value,
+    };
+    setSubService(updatedSubService);
+  };
+
+  const handleUploadedImageChange = async (e) => {
+    const file = e.target.files[0];
+    setUploadedImage(file);
+    const imageUrl = URL.createObjectURL(file);
+    setImageUrl(imageUrl);
+  };
+
+  const handleCreate = async () => {
+    const formData = new FormData();
+
+    formData.append("name", serviceName);
+    formData.append("category_id", categoryId);
+    formData.append("subService", JSON.stringify(subService));
+    formData.append("image", uploadedImage);
+
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service`,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
   };
 
   const handleDragEnd = (result) => {
@@ -40,49 +76,14 @@ function AdminAddServicePage() {
     setSubService(reOrderedSubService);
   };
 
-  const handleSubServiceChange = (index, field, value) => {
-    const updatedSubService = [...subService];
-    updatedSubService[index] = {
-      ...updatedSubService[index],
-      [field]: value,
-    };
-    setSubService(updatedSubService);
-  };
-
-  const uploadImage = async () => {
-    try {
-      const { data, error } = await supabase.storage
-        .from("image")
-        .upload(`services-image/${image.name}`, image, {
-          cacheControl: "3600", // ตั้งค่า cache control ตามที่ต้องการ
-        });
-
-      if (error) {
-        console.error("Error uploading image:", error.message);
-      } else {
-        console.log("Image uploaded successfully:", data);
-        // ทำอย่างอื่นต่อไปที่คุณต้องการ
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-  };
-
-  const handleCreate = async () => {
-    if (image) {
-      await uploadImage();
-    }
-  };
-
   useEffect(() => {
     addSubService();
+    getCategory();
   }, []);
 
+  console.log(serviceName);
+  console.log(categoryId);
+  console.log(uploadedImage);
   return (
     <div className="flex h-screen font-prompt">
       <div className="h-full">
@@ -115,29 +116,42 @@ function AdminAddServicePage() {
                   placeholder="Enter service name"
                   className="border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
                   onChange={(e) => {
-                    handleServiceNameChange(e);
+                    setServiceName(e.target.value);
                   }}
                 />
               </div>
               <div className="flex flex-row w-[400px]">
-                <p className="w-[200px]">
+                <p className="w-[400px]">
                   หมวดหมู่<span className="text-red">*</span>
                 </p>
                 <Select
-                  variant="unstyled"
+                  onChange={(e) => {
+                    setCategoryId(e.target.value);
+                  }}
+                  variant="outline"
                   placeholder="เลือกหมวดหมู่"
-                  className="text-center "
+                  className="font-semibold text-center"
                 >
-                  <option value="ทั่วไป">บริการทั่วไป</option>
-                  <option value="ห้องครัว">บริการห้องครัว</option>
-                  <option value="ห้องน้ำ">บริการห้องน้ำ</option>
+                  {categoryData.map((item) => {
+                    return (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        isdisabled={(item.id === undefined).toString()}
+                      >
+                        บริการ{item.name}
+                      </option>
+                    );
+                  })}
                 </Select>
               </div>
               <div className="flex flex-row">
                 <p className="w-[200px]">
                   รูปภาพ<span className="text-red">*</span>
                 </p>
-                <input type="file" onChange={handleImageChange}></input>
+
+                <input type="file" onChange={handleUploadedImageChange}></input>
+                <img src={imageUrl} />
               </div>
               <div className="flex flex-col gap-5">
                 <p>รายการบริการย่อย</p>
