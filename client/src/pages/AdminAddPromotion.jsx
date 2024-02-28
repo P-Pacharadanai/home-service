@@ -10,6 +10,12 @@ import axios from "axios";
 const AdminAddPromotion = () => {
   const [promotionData, setPromotionData] = useState({});
   const handleCreatePromotion = async () => {
+    const formData = new FormData();
+    formData.append("promotionCode", promotionCode);
+    formData.append("promotionType", promotionType);
+    formData.append("discount", discount);
+    formData.append("usageLimit", usageLimit);
+
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
       promotionData
@@ -17,11 +23,14 @@ const AdminAddPromotion = () => {
     console.log(promotionData);
     navigate(`/admin-promotion/${data?.data?.id}`);
   };
+  {
+  }
 
   const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
   const [promotionType, setPromotionType] = useState(""); // State for promotion type
   const [fixedDiscount, setFixedDiscount] = useState("");
   const [percentDiscount, setPercentDiscount] = useState("");
+  const [discount, setDiscount] = useState("");
   const [usageLimit, setUsageLimit] = useState(""); // State for usage limit
   const [expirationDate, setExpirationDate] = useState(null); // State for expiration date
   const [expirationTime, setExpirationTime] = useState(null); // State for expiration time
@@ -51,6 +60,8 @@ const AdminAddPromotion = () => {
             setFixedDiscount={setFixedDiscount}
             percentDiscount={percentDiscount}
             setPercentDiscount={setPercentDiscount}
+            discount={discount}
+            setDiscount={setDiscount}
             usageLimit={usageLimit}
             setUsageLimit={setUsageLimit}
             expirationDate={expirationDate}

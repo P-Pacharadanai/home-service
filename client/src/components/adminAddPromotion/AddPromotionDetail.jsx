@@ -28,6 +28,7 @@ const AddPromotionDetail = (props) => {
     setExpirationDate,
     setExpirationTime,
   } = props;
+
   const changeDate = (_, dateString) => {
     setExpirationDate(dateString);
   };
