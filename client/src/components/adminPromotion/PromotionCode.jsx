@@ -55,6 +55,20 @@ const PromotionCode  = () => {
     }
   }, [state.user?.userId]);
 
+  function formatDiscount(discount) {
+    if (typeof discount === 'string' && discount.includes('%')) {
+      return `${discount}`;
+    } else if (typeof discount === 'number') {
+      if (discount === 10) {
+        return `-${discount.toFixed(2)}%`;
+      } else {
+        return `-${discount.toFixed(2)}฿`;
+      }
+    } else {
+      return discount || "No discount";
+    }
+  }
+  
   return (
     <div className="flex ">
       <div className=" top-0 left-0 fixed w-64 min-h-screen">
@@ -95,8 +109,8 @@ const PromotionCode  = () => {
             <div key={promoCode.promotion_id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
               <Link to={`/admin-promotion-details/${promoCode.promotion_id}`}>{promoCode.code}</Link>
               <div>{promoCode.type}</div>
-              <div>{promoCode.usage_count}</div>
-              <div style={{color: 'rgba(200, 36, 56, 1)'}}>{promoCode.discount}</div>
+              <div>{promoCode.usage_count}/{promoCode.usage_limit}</div>
+              <div style={{color: 'rgba(200, 36, 56, 1)'}}>{formatDiscount(promoCode.discount)}</div>
               <div>{convertThaiDateTime(promoCode.expiration_date)}</div>
               <div className="ml-8 w-full">{convertThaiDateTime(promoCode.created_at)}</div>
               <div className="flex justify-center gap-6 ml-20">

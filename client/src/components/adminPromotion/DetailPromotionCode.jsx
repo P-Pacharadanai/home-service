@@ -10,14 +10,14 @@ const DetailPromotionCode  = () => {
   const params = useParams();
 
   const getCategoryData = async () => {
-    try {
-    const {data } = await axios.get(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${params.promotionId}`);
-    setCategoryData(data.data);
-    //console.log(data.data);
-  } catch (error) {
-    console.error("Failed to fetch category data:", error);
-  }
-};
+      try {
+      const {data } = await axios.get(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${params.promotionId}`);
+      setCategoryData(data.data);
+      //console.log(data.data);
+    } catch (error) {
+      console.error("Failed to fetch category data:", error);
+    }
+  };
 
   useEffect(() => {
     getCategoryData();
@@ -26,6 +26,20 @@ const DetailPromotionCode  = () => {
   const handleBackClick = () => {
     navigate('/admin-promotion');
   };
+
+  function formatDiscount(discount) {
+    if (typeof discount === 'string' && discount.includes('%')) {
+      return `${discount}`;
+    } else if (typeof discount === 'number') {
+      if (discount === 10) {
+        return `-${discount.toFixed(2)}%`;
+      } else {
+        return `-${discount.toFixed(2)}฿`;
+      }
+    } else {
+      return discount || "No discount";
+    }
+  }
 
   return (
     <div className="flex">
@@ -61,11 +75,11 @@ const DetailPromotionCode  = () => {
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">ราคาที่ลด</p>
-          <p className="flex justify-start items-start -ml-32" style={{color: 'rgba(200, 36, 56, 1)'}}>{categoryData.discount}</p>
+          <p className="flex justify-start items-start -ml-32" style={{color: 'rgba(200, 36, 56, 1)'}}>{formatDiscount(categoryData.discount)}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">โควต้าการใช้</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">{categoryData.usage_count}</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">{categoryData.usage_count}/{categoryData.usage_limit} ครั้ง</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">วันหมดอายุ</p>
