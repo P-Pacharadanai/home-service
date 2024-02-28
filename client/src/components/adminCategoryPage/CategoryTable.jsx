@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import axios from "axios";
 import { convertThaiDateTime } from "../common";
 import { GripVerticalIcon, TrashIcon, PenSquareIcon } from "../../assets/icons";
-import PromotionListSkeleton from "../skeleton/promotionList";
+import CategoryListSkeleton from "../skeleton/CategoryList";
 
 const CategoryTable = (props) => {
   const [categories, setCategories] = useState([]);
@@ -57,7 +57,7 @@ const CategoryTable = (props) => {
           </thead>
           {categories.length === 0 && (
             <tbody className="bg-white">
-              <PromotionListSkeleton itemCount={5} />
+              <CategoryListSkeleton itemCount={5} />
             </tbody>
           )}
           <Droppable droppableId="subServiceList">
