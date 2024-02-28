@@ -14,7 +14,7 @@ const AddPromotionNav = (props) => {
           </button>
           <button
             className="bg-blue-600 text-white text-lg px-9 py-2 rounded-lg"
-            onClick={props.onClickButtonAdd}
+            onClick={props.handleCreatePromotion}
           >
             {props.buttonAdd}
           </button>
