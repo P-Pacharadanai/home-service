@@ -20,6 +20,17 @@ const CategoryTable = (props) => {
     setCategories(data.data);
   };
 
+  const updateCategoryData = async (newCategories) => {
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category`,
+      {
+        categories: newCategories,
+      }
+    );
+
+    console.log("Data: ", data);
+  };
+
   const handleConfirmDelete = (id, name) => {
     props.setDeleteCategoryId({
       id: id,
@@ -34,7 +45,14 @@ const CategoryTable = (props) => {
     const [reOrderedItem] = reOrderedCategory.splice(result.source.index, 1);
     reOrderedCategory.splice(result.destination.index, 0, reOrderedItem);
 
-    setCategories(reOrderedCategory);
+    const updatedCategory = reOrderedCategory.map((category, index) => ({
+      ...category,
+      index: index + 1,
+    }));
+
+    updateCategoryData(updatedCategory);
+
+    setCategories(updatedCategory);
   };
 
   useEffect(() => {
