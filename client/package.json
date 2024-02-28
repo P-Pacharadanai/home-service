@@ -28,6 +28,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.21.3",
     "react-thailand-address-autocomplete": "^0.0.6",
     "react-timepicker": "^2.0.2",

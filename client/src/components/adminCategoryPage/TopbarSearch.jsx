@@ -31,7 +31,7 @@ const TopbarSearch = (props) => {
 
         {props.buttonCancel && (
           <button
-            onClick={props.onClickButtonCancle}
+            onClick={props.onClickButtonCancel}
             className="min-w-28 text-[1rem] text-blue-600 border border-blue-600 rounded-lg px-6 py-2 ml-6"
           >
             {props.buttonCancel}

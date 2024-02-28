@@ -3,6 +3,7 @@ import axios from "axios";
 import { iconTag, iconTagCircle } from "../../assets/icons";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
+import ServiceCardSkeleton from "../skeleton/SeviceCard";
 
 function ServiceLists(props) {
   const { min, max, keyword, category, sortBy } = props;
@@ -36,6 +37,7 @@ function ServiceLists(props) {
     <>
       <section className="max-container flex justify-center flex-wrap py-20">
         <div className=" max-container gap-4 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-9">
+          {serviceList.length === 0 && <ServiceCardSkeleton itemCount={9} />}
           {serviceList.map((service) => (
             <div
               key={service.service_id}
