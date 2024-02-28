@@ -57,13 +57,7 @@ promotionRouter.get("/", async (req, res) => {
 
 promotionRouter.post("/", async (req, res) => {
   try {
-    const {
-      promotionCode,
-      promotionType,
-      fixedDiscount,
-      percentDiscount,
-      usageLimit,
-    } = req.body;
+    const { ...FormData } = req.body;
 
     const { data, error } = await supabase
       .from("promotion")
@@ -71,10 +65,9 @@ promotionRouter.post("/", async (req, res) => {
         code: promotionCode,
         type: promotionType,
         usage_limit: usageLimit,
-        discount: fixedDiscount,
-        percentDiscount,
+        discount: discount,
       })
-      .select("*");
+      .select();
 
     if (error) {
       return res.json({ message: error });

@@ -19,6 +19,8 @@ const AddPromotionDetail = (props) => {
     setFixedDiscount,
     percentDiscount,
     setPercentDiscount,
+    discount,
+    setDiscount,
     usageLimit,
     setUsageLimit,
     expirationDate,
@@ -26,6 +28,7 @@ const AddPromotionDetail = (props) => {
     setExpirationDate,
     setExpirationTime,
   } = props;
+
   const changeDate = (_, dateString) => {
     setExpirationDate(dateString);
   };
@@ -37,7 +40,7 @@ const AddPromotionDetail = (props) => {
   const disabledDate = (current) => {
     return current && current < dayjs().endOf("day");
   };
-
+  console.log(discount);
   return (
     <div className="w-[1120px] h-[428px] px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 inline-flex font-['Prompt'] ">
       <div className={divStyle}>
@@ -72,7 +75,9 @@ const AddPromotionDetail = (props) => {
               <input
                 type="number"
                 value={fixedDiscount}
-                onChange={(e) => setFixedDiscount(e.target.value)}
+                onChange={(e) => {
+                  setFixedDiscount(e.target.value), setDiscount(e.target.value);
+                }}
                 className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input ${
                   promotionType === "percent" ? "disabled-input" : ""
                 }`}
@@ -104,7 +109,10 @@ const AddPromotionDetail = (props) => {
               <input
                 type="number"
                 value={percentDiscount}
-                onChange={(e) => setPercentDiscount(e.target.value)}
+                onChange={(e) => {
+                  setPercentDiscount(e.target.value),
+                    setDiscount(e.target.value);
+                }}
                 className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input ${
                   promotionType === "fixed" ? "disabled-input" : ""
                 }`}
