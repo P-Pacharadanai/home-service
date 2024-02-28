@@ -54,10 +54,6 @@ function AuthenticatedApp() {
             element={<DetailPromotionCode />}
           />
 
-          <Route
-            path="/admin-promotion-details"
-            element={<DetailPromotionCode />}
-          />
           <Route path="/admin-promotion-add" element={<AdminAddPromotion />} />
           <Route
             path="/admin-promotion-edit"
@@ -68,7 +64,6 @@ function AuthenticatedApp() {
             path="/admin-service-detail"
             element={<AdminServiceDetail />}
           />
-
           <Route path="/promotion-nav" element={<CodePromoNav />} />
           <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>
