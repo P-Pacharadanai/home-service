@@ -23,9 +23,11 @@ promotionRouter.get("/", async (req, res) => {
           .update({ usage_count: data[0]?.usage_count + 1 })
           .eq("code", promotionCode)
           .select();
+
         if (updateError) {
           return res.json({ message: updateError });
         }
+
         return res.json({
           data: updateData[0],
         });
@@ -53,42 +55,26 @@ promotionRouter.get("/", async (req, res) => {
   }
 });
 
-//Get all
-promotionRouter.get("/:promotionId", async (req, res) => {
+promotionRouter.post("/", async (req, res) => {
   try {
-    const promotionId = req.params.promotionId;
+    const { ...FormData } = req.body;
 
     const { data, error } = await supabase
       .from("promotion")
-      .select("*")
-      .eq("promotion_id", promotionId);
+      .insert({
+        code: promotionCode,
+        type: promotionType,
+        usage_limit: usageLimit,
+        discount: discount,
+      })
+      .select();
+
     if (error) {
       return res.json({ message: error });
     }
 
     return res.json({
       data: data[0],
-    });
-  } catch (error) {
-    return res.json({ message: error });
-  }
-});
-
-//Delete
-promotionRouter.delete("/:promotionId", async (req, res) => {
-  try {
-    const promotionId = req.params.promotionId;
-    const { error } = await supabase
-      .from("promotion")
-      .delete()
-      .eq("id", promotionId);
-
-    if (error) {
-      return res.json({ message: error.message });
-    }
-
-    return res.json({
-      message: "code has been deleted",
     });
   } catch (error) {
     return res.json({ message: error.message });
