@@ -7,19 +7,34 @@ categoryRouter.get("/", async (req, res) => {
   try {
     const { keyword } = req.query;
 
-    const { data: categories, error } = await supabase
-      .from("categories")
-      .select("*")
-      .ilike("name", `%${keyword}%` || "%")
-      .order("id", { ascending: true });
+    if (req.query.length > 0) {
+      const { data: categories, error } = await supabase
+        .from("categories")
+        .select("*")
+        .ilike("name", `%${keyword}%` || "%")
+        .order("index", { ascending: true });
 
-    if (error) {
-      return res.json({ message: error });
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      return res.json({
+        data: categories,
+      });
+    } else {
+      const { data: categories, error } = await supabase
+        .from("categories")
+        .select("*")
+        .order("index", { ascending: true });
+
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      return res.json({
+        data: categories,
+      });
     }
-
-    return res.json({
-      data: categories,
-    });
   } catch (error) {
     return res.json({ message: error });
   }
@@ -63,6 +78,28 @@ categoryRouter.post("/", async (req, res) => {
     });
   } catch (error) {
     return res.json({ message: error.message });
+  }
+});
+
+categoryRouter.put("/", async (req, res) => {
+  try {
+    const categories = req.body.categories;
+    console.log(categories);
+
+    const { data, error } = await supabase
+      .from("categories")
+      .upsert(categories)
+      .select();
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: data,
+    });
+  } catch (error) {
+    return res.json({ message: error });
   }
 });
 
