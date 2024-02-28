@@ -23,11 +23,9 @@ promotionRouter.get("/", async (req, res) => {
           .update({ usage_count: data[0]?.usage_count + 1 })
           .eq("code", promotionCode)
           .select();
-
         if (updateError) {
           return res.json({ message: updateError });
         }
-
         return res.json({
           data: updateData[0],
         });

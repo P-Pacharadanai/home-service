@@ -1,8 +1,11 @@
 import { Router, query } from "express";
 import supabase from "../utils/db.js";
+import multer from "multer";
 
 const serviceRouter = Router();
-
+const storage = multer.memoryStorage();
+const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
+// const imageUpload = multer({ dest: "/upload" }).fields([{ name: "image" }]);
 // serviceRouter.post("/", async (req, res) => {
 //   const { name, category, subService } = req.body;
 //   try {
@@ -16,19 +19,46 @@ const serviceRouter = Router();
 //   }
 // });
 
-serviceRouter.post("/", async (req, res) => {
-  const image = {
-    name: AbortController,
-    size: 123,
-    type: "image/jpeg",
-    webkitRelativePath: "",
-  };
+serviceRouter.post("/", imageUpload, async (req, res) => {
+  console.log(req.body.subService);
+  const file = req.files.image[0];
+  const serviceName = req.body.name;
+  const categoryId = req.body.category_id;
+  const subService = JSON.parse(req.body.subService);
   try {
-    const { data, error } = await supabase.storage
+    const { data: image, error } = await supabase.storage
       .from("image")
-      .upload(`services-image/A`, image, {});
+      .upload(
+        `services-image/${Date.now() + "_" + file.originalname}`,
+        file.buffer,
+        {
+          contentType: file.mimetype,
+        }
+      );
 
-    return res.json({ data });
+    const imagePath = `https://gjmjphpjtksranfvtdqg.supabase.co/storage/v1/object/public/${image.fullPath}`;
+
+    const { data: service } = await supabase
+      .from("services")
+      .insert({ name: serviceName, category: categoryId, image: imagePath })
+      .select();
+
+    const serviceId = service[0].service_id;
+
+    const newSubService = subService.map((item) => ({
+      ...item,
+      service_id: serviceId,
+    }));
+
+    console.log(newSubService);
+
+    const { data: serviceList } = await supabase
+      .from("service_list")
+      .insert(newSubService)
+      .select();
+
+    console.log("serviceList", serviceList);
+    return res.json({ message: data });
   } catch (error) {
     return res.json({ message: error });
   }
@@ -37,7 +67,6 @@ serviceRouter.post("/", async (req, res) => {
 serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
-    // retrieve all user profile from the "services" table
     let sort, asc;
     switch (sortBy) {
       case "":

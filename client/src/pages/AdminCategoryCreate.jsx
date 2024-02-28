@@ -41,7 +41,7 @@ function AdminCategoryCreate() {
           buttonAdd="สร้าง"
           buttonCancel="ยกเลิก"
           onClickButtonAdd={handleCreateCategory}
-          onClickButtonCancle={() => navigate("/admin-category")}
+          onClickButtonCancel={() => navigate("/admin-category")}
         />
         <div className="flex-1 px-10 py-14 bg-base">
           <MainContent

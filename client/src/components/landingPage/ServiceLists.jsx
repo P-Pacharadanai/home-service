@@ -3,6 +3,7 @@ import axios from "axios";
 import { iconTag, iconTagCircle } from "../../assets/icons";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
+import ServiceCardSkeleton from "../skeleton/SeviceCard";
 
 function ServiceLists() {
   const [serviceList, setServiceList] = useState([]);
@@ -31,6 +32,9 @@ function ServiceLists() {
   return (
     <>
       <div className="flex flex-wrap flex-1 justify-center gap-8 sm:w-[349px] sm:min-w-[340px] w-full rounded-[8px] font-prompt">
+        {serviceList.length === 0 && (
+          <ServiceCardSkeleton itemCount={3} marginTop="mt-4" />
+        )}
         {serviceList.map((service, index) => (
           <div
             key={index}

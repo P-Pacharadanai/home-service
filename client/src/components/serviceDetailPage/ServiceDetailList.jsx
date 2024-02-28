@@ -1,4 +1,6 @@
-import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ServiceDetailSkeleton from "../skeleton/SeviceDetail";
 
 function ServiceDetailList(props) {
   const { serviceList, serviceOrder, setServiceOrder } = props;
@@ -59,9 +61,14 @@ function ServiceDetailList(props) {
   return (
     <div className="max-w-[735px] px-6 pt-8 pb-14 bg-white border border-gray-300 rounded-lg">
       <h3 className="text-xl text-gray-700">
-        เลือกรายการบริการ{serviceList[0]?.services.name}
+        {serviceList[0] ? (
+          "เลือกรายการบริการ" + serviceList[0]?.services.name
+        ) : (
+          <Skeleton width={200} />
+        )}
       </h3>
       <div className="mt-11">
+        {serviceList.length === 0 && <ServiceDetailSkeleton itemCount={3} />}
         {serviceList.map((list, index) => {
           return (
             <div key={list?.service_list_id}>

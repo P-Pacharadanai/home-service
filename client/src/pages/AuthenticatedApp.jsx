@@ -19,7 +19,7 @@ import {
 
 import AdminCategoryCreate from "./AdminCategoryCreate";
 import AdminCategoryDetail from "./AdminCategoryDetail";
-import AdminCategoryEdit from "./AdminCaregoryEdit";
+import AdminCategoryEdit from "./AdminCategoryEdit";
 import AdminAddServicePage from "./AdminAddServicePage";
 import AdminAddPromotion from "./AdminAddPromotion";
 function AuthenticatedApp() {
