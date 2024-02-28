@@ -2,14 +2,13 @@ import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import { Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import supabase from "../utils/supabaseClient.js";
 import { GripVerticalIcon } from "../assets/icons/index.js";
 import axios from "axios";
 
 function AdminAddServicePage() {
   const [serviceName, setServiceName] = useState("");
   const [subService, setSubService] = useState([]);
-  const [uploadedImage, setUploadedImage] = useState();
+  const [uploadImage, setUploadImage] = useState();
   const [imageUrl, setImageUrl] = useState();
   const [categoryId, setCategoryId] = useState();
   const [categoryData, setCategoryData] = useState([]);
@@ -44,9 +43,9 @@ function AdminAddServicePage() {
     setSubService(updatedSubService);
   };
 
-  const handleUploadedImageChange = async (e) => {
+  const handleUploadImageChange = async (e) => {
     const file = e.target.files[0];
-    setUploadedImage(file);
+    setUploadImage(file);
     const imageUrl = URL.createObjectURL(file);
     setImageUrl(imageUrl);
   };
@@ -57,13 +56,15 @@ function AdminAddServicePage() {
     formData.append("name", serviceName);
     formData.append("category_id", categoryId);
     formData.append("subService", JSON.stringify(subService));
-    formData.append("image", uploadedImage);
+    formData.append("image", uploadImage);
 
     const { data } = await axios.post(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service`,
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
+
+    console.log(data);
   };
 
   const handleDragEnd = (result) => {
@@ -81,9 +82,8 @@ function AdminAddServicePage() {
     getCategory();
   }, []);
 
-  console.log(serviceName);
-  console.log(categoryId);
-  console.log(uploadedImage);
+  console.log(uploadImage);
+
   return (
     <div className="flex h-screen font-prompt">
       <div className="h-full">
@@ -150,7 +150,7 @@ function AdminAddServicePage() {
                   รูปภาพ<span className="text-red">*</span>
                 </p>
 
-                <input type="file" onChange={handleUploadedImageChange}></input>
+                <input type="file" onChange={handleUploadImageChange}></input>
                 <img src={imageUrl} />
               </div>
               <div className="flex flex-col gap-5">

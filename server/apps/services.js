@@ -3,9 +3,9 @@ import supabase from "../utils/db.js";
 import multer from "multer";
 
 const serviceRouter = Router();
-const multerUpload = multer({ dest: "uploads/" });
-const imageUpload = multerUpload.fields([{ name: "image", maxCount: 2 }]);
-
+const storage = multer.memoryStorage();
+const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
+// const imageUpload = multer({ dest: "/upload" }).fields([{ name: "image" }]);
 // serviceRouter.post("/", async (req, res) => {
 //   const { name, category, subService } = req.body;
 //   try {
@@ -21,9 +21,21 @@ const imageUpload = multerUpload.fields([{ name: "image", maxCount: 2 }]);
 
 serviceRouter.post("/", imageUpload, async (req, res) => {
   console.log(req.body);
-  console.log(req.files.image);
+  const file = req.files.image[0];
   try {
-    return res.json({ message: `Success` });
+    const { data, error } = await supabase.storage
+      .from("image")
+      .upload(
+        `services-image/${Date.now() + "_" + file.originalname}`,
+        file.buffer,
+        {
+          contentType: file.mimetype,
+        }
+      );
+
+    const imagePath = `https://gjmjphpjtksranfvtdqg.supabase.co/storage/v1/object/public/${data.fullPath}`;
+
+    return res.json({ message: data });
   } catch (error) {
     return res.json({ message: error });
   }
@@ -32,7 +44,6 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
-    // retrieve all user profile from the "services" table
     let sort, asc;
     switch (sortBy) {
       case "":
