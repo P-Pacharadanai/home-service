@@ -7,7 +7,7 @@ categoryRouter.get("/", async (req, res) => {
   try {
     const { keyword } = req.query;
 
-    if (req.query.length > 0) {
+    if (Object.keys(req.query).length) {
       const { data: categories, error } = await supabase
         .from("categories")
         .select("*")
