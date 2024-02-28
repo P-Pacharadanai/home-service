@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft } from 'lucide-react';
 import { SidebarNavAdmin, convertThaiDateTime } from '../common';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { useParams,  useNavigate  } from "react-router-dom";
 import axios from "axios";
 
 const DetailPromotionCode  = () => {
@@ -13,8 +12,8 @@ const DetailPromotionCode  = () => {
   const getCategoryData = async () => {
     try {
     const {data } = await axios.get(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${params.promotionId}`);
-    //setCategoryData(data.data);
-    console.log(data.data);
+    setCategoryData(data.data);
+    //console.log(data.data);
   } catch (error) {
     console.error("Failed to fetch category data:", error);
   }
@@ -42,10 +41,10 @@ const DetailPromotionCode  = () => {
         </div>
         <div className="font-prompt flex flex-col items-center text-gray-700 text-start w-[200px]">
           <p className="text-xs flex pr-6 ">Promotion Code</p>
-          <h2 className="text-2xl font-medium tracking-wide text-gray-950 leading-8">HOME202</h2>
+          <h2 className="text-2xl font-medium tracking-wide text-gray-950 leading-8">{categoryData.code}</h2>
         </div>  
         <div className="w-full flex justify-end">
-          <button className="bg-blue-600 text-white text-lg px-9 py-2 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 border">
+          <button onClick={() => navigate(`/admin-promotion-edit/${categoryData.promotion_id}`)}aria-label={`Edit ${categoryData.code}`} className="bg-blue-600 text-white text-lg px-9 py-2 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600 border">
             แก้ไข
           </button>
         </div>  

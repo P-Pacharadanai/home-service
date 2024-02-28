@@ -47,7 +47,7 @@ function AuthenticatedApp() {
           />
           <Route path="/admin-service" element={<AdminService />} />
           <Route path="/admin-edit-service" element={<AdminEditService />} />
-          <Route path="/admin-promotion-details" element={<DetailPromotionCode />} />
+          <Route path="/admin-promotion-details/:promotionId" element={<DetailPromotionCode />} />
           <Route path="/admin-promotion-add" element={<AdminAddPromotion />} />
           <Route path="/admin-promotion" element={<PromotionCode />} />
           <Route path="/promotion-nav" element={<CodePromoNav />} />
