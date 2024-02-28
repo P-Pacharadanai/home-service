@@ -1,7 +1,7 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-function PromotionListSkeleton({ itemCount }) {
+function CategoryListSkeleton({ itemCount }) {
   return Array(itemCount)
     .fill(0)
     .map((_, index) => {
@@ -33,4 +33,4 @@ function PromotionListSkeleton({ itemCount }) {
     });
 }
 
-export default PromotionListSkeleton;
+export default CategoryListSkeleton;
