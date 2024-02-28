@@ -55,4 +55,37 @@ promotionRouter.get("/", async (req, res) => {
   }
 });
 
+promotionRouter.post("/", async (req, res) => {
+  try {
+    const {
+      promotionCode,
+      promotionType,
+      fixedDiscount,
+      percentDiscount,
+      usageLimit,
+    } = req.body;
+
+    const { data, error } = await supabase
+      .from("promotion")
+      .insert({
+        code: promotionCode,
+        type: promotionType,
+        usage_limit: usageLimit,
+        discount: fixedDiscount,
+        percentDiscount,
+      })
+      .select("*");
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: data[0],
+    });
+  } catch (error) {
+    return res.json({ message: error.message });
+  }
+});
+
 export default promotionRouter;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
@@ -9,14 +9,23 @@ import {
   spanStyle,
   divStyle,
 } from "./AddPromotionStyle";
-const AddPromotionDetail = () => {
-  const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
-  const [promotionType, setPromotionType] = useState(""); // State for promotion type
-  const [discount, setDiscount] = useState(""); // State for discount
-  const [usageLimit, setUsageLimit] = useState(""); // State for usage limit
-  const [expirationDate, setExpirationDate] = useState(null); // State for expiration date
-  const [expirationTime, setExpirationTime] = useState(null); // State for expiration time
-
+const AddPromotionDetail = (props) => {
+  const {
+    promotionCode,
+    setPromotionCode,
+    promotionType,
+    setPromotionType,
+    fixedDiscount,
+    setFixedDiscount,
+    percentDiscount,
+    setPercentDiscount,
+    usageLimit,
+    setUsageLimit,
+    expirationDate,
+    expirationTime,
+    setExpirationDate,
+    setExpirationTime,
+  } = props;
   const changeDate = (_, dateString) => {
     setExpirationDate(dateString);
   };
@@ -61,9 +70,9 @@ const AddPromotionDetail = () => {
             </div>
             <div className="relative">
               <input
-                type="text"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
+                type="number"
+                value={fixedDiscount}
+                onChange={(e) => setFixedDiscount(e.target.value)}
                 className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input ${
                   promotionType === "percent" ? "disabled-input" : ""
                 }`}
@@ -86,15 +95,16 @@ const AddPromotionDetail = () => {
                 className={`text-black text-sm font-normal font-['Prompt'] leading-[21px] ${
                   promotionType === "fixed" ? "text-gray-400" : ""
                 }`}
+                disabled={promotionType === "fixed"}
               >
                 Percent
               </p>
             </div>
             <div className="relative">
               <input
-                type="text"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
+                type="number"
+                value={percentDiscount}
+                onChange={(e) => setPercentDiscount(e.target.value)}
                 className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input ${
                   promotionType === "fixed" ? "disabled-input" : ""
                 }`}
@@ -109,7 +119,7 @@ const AddPromotionDetail = () => {
         <p className={fontStyle}>โควต้าการใช้</p>
         <div className="relative">
           <input
-            type="text"
+            type="number"
             value={usageLimit}
             onChange={(e) => setUsageLimit(e.target.value)}
             className="w-[433px] h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-end items-center gap-2.5 inline-flex focus:outline-none"
