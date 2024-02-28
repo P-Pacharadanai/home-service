@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertModal, SidebarNavAdmin } from "../../components/common";
+import { AlertModal, SidebarNavAdmin , convertThaiDateTime } from "../../components/common";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus ,Trash2 } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,55 +8,69 @@ import { useAuth } from "../../contexts/authentication";
 
 const PromotionCode  = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPromoCodeId, setSelectedPromoCodeId] = useState(null);
+  const [selectedPromoCode, setSelectedPromoCode] = useState("");
   const { state } = useAuth();
-  const [codePromo, setCodePromo] = useState([]);
+  const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState([]);
+  const [deleteCodePromoId, setDeleteCodePromoId] = useState({ id: 0, name: "" });
 
-  const getcodePromo = async () => {
-    try {
-      const apiUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}`;
-      const { data } = await axios.get(apiUrl);
-      setCodePromo(data);
-
-    } catch (error) {
-      if (error.response) {
-        console.error("Resource not found: ");
-      } else {
-        console.error("Error fetching data: ");
-      }
-    } 
+  const getCategoryData = async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`);
+    setCategoryData(data.data);
+    //console.log(data.data);
   };
 
-  useEffect(() => {
-    if (state.user?.userId) {
-      getcodePromo();
-    }
-  }, [state.user?.userId]);
+  const handleConfirmDelete = async () => {
+    console.log("Attempting to delete promo code", deleteCodePromoId);
+    await axios.delete(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
+        deleteCodePromoId.id
+      }`
+    );
+    setIsModalOpen(true)
+    setCategoryData(currentCodes => currentCodes.filter(code => code.id !== deleteCodePromoId.id));
 
-  const navigate = useNavigate();
+    setDeleteCodePromoId({ id: 0, name: "" });
+    navigate("/admin-promotion");
+  };
 
-  const handleDeleteClick = (promoCodeId) => {
-    setSelectedPromoCodeId(promoCodeId);
+  const handleDeleteClick = (promoCode) => {
+    setSelectedPromoCode(promoCode);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-  };
-
-  const handleConfirmDelete = () => {
-    // Correctly filtering by ID 
-    setCodePromo(currentCodes => currentCodes.filter(code => code.id !== selectedPromoCodeId));
-    setIsModalOpen(false);
-    setSelectedPromoCodeId(null); // Resetting the ID
+    setDeleteCodePromoId({ id: 0, name: "" });
   };
 
   const handleNavigation = () => {
     navigate('/admin-promotion-add');
   };
 
+  useEffect(() => {
+    if (state.user?.userId) {
+      getCategoryData();
+    }
+  }, [state.user?.userId]);
+
+  function formatDiscount(discount) {
+    if (typeof discount === 'string' && discount.includes('%')) {
+      return `${discount}`;
+    } else if (typeof discount === 'number') {
+      if (discount === 10) {
+        return `-${discount.toFixed(2)}%`;
+      } else {
+        return `-${discount.toFixed(2)}฿`;
+      }
+    } else {
+      return discount || "No discount";
+    }
+  }
+  
   return (
-    <div className="flex">
+    <div className="flex ">
       <div className=" top-0 left-0 fixed w-64 min-h-screen">
         <SidebarNavAdmin currentPage={"Promotion Code"}/> 
       </div>
@@ -80,7 +94,7 @@ const PromotionCode  = () => {
       </div>
       </nav>
 
-      <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1110px] ml-10 bg-white">
+      <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1110px] ml-10 mb-40 bg-white">
         <div className="grid grid-cols-7 bg-gray-100 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
           <div>Promotion Code</div>
           <div>ประเภท</div>
@@ -91,21 +105,21 @@ const PromotionCode  = () => {
           <div className="text-center ml-20">Action</div>
         </div>
         <div className="divide-y divide-gray-200 py-2">
-          {codePromo.map((promoCode) => (
-            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
-              <div>{promoCode.code}</div>
+          {categoryData.map((promoCode) => (
+            <div key={promoCode.promotion_id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
+              <Link to={`/admin-promotion-details/${promoCode.promotion_id}`}>{promoCode.code}</Link>
               <div>{promoCode.type}</div>
-              <div>{promoCode.usage}</div>
-              <div style={{color: 'rgba(200, 36, 56, 1)'}}>{promoCode.discount}</div>
-              <div>{new Date(promoCode.startDate).toLocaleDateString()}</div>
-              <div className="ml-8 w-full">{new Date(promoCode.endDate).toLocaleDateString()}</div>
+              <div>{promoCode.usage_count}/{promoCode.usage_limit}</div>
+              <div style={{color: 'rgba(200, 36, 56, 1)'}}>{formatDiscount(promoCode.discount)}</div>
+              <div>{convertThaiDateTime(promoCode.expiration_date)}</div>
+              <div className="ml-8 w-full">{convertThaiDateTime(promoCode.created_at)}</div>
               <div className="flex justify-center gap-6 ml-20">
-                <button onClick={() => handleDeleteClick(promoCode.id)} aria-label={`Delete ${promoCode.code}`}>
+                <button onClick={() => handleDeleteClick(`${promoCode.code}`)}>
                   <Trash2 className="w-4 h-4 text-gray-500 hover:text-gray-950" />
                 </button>
-                <Link to={`/admin-promotion-details/${promoCode.id}`} aria-label={`Edit ${promoCode.code}`} >
+                <button onClick={() => navigate(`/admin-promotion-edit/${promoCode.promotion_id}`)}aria-label={`Edit ${promoCode.code}`} >
                   <img src={savefileIcon} alt="Edit" className="w-4 h-4"/>
-                </Link>
+                </button>
               </div>
             </div>
           ))}
@@ -114,8 +128,9 @@ const PromotionCode  = () => {
 
       <AlertModal
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmDelete}
+        onClose= {handleCloseModal}
+        onConfirm={handleConfirmDelete} 
+        promoCode={selectedPromoCode} 
       /> 
     </div>
     </div>
