@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertModal, SidebarNavAdmin } from "../../components/common";
+import { AlertModal, SidebarNavAdmin , convertThaiDateTime } from "../../components/common";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus ,Trash2 } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,30 +10,22 @@ const PromotionCode  = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPromoCodeId, setSelectedPromoCodeId] = useState(null);
   const { state } = useAuth();
-  const [codePromo, setCodePromo] = useState([]);
+  const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState([]);
 
-  const getcodePromo = async () => {
-    try {
-      const apiUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}`;
-      const { data } = await axios.get(apiUrl);
-      setCodePromo(data);
 
-    } catch (error) {
-      if (error.response) {
-        console.error("Resource not found: ");
-      } else {
-        console.error("Error fetching data: ");
-      }
-    } 
+  const getCategoryData = async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`);
+    setCategoryData(data.data);
+    //console.log(data.data);
   };
 
   useEffect(() => {
     if (state.user?.userId) {
-      getcodePromo();
+      getCategoryData();
     }
   }, [state.user?.userId]);
-
-  const navigate = useNavigate();
 
   const handleDeleteClick = (promoCodeId) => {
     setSelectedPromoCodeId(promoCodeId);
@@ -52,7 +44,7 @@ const PromotionCode  = () => {
   };
 
   const handleNavigation = () => {
-    navigate('/admin-promotion-add');
+    navigate('/admin-promotion-details');
   };
 
   return (
@@ -91,19 +83,19 @@ const PromotionCode  = () => {
           <div className="text-center ml-20">Action</div>
         </div>
         <div className="divide-y divide-gray-200 py-2">
-          {codePromo.map((promoCode) => (
-            <div key={promoCode.id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
+          {categoryData.map((promoCode) => (
+            <div key={promoCode.promotion_id} className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt">
               <div>{promoCode.code}</div>
               <div>{promoCode.type}</div>
-              <div>{promoCode.usage}</div>
+              <div>{promoCode.usage_count}</div>
               <div style={{color: 'rgba(200, 36, 56, 1)'}}>{promoCode.discount}</div>
-              <div>{new Date(promoCode.startDate).toLocaleDateString()}</div>
-              <div className="ml-8 w-full">{new Date(promoCode.endDate).toLocaleDateString()}</div>
+              <div>{convertThaiDateTime(promoCode.expiration_date)}</div>
+              <div className="ml-8 w-full">{convertThaiDateTime(promoCode.created_at)}</div>
               <div className="flex justify-center gap-6 ml-20">
                 <button onClick={() => handleDeleteClick(promoCode.id)} aria-label={`Delete ${promoCode.code}`}>
                   <Trash2 className="w-4 h-4 text-gray-500 hover:text-gray-950" />
                 </button>
-                <Link to={`/admin-promotion-details/${promoCode.id}`} aria-label={`Edit ${promoCode.code}`} >
+                <Link to={`/admin-promotion-details/${promoCode.promotion_id}`} aria-label={`Edit ${promoCode.code}`} >
                   <img src={savefileIcon} alt="Edit" className="w-4 h-4"/>
                 </Link>
               </div>

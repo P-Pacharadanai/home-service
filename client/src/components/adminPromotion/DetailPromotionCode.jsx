@@ -1,10 +1,28 @@
-import React from 'react';
+import { useState, useEffect } from "react";
 import { ChevronLeft } from 'lucide-react';
-import { SidebarNavAdmin } from '../common';
+import { SidebarNavAdmin, convertThaiDateTime } from '../common';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const DetailPromotionCode  = () => {
   const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState({});
+  const params = useParams();
+
+  const getCategoryData = async () => {
+    try {
+    const {data } = await axios.get(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${params.promotionId}`);
+    //setCategoryData(data.data);
+    console.log(data.data);
+  } catch (error) {
+    console.error("Failed to fetch category data:", error);
+  }
+};
+
+  useEffect(() => {
+    getCategoryData();
+  }, []);
   
   const handleBackClick = () => {
     navigate('/admin-promotion');
@@ -36,33 +54,33 @@ const DetailPromotionCode  = () => {
       <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1110px] w-full mt-10 mb-40 overflow-auto">
         <div className="grid grid-cols-2 p-6 w-[850px]">
           <p className="font-medium max-w-40">Promotion Code</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">HOME202</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">{categoryData.code}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">ประเภท</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">Fixed</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">{categoryData.type}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">ราคาที่ลด</p>
-          <p className="flex justify-start items-start -ml-32" style={{color: 'rgba(200, 36, 56, 1)'}}>-50.00฿</p>
+          <p className="flex justify-start items-start -ml-32" style={{color: 'rgba(200, 36, 56, 1)'}}>{categoryData.discount}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">โควต้าการใช้</p>
-          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">10/100 ครั้ง</p>
+          <p className="flex justify-start items-start -ml-32 max-w-40 text-black">{categoryData.usage_count}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">วันหมดอายุ</p>
-          <p className="flex justify-start items-start -ml-32 text-black">12/06/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">{convertThaiDateTime(categoryData.expiration_date)}</p>
         </div>
         
         <hr className="border-t border-gray-300 w-full mb-2 mt-2" /> 
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
-          <p className="flex justify-start items-start -ml-32 text-black">12/02/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">{convertThaiDateTime(categoryData.created_at)}</p>
         </div>
         <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
           <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
-          <p className="flex justify-start items-start -ml-32 text-black">12/02/2024 10:30 PM</p>
+          <p className="flex justify-start items-start -ml-32 text-black">{convertThaiDateTime(categoryData.updated_at)}</p>
         </div>
       </div>
       </div>
