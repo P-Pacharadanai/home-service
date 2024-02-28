@@ -22,9 +22,9 @@ function AdminAddServicePage() {
   const addSubService = () => {
     const newSubServiceItem = {
       id: Date.now(),
-      serviceName: "",
-      serviceCost: "",
-      serviceUnit: "",
+      title: "",
+      price: "",
+      unit: "",
     };
 
     setSubService([...subService, newSubServiceItem]);
@@ -52,10 +52,11 @@ function AdminAddServicePage() {
 
   const handleCreate = async () => {
     const formData = new FormData();
+    const newSubService = subService.map(({ id, ...rest }) => rest);
 
     formData.append("name", serviceName);
     formData.append("category_id", categoryId);
-    formData.append("subService", JSON.stringify(subService));
+    formData.append("subService", JSON.stringify(newSubService));
     formData.append("image", uploadImage);
 
     const { data } = await axios.post(
@@ -82,7 +83,7 @@ function AdminAddServicePage() {
     getCategory();
   }, []);
 
-  console.log(uploadImage);
+  console.log(subService);
 
   return (
     <div className="flex h-screen font-prompt">
@@ -151,7 +152,7 @@ function AdminAddServicePage() {
                 </p>
 
                 <input type="file" onChange={handleUploadImageChange}></input>
-                <img src={imageUrl} />
+                <img className=" w-[300px] h-[300px]" src={imageUrl} />
               </div>
               <div className="flex flex-col gap-5">
                 <p>รายการบริการย่อย</p>
@@ -187,7 +188,7 @@ function AdminAddServicePage() {
                                   onChange={(e) =>
                                     handleSubServiceChange(
                                       index,
-                                      "serviceName",
+                                      "title",
                                       e.target.value
                                     )
                                   }
@@ -202,7 +203,7 @@ function AdminAddServicePage() {
                                   onChange={(e) =>
                                     handleSubServiceChange(
                                       index,
-                                      "serviceCost",
+                                      "price",
                                       e.target.value
                                     )
                                   }
@@ -216,7 +217,7 @@ function AdminAddServicePage() {
                                   onChange={(e) =>
                                     handleSubServiceChange(
                                       index,
-                                      "serviceUnit",
+                                      "unit",
                                       e.target.value
                                     )
                                   }

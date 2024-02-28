@@ -20,10 +20,13 @@ const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
 // });
 
 serviceRouter.post("/", imageUpload, async (req, res) => {
-  console.log(req.body);
+  console.log(req.body.subService);
   const file = req.files.image[0];
+  const serviceName = req.body.name;
+  const categoryId = req.body.category_id;
+  const subService = JSON.parse(req.body.subService);
   try {
-    const { data, error } = await supabase.storage
+    const { data: image, error } = await supabase.storage
       .from("image")
       .upload(
         `services-image/${Date.now() + "_" + file.originalname}`,
@@ -33,8 +36,28 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
         }
       );
 
-    const imagePath = `https://gjmjphpjtksranfvtdqg.supabase.co/storage/v1/object/public/${data.fullPath}`;
+    const imagePath = `https://gjmjphpjtksranfvtdqg.supabase.co/storage/v1/object/public/${image.fullPath}`;
 
+    const { data: service } = await supabase
+      .from("services")
+      .insert({ name: serviceName, category: categoryId, image: imagePath })
+      .select();
+
+    const serviceId = service[0].service_id;
+
+    const newSubService = subService.map((item) => ({
+      ...item,
+      service_id: serviceId,
+    }));
+
+    console.log(newSubService);
+
+    const { data: serviceList } = await supabase
+      .from("service_list")
+      .insert(newSubService)
+      .select();
+
+    console.log("serviceList", serviceList);
     return res.json({ message: data });
   } catch (error) {
     return res.json({ message: error });
