@@ -64,8 +64,6 @@ function AdminAddServicePage() {
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
-
-    console.log(data);
   };
 
   const handleDragEnd = (result) => {
