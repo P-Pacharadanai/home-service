@@ -50,7 +50,7 @@ function ServiceLists(props) {
                 />
                 <div className="mt-4 flex gap-2.5 pl-4">
                   <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">
-                    บริการ{service.category}
+                    บริการ{`${service.category}`}
                   </p>
                 </div>
                 <h3 className="mt-2 text-xl leading-normal font-semibold pl-4 text-gray-950">
