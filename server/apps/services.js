@@ -66,72 +66,57 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 
 serviceRouter.get("/", async (req, res) => {
   try {
+    // Extract filter parameters (optional)
     const { keyword, category, min, max, sortBy } = req.query;
 
-    if (category || min || max || sortBy) {
-      console.log("A");
-      // retrieve all user profile from the "services" table
-      let sort, asc;
-      switch (sortBy) {
-        case "ASC":
-          (sort = "price"), (asc = true);
-          break;
-        case "DESC":
-          (sort = "price"), (asc = false);
-          break;
-        default:
-          (sort = "category_id"), (asc = true);
-          break;
-      }
+    // Build the base query
+    const getData = supabase
+      .from("services")
+      .select(
+        `*,service_list(title,price,unit), categories(id,name, background_color, text_color)`
+      );
 
-      let query = supabase
-        .from("services")
-        .select(`*,categories(name,background_color,text_color)`);
-
-      if (Number(category) !== 0) {
-        query = query.eq("category_id", Number(category));
-      }
-
-      let { data: services, error } = await query
-        .like("name", `%${keyword}%` || "%")
-        .gte("price", min)
-        .lte("price", max)
-        .order(sort, { ascending: asc });
-
-      if (error) {
-        console.log("Error:", error);
-        return res.json({ message: error });
-      }
-
-      console.log("Data:", services);
-      return res.json({ data: services });
-
-      //check if there's an error during the data retrieval
-
-      //send the retrieved services profile as a JSON response
-    } else {
-      console.log("B");
-      let newKeyword;
-      if (keyword.trim() !== "") {
-        newKeyword = `%${keyword}%`;
-      } else {
-        newKeyword = "%";
-      }
-
-      const { data: services, error } = await supabase
-        .from("services")
-        .select(`*,categories(name,background_color,text_color)`)
-        .ilike("name", newKeyword)
-        .order("category_id", { ascending: true });
-
-      if (error) {
-        return res.json({ message: error });
-      }
-
-      return res.json({ data: services });
+    if (keyword) {
+      getData.ilike("name", `%${keyword?.trim() || "%"}%`);
     }
+
+    // Apply optional filtering based on provided parameters
+    if (category && Number(category) !== 0) {
+      getData.eq("category_id", Number(category));
+    }
+
+    if (min) {
+      getData.gte("price", min);
+    }
+
+    if (max) {
+      getData.lte("price", max);
+    }
+
+    // Apply sorting (default: category_id asc)
+    const sort =
+      sortBy === "ASC" || sortBy === "DESC" ? "price" : "category_id";
+    const ascending = sortBy === "DESC" ? false : true;
+
+    getData
+      .order(sort, { ascending: ascending })
+      .order("price", { referencedTable: "service_list", ascending: true });
+
+    console.log(sortBy);
+    // Apply keyword filtering (case-insensitive)
+    // Execute the getData and handle errorsce
+    const { data: services, error } = await getData;
+
+    if (error) {
+      console.error("Error:", error);
+      return res.status(400).json({ message: error.message }); // Use status code and error message
+    }
+
+    // Return the retrieved services as JSON response
+    return res.json({ data: services });
   } catch (error) {
-    return res.json({ message: error });
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" }); // Generic error message for user
   }
 });
 

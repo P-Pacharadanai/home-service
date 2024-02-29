@@ -50,8 +50,14 @@ function ServiceLists() {
               className="w-full h-[180px] rounded-tl-lg rounded-tr-lg object-cover"
             />
             <div className="mt-4 flex gap-2.5 pl-4">
-              <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">
-                บริการ{service.category}
+              <p
+                className="text-md text-blue-800 p-2.5 rounded-xl leading-none"
+                style={{
+                  backgroundColor: `${service.categories.background_color}`,
+                  color: `${service.categories.text_color}`,
+                }}
+              >
+                บริการ{service.categories.name}
               </p>
             </div>
             <h3 className="mt-2 text-xl leading-normal font-semibold pl-4 text-gray-950">
