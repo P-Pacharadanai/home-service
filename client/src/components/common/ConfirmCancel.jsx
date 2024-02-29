@@ -3,7 +3,7 @@ import { XmarkIcon } from "../../assets/icons/index";
 
 const ConfirmCancel = ({ onDelete, onClose, itemName }) => {
   return (
-    <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-70">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
       <div
         id="confirm-cancel-box"
         className="font-prompt bg-white rounded-2xl flex flex-col items-center justify-center leading-8 min-w-[360px] h-[270px] drop-shadow-2xl "
