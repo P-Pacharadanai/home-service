@@ -3,54 +3,9 @@ import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
 import "antd/lib/locale/th_TH";
-import {
-  pickerStyle,
-  fontStyle,
-  spanStyle,
-  divStyle,
-} from "./EditPromotionStyle";
-
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { convertThaiDateTime } from "../common";
+import { pickerStyle, fontStyle, divStyle } from "./EditPromotionStyle";
 
 const EditPromotionDetail = (props) => {
-  const navigate = useNavigate();
-  const [categoryData, setCategoryData] = useState({});
-  const params = useParams();
-
-  const getCategoryData = async () => {
-    try {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
-          params.promotionId
-        }`
-      );
-      setCategoryData(data.data);
-      //console.log(data.data);
-    } catch (error) {
-      console.error("Failed to fetch category data:", error);
-    }
-  };
-
-  useEffect(() => {
-    getCategoryData();
-  }, []);
-
-  function formatDiscount(discount) {
-    if (typeof discount === "string" && discount.includes("%")) {
-      return `${discount}`;
-    } else if (typeof discount === "number") {
-      if (discount === 10) {
-        return `-${discount.toFixed(2)}%`;
-      } else {
-        return `-${discount.toFixed(2)}฿`;
-      }
-    } else {
-      return discount || "No discount";
-    }
-  }
-
   const {
     promotionCode,
     setPromotionCode,
@@ -69,6 +24,9 @@ const EditPromotionDetail = (props) => {
     setExpirationDate,
     setExpirationTime,
   } = props;
+
+  const { categoryData, onChangeHandler } = props;
+
   const changeDate = (_, dateString) => {
     setExpirationDate(dateString);
   };
@@ -90,6 +48,7 @@ const EditPromotionDetail = (props) => {
           onChange={(e) => setPromotionCode(e.target.value)}
           className="w-[433px] h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-start items-center gap-2.5 flex  focus:outline-none "
         />
+        {categoryData?.code}
       </div>
       <div className="w-[497px] h-24 justify-start items-start gap-6 inline-flex">
         <p className={fontStyle}>ประเภท</p>
@@ -206,17 +165,17 @@ const EditPromotionDetail = (props) => {
         />
       </div>
       <hr className="border-t border-gray-300 w-full mb-2 mt-2" />
-      <div className="grid grid-cols-2 p-4 w-[850px] font-prompt">
-        <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
-        <p className="flex justify-start items-start -ml-32 text-black">
-          {convertThaiDateTime(categoryData.created_at)}
-        </p>
+      <div className={divStyle}>
+        <p className={fontStyle}>สร้างเมื่อ</p>
+        <div>
+          <p className=" flex w-[433px] h-11 px-4 py-2.5 text-black">1234</p>
+        </div>
       </div>
-      <div className="grid grid-cols-2 p-4 w-[850px] font-prompt">
-        <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
-        <p className="flex justify-start items-start -ml-32 text-black">
-          {convertThaiDateTime(categoryData.updated_at)}
-        </p>
+      <div className={divStyle}>
+        <p className={fontStyle}>แก้ไขล่าสุด</p>
+        <div>
+          <p className=" flex w-[433px] h-11 px-4 py-2.5 text-black">1234</p>
+        </div>
       </div>
     </div>
   );
