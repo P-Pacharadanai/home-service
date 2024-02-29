@@ -1,31 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { SidebarNavAdmin } from "../components/common/";
-import {
-  AddPromotionDetail,
-  AddPromotionNav,
-} from "../components/adminAddPromotion";
 import { useState } from "react";
-import axios from "axios";
+import { SidebarNavAdmin } from "../components/common/";
+import { EditPromotionNav } from "../components/adminPromotion";
+import EditPromotionDetail from "../components/adminEditPromotion/EditPromotionDetail";
 
-const AdminAddPromotion = () => {
-  const [promotionData, setPromotionData] = useState({});
-  const handleCreatePromotion = async () => {
-    const formData = new FormData();
-    formData.append("promotionCode", promotionCode);
-    formData.append("promotionType", promotionType);
-    formData.append("discount", discount);
-    formData.append("usageLimit", usageLimit);
-
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
-      promotionData
-    );
-    console.log(promotionData);
-    navigate(`/admin-promotion/${data?.data?.id}`);
-  };
-  {
-  }
-
+const AdminEditPromotion = () => {
   const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
   const [promotionType, setPromotionType] = useState(""); // State for promotion type
   const [fixedDiscount, setFixedDiscount] = useState("");
@@ -43,15 +22,15 @@ const AdminAddPromotion = () => {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <AddPromotionNav
-          buttonAdd="สร้าง"
+        <EditPromotionNav
+          buttonAdd="แก้ไข"
           buttonCancel="ยกเลิก"
-          handleCreatePromotion={handleCreatePromotion}
+          //handleEditPromotion={handleEditPromotion}
           onClickButtonCancel={() => navigate("/admin-promotion")}
         />
 
         <div className="flex-1 p-8  overflow-y-auto bg-base relative">
-          <AddPromotionDetail
+          <EditPromotionDetail
             promotionCode={promotionCode}
             setPromotionCode={setPromotionCode}
             promotionType={promotionType}
@@ -75,4 +54,4 @@ const AdminAddPromotion = () => {
   );
 };
 
-export default AdminAddPromotion;
+export default AdminEditPromotion;

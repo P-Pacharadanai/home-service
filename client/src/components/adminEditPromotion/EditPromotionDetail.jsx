@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
@@ -8,8 +8,49 @@ import {
   fontStyle,
   spanStyle,
   divStyle,
-} from "./AddPromotionStyle";
-const AddPromotionDetail = (props) => {
+} from "./EditPromotionStyle";
+
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { convertThaiDateTime } from "../common";
+
+const EditPromotionDetail = (props) => {
+  const navigate = useNavigate();
+  const [categoryData, setCategoryData] = useState({});
+  const params = useParams();
+
+  const getCategoryData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
+          params.promotionId
+        }`
+      );
+      setCategoryData(data.data);
+      //console.log(data.data);
+    } catch (error) {
+      console.error("Failed to fetch category data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCategoryData();
+  }, []);
+
+  function formatDiscount(discount) {
+    if (typeof discount === "string" && discount.includes("%")) {
+      return `${discount}`;
+    } else if (typeof discount === "number") {
+      if (discount === 10) {
+        return `-${discount.toFixed(2)}%`;
+      } else {
+        return `-${discount.toFixed(2)}฿`;
+      }
+    } else {
+      return discount || "No discount";
+    }
+  }
+
   const {
     promotionCode,
     setPromotionCode,
@@ -41,7 +82,7 @@ const AddPromotionDetail = (props) => {
   };
   console.log(discount);
   return (
-    <div className="w-[1120px] h-[428px] px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 inline-flex font-['Prompt'] ">
+    <div className="w-[1120px]  px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 inline-flex font-['Prompt'] ">
       <div className={divStyle}>
         <p className={fontStyle}>Promotion Code</p>
         <input
@@ -74,15 +115,18 @@ const AddPromotionDetail = (props) => {
               <input
                 type="number"
                 value={fixedDiscount}
+                placeholder="฿"
+                style={{ textAlign: "right" }}
                 onChange={(e) => {
-                  setFixedDiscount(e.target.value), setDiscount(e.target.value);
+                  const newValue = e.target.value;
+                  setFixedDiscount(newValue);
+                  setDiscount(newValue);
                 }}
                 className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input ${
                   promotionType === "percent" ? "disabled-input" : ""
                 }`}
                 disabled={promotionType === "percent"}
               />
-              <span className={spanStyle}>฿</span>
             </div>
           </div>
 
@@ -108,6 +152,8 @@ const AddPromotionDetail = (props) => {
               <input
                 type="number"
                 value={percentDiscount}
+                placeholder="%"
+                style={{ textAlign: "right" }}
                 onChange={(e) => {
                   setPercentDiscount(e.target.value),
                     setDiscount(e.target.value);
@@ -117,28 +163,29 @@ const AddPromotionDetail = (props) => {
                 }`}
                 disabled={promotionType === "fixed"}
               />
-              <span className={spanStyle}>%</span>
             </div>
           </div>
         </div>
       </div>
       <div className={divStyle}>
         <p className={fontStyle}>โควต้าการใช้</p>
-        <div className="relative">
+        <div>
           <input
             type="number"
             value={usageLimit}
             onChange={(e) => setUsageLimit(e.target.value)}
-            className="w-[433px] h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 justify-end items-center gap-2.5 inline-flex focus:outline-none"
+            placeholder="ครั้ง"
+            style={{ textAlign: "right" }}
+            className=" flex w-[433px] h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 gap-2.5 focus:outline-none"
           />
-          <span className={spanStyle}>ครั้ง</span>
         </div>
       </div>
+
       <div className={divStyle}>
         <p className={fontStyle}>วันหมดอายุ</p>
         <DatePicker
           format="DD/MM/YYYY"
-          locale={{ lang: { locale: "th" } }}
+          locale="th_TH"
           disabledDate={disabledDate}
           showDate={{
             defaultValue: dayjs().format("DD/MM/YYYY"),
@@ -158,8 +205,21 @@ const AddPromotionDetail = (props) => {
           style={pickerStyle}
         />
       </div>
+      <hr className="border-t border-gray-300 w-full mb-2 mt-2" />
+      <div className="grid grid-cols-2 p-4 w-[850px] font-prompt">
+        <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
+        <p className="flex justify-start items-start -ml-32 text-black">
+          {convertThaiDateTime(categoryData.created_at)}
+        </p>
+      </div>
+      <div className="grid grid-cols-2 p-4 w-[850px] font-prompt">
+        <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
+        <p className="flex justify-start items-start -ml-32 text-black">
+          {convertThaiDateTime(categoryData.updated_at)}
+        </p>
+      </div>
     </div>
   );
 };
 
-export default AddPromotionDetail;
+export default EditPromotionDetail;
