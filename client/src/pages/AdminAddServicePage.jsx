@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GripVerticalIcon } from "../assets/icons/index.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AdminAddServicePage() {
   const [serviceName, setServiceName] = useState("");
@@ -12,6 +13,8 @@ function AdminAddServicePage() {
   const [imageUrl, setImageUrl] = useState();
   const [categoryId, setCategoryId] = useState();
   const [categoryData, setCategoryData] = useState([]);
+
+  const navigate = useNavigate();
 
   const getCategory = async () => {
     const categoryUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category`;
@@ -51,6 +54,16 @@ function AdminAddServicePage() {
   };
 
   const handleCreate = async () => {
+    if (
+      !serviceName ||
+      !categoryId ||
+      !uploadImage ||
+      subService.some((item) => !item.title || !item.price || !item.unit)
+    ) {
+      alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
+      return;
+    }
+
     const formData = new FormData();
     const newSubService = subService.map(({ id, ...rest }) => rest);
 
@@ -64,6 +77,7 @@ function AdminAddServicePage() {
       formData,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
+    navigate("/admin-service");
   };
 
   const handleDragEnd = (result) => {
@@ -80,8 +94,6 @@ function AdminAddServicePage() {
     addSubService();
     getCategory();
   }, []);
-
-  console.log(subService);
 
   return (
     <div className="flex h-screen font-prompt">

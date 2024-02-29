@@ -71,7 +71,16 @@ function ServiceLists() {
                 height={4}
                 className="absolute -mb-3 mt-1 ml-1"
               />
-              <p className="text-gray-700">ค่าบริการประมาณ {service.price} ฿</p>
+              <p className="text-gray-700">
+                ค่าบริการประมาณ{" "}
+                {service.service_list.length === 1
+                  ? service.service_list[0].price.toLocaleString()
+                  : `${service.service_list[0].price.toLocaleString()} -
+                    ${service.service_list[
+                      service.service_list.length - 1
+                    ].price.toLocaleString()}`}
+                {" ฿"}
+              </p>
               <p className="leading-normal text-gray-700 tracking-wide text-sm">
                 {service.type}
               </p>

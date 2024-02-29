@@ -71,7 +71,14 @@ function ServiceLists(props) {
                       height={6}
                       className="relative "
                     />
-                    {service.price}
+                    ค่าบริการประมาณ{" "}
+                    {service.service_list.length === 1
+                      ? service.service_list[0].price.toLocaleString()
+                      : `${service.service_list[0].price.toLocaleString()} -
+                    ${service.service_list[
+                      service.service_list.length - 1
+                    ].price.toLocaleString()}`}
+                    {" ฿"}
                     <img
                       src={iconTagCircle}
                       width={4}

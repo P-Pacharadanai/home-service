@@ -5,19 +5,6 @@ import multer from "multer";
 const serviceRouter = Router();
 const storage = multer.memoryStorage();
 const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
-// const imageUpload = multer({ dest: "/upload" }).fields([{ name: "image" }]);
-// serviceRouter.post("/", async (req, res) => {
-//   const { name, category, subService } = req.body;
-//   try {
-//     const { error } = await supabase.from("services_list").insert();
-
-//     return res.json({
-//       clientSecret: paymentIntent.client_secret,
-//     });
-//   } catch (error) {
-//     return res.json({ message: error });
-//   }
-// });
 
 serviceRouter.post("/", imageUpload, async (req, res) => {
   console.log(req.body.subService);
@@ -25,6 +12,10 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
   const serviceName = req.body.name;
   const categoryId = req.body.category_id;
   const subService = JSON.parse(req.body.subService);
+
+  const subServicePrice = subService.map((item) => item.price);
+  const sortPrice = subServicePrice.sort((a, b) => a - b);
+
   try {
     const { data: image, error } = await supabase.storage
       .from("image")
@@ -40,7 +31,12 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 
     const { data: service } = await supabase
       .from("services")
-      .insert({ name: serviceName, category: categoryId, image: imagePath })
+      .insert({
+        name: serviceName,
+        price: sortPrice[0],
+        category_id: categoryId,
+        image: imagePath,
+      })
       .select();
 
     const serviceId = service[0].service_id;
@@ -49,8 +45,6 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
       ...item,
       service_id: serviceId,
     }));
-
-    console.log(newSubService);
 
     const { data: serviceList } = await supabase
       .from("service_list")
