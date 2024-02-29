@@ -69,9 +69,9 @@ function SearchTab(props) {
             placeholder="บริการทั้งหมด"
             className="font-semibold text-center"
           >
-            <option value="ทั่วไป">บริการทั่วไป</option>
-            <option value="ห้องครัว">บริการห้องครัว</option>
-            <option value="ห้องน้ำ">บริการห้องน้ำ</option>
+            <option value="17">บริการทั่วไป</option>
+            <option value="2">บริการห้องครัว</option>
+            <option value="3">บริการห้องน้ำ</option>
           </Select>
         </div>
 

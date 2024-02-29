@@ -84,7 +84,7 @@ const CategoryTable = (props) => {
                 ref={provided.innerRef}
               >
                 {categories.map((category, index) => {
-                  const creatAt = convertThaiDateTime(category.created_at);
+                  const createAt = convertThaiDateTime(category.created_at);
                   const updateAt = convertThaiDateTime(category.updated_at);
 
                   return (
@@ -120,7 +120,7 @@ const CategoryTable = (props) => {
                               บริการ{category.name}
                             </p>
                           </td>
-                          <td className="w-[245px] py-8 px-6 ">{creatAt}</td>
+                          <td className="w-[245px] py-8 px-6 ">{createAt}</td>
                           <td className="w-[357px] py-8 px-6 ">{updateAt}</td>
                           <td className="w-[120px] py-8 px-6 text-center">
                             <div className="flex flex-row items-center justify-center gap-7">

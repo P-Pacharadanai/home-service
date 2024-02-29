@@ -67,35 +67,58 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 serviceRouter.get("/", async (req, res) => {
   try {
     const { keyword, category, min, max, sortBy } = req.query;
-    let sort, asc;
-    switch (sortBy) {
-      case "":
-        (sort = "service_id"), (asc = true);
-        break;
-      case "ASC":
-        (sort = "price"), (asc = true);
-        break;
-      case "DESC":
-        (sort = "price"), (asc = false);
-        break;
+
+    if (category || min || max || sortBy) {
+      // retrieve all user profile from the "services" table
+      let sort, asc;
+      switch (sortBy) {
+        case "":
+          (sort = "service_id"), (asc = true);
+          break;
+        case "ASC":
+          (sort = "price"), (asc = true);
+          break;
+        case "DESC":
+          (sort = "price"), (asc = false);
+          break;
+      }
+
+      let { data: services, error } = await supabase
+        .from("services")
+        .select(`*,categories(name,background_color,text_color)`)
+        .like("name", `%${keyword}%` || "%")
+        .like("category", category || "%")
+        .gte("price", min)
+        .lte("price", max)
+        .order(sort, { ascending: asc });
+
+      //check if there's an error during the data retrieval
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      //send the retrieved services profile as a JSON response
+      return res.json({ data: services });
+    } else {
+      let newKeyword;
+      if (keyword.trim() !== "") {
+        newKeyword = `%${keyword}%`;
+      } else {
+        newKeyword = "%";
+      }
+
+      const { data: services, error } = await supabase
+        .from("services")
+        .select(`*,categories(name,background_color,text_color)`)
+        .ilike("name", newKeyword)
+        .order("service_id", { ascending: true });
+
+      if (error) {
+        return res.json({ message: error });
+      }
+
+      return res.json({ data: services });
     }
-
-    let { data: services, error } = await supabase
-      .from("services")
-      .select(`*`)
-      .like("name", `%${keyword}%` || "%")
-      .like("category", category || "%")
-      .gte("price", min)
-      .lte("price", max)
-      .order(sort, { ascending: asc });
-
-    //check if there's an error during the data retrieval
-    if (error) {
-      return res.json({ message: error });
-    }
-
-    //send the retrieved services profile as a JSON response
-    return res.json({ data: services });
   } catch (error) {
     return res.json({ message: error });
   }

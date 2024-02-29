@@ -1,136 +1,180 @@
+import React, { useState, useEffect } from "react";
 import { GripVerticalIcon, TrashIcon, PenSquareIcon } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { convertThaiDateTime } from "../common";
+const ServiceService = (props) => {
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const CategoryService = () => {
-  const services = [
-    {
-      order: 1,
-      name: "ล้างแอร์",
-      category: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 2,
-      name: "ติดตั้งแอร์",
-      category: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 3,
-      name: "ทำความสะอาดทั่วไป",
-      category: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 4,
-      name: "ซ่อมแอร์",
-      category: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 5,
-      name: "ซ่อมเครื่องซักผ้า",
-      category: "บริการทั่วไป",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
+  const navigate = useNavigate();
 
-    {
-      order: 6,
-      name: "ติดตั้งเตาแก๊ส",
-      category: "บริการห้องครัว",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 7,
-      name: "ติดตั้งเครื่องดูดควัน",
-      category: "บริการห้องครัว",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 8,
-      name: "ติดตั้งชักโครก",
-      category: "บริการห้องน้ำ",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-    {
-      order: 9,
-      name: "ติดตั้งเครื่องทำน้ำอุ่น",
-      category: "บริการห้องน้ำ",
-      created: "12/02/2022 10:30PM",
-      updated: "12/02/2022 10:30PM",
-    },
-  ];
+  const getServiceData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service?keyword=${
+          props.inputKeyword
+        }`
+      );
+      setServices(data.data);
 
-  const categoryColorMap = {
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const updateServiceData = async (newCategories) => {
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service`,
+      {
+        services: newServices,
+      }
+    );
+
+    console.log("Data: ", data);
+  };
+
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const reOrderedService = Array.from(services);
+    const [reOrderedItem] = reOrderedService.splice(result.source.index, 1);
+    reOrderedService.splice(result.destination.index, 0, reOrderedItem);
+
+    const updatedService = reOrderedService.map((service, index) => ({
+      ...service,
+      index: index + 1,
+    }));
+
+    // updateServiceData(updatedService);
+
+    setServices(updatedService);
+  };
+
+  const handleConfirmDelete = (id, name) => {
+    props.setDeleteServiceId({
+      id: id,
+      name: "บริการ" + name,
+    });
+  };
+
+  useEffect(() => {
+    getServiceData();
+  }, [props.inputKeyword, props.refresh]);
+  console.log("Services:", services);
+
+  const ServiceColorMap = {
     บริการทั่วไป: "py-1 px2.5 text-blue-800 bg-blue-100",
     บริการห้องครัว: "py-1 px2.5 text-purple-900 bg-purple-100",
     บริการห้องน้ำ: "py-1 px2.5 text-green-900 bg-green-100",
   };
 
   return (
-    <div className="flex mt-10 ml-10">
-      <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
-        <thead>
-          <tr className="bg-gray-100 text-gray-700 text-sm">
-            <th className="py-2.5 px-6 w-[56px]"> </th>{" "}
-            <th className="py-2.5 px-6 w-[58px]">ลำดับ</th>
-            <th className="py-2.5 px-6 w-[262px] text-left">ชื่อบริการ</th>
-            <th className="py-2.5 px-6 w-[225px] text-left">หมวดหมู่</th>
-            <th className="py-2.5 px-6 w-[209px] text-left">สร้างเมื่อ</th>
-            <th className="py-2.5 px-6 w-[226px] text-left">แก้ไขล่าสุด</th>
-            <th className="py-2.5 px-6 w-[120px]">Action</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white">
-          {services.map((service, index) => (
-            <tr key={index} className="border-b">
-              <td className="py-2 px-4 ">
-                <img
-                  src={GripVerticalIcon}
-                  alt="Grip Icon"
-                  className="h-6 w-6 cursor-move"
-                />
-              </td>
-              <td className="py-8 px-6 text-center ">{service.order}</td>
-              <td className="py-8 px-6 ">{service.name}</td>
-              <td className="py-8 px-6">
-                <div
-                  className={`inline-block ${
-                    categoryColorMap[service.category]
-                  } font-normal text-xs h-[26px] rounded-lg py-1 px-2.5`}
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="flex mt-10 ml-10">
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
+            <thead>
+              <tr className="bg-gray-100 text-gray-700 text-sm">
+                <th className="py-2.5 px-6 w-[56px]"></th>
+                <th className="py-2.5 px-6 w-[58px]">ลำดับ</th>
+                <th className="py-2.5 px-6 w-[262px] text-left">ชื่อบริการ</th>
+                <th className="py-2.5 px-6 w-[225px] text-left">หมวดหมู่</th>
+                <th className="py-2.5 px-6 w-[209px] text-left">สร้างเมื่อ</th>
+                <th className="py-2.5 px-6 w-[226px] text-left">แก้ไขล่าสุด</th>
+                <th className="py-2.5 px-6 w-[120px]">Action</th>
+              </tr>
+            </thead>
+            <Droppable droppableId="subServiceList">
+              {(provided) => (
+                <tbody
+                  className="bg-white"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
                 >
-                  {service.category}
-                </div>
-              </td>
-              <td className="py-8 px-6 ">{service.created}</td>
-              <td className="py-8 px-6 ">{service.updated}</td>
-              <td className="py-8 px-6 text-center">
-                <div className="flex flex-row items-center justify-center gap-7">
-                  <img
-                    src={TrashIcon}
-                    alt="Trash Icon"
-                    className="cursor-pointer h-4 w-4"
-                  />
-                  <img
-                    src={PenSquareIcon}
-                    alt="Edit Icon"
-                    className="cursor-pointer h-4 w-4"
-                  />
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                  {services.map((service, index) => {
+                    const createAt = convertThaiDateTime(service.created_at);
+                    const updateAt = convertThaiDateTime(service.updated_at);
+
+                    return (
+                      <Draggable
+                        key={service.id}
+                        draggableId={service.service_id.toString()}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <tr
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            className="border-b relative bg-white"
+                          >
+                            <td className="py-2 px-4 w-[56px]">
+                              <img
+                                {...provided.dragHandleProps}
+                                src={GripVerticalIcon}
+                                alt="Grip Icon"
+                                className="h-6 w-6 cursor-move"
+                              />
+                            </td>
+                            <td className="py-8 px-6 text-center w-[58px] ">
+                              {index + 1}
+                            </td>
+                            <td className="py-8 px-6 w-[262px]">
+                              <p
+                                onClick={() =>
+                                  navigate(`/admin-service/${service.id}`)
+                                }
+                              >
+                                บริการ{service.name}
+                              </p>
+                            </td>
+
+                            <td className="py-8 px-6 w-[225px]">
+                              <p
+                                style={{
+                                  backgroundColor: `${service.categories.background_color}`,
+                                  color: `${service.categories.text_color}`,
+                                }}
+                                className="py-1 px-2.5 inline-block font-normal text-xs h-[26px] rounded-lg"
+                              >
+                                บริการ{service.categories.name}
+                              </p>
+                            </td>
+
+                            <td className="py-8 px-6 w-[209px]">{createAt}</td>
+                            <td className="py-8 px-6 w-[226px]">{updateAt}</td>
+                            <td className="py-8 px-6 text-center ">
+                              <div className="flex flex-row items-center justify-center gap-7 w-[120px]">
+                                <img
+                                  src={TrashIcon}
+                                  alt="Trash Icon"
+                                  className="cursor-pointer h-4 w-4"
+                                />
+                                <img
+                                  src={PenSquareIcon}
+                                  alt="Edit Icon"
+                                  className="cursor-pointer h-4 w-4"
+                                />
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </tbody>
+              )}
+            </Droppable>
+          </table>
+        )}
+      </div>
+    </DragDropContext>
   );
 };
 
-export default CategoryService;
+export default ServiceService;

@@ -1,13 +1,11 @@
 import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import CategoryService from "../components/adminServicePage/CategoryService";
 import TopbarSearch from "../components/adminCategoryPage/TopbarSearch";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 function AdminService() {
+  const [inputKeyword, setInputKeyword] = useState("");
   const navigate = useNavigate();
-  const handleAdd = () => {
-    navigate("/admin-add-service");
-  };
   return (
     <div className="flex h-screen ">
       <div className="h-full">
@@ -19,11 +17,13 @@ function AdminService() {
           title="บริการ"
           searchText="ค้นหาบริการ..."
           buttonAdd="เพิ่มบริการ +"
-          onAddClick={handleAdd}
+          onAddClick={() => navigate("/admin-add-service")}
+          inputKeyword={inputKeyword}
+          setInputKeyword={setInputKeyword}
         />
 
         <div className="flex-1 p-4 overflow-y-auto bg-base">
-          <CategoryService />
+          <CategoryService inputKeyword={inputKeyword} />
         </div>
       </div>
     </div>
