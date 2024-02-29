@@ -69,6 +69,7 @@ function SearchTab(props) {
             variant="unstyled"
             placeholder="บริการทั้งหมด"
             className="font-semibold text-center"
+            defaultValue={1}
           >
             {categoryData.map((item) => {
               return (

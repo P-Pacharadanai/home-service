@@ -69,37 +69,48 @@ serviceRouter.get("/", async (req, res) => {
     const { keyword, category, min, max, sortBy } = req.query;
 
     if (category || min || max || sortBy) {
+      console.log("A");
       // retrieve all user profile from the "services" table
       let sort, asc;
       switch (sortBy) {
-        case "":
-          (sort = "service_id"), (asc = true);
-          break;
         case "ASC":
           (sort = "price"), (asc = true);
           break;
         case "DESC":
           (sort = "price"), (asc = false);
           break;
+        default:
+          (sort = "category_id"), (asc = true);
+          break;
       }
 
-      let { data: services, error } = await supabase
+      let query = supabase
         .from("services")
-        .select(`*,categories(name,background_color,text_color)`)
+        .select(`*,categories(name,background_color,text_color)`);
+
+      if (Number(category) !== 0) {
+        query = query.eq("category_id", Number(category));
+      }
+
+      let { data: services, error } = await query
         .like("name", `%${keyword}%` || "%")
-        .like("category", category || "%")
         .gte("price", min)
         .lte("price", max)
         .order(sort, { ascending: asc });
 
-      //check if there's an error during the data retrieval
       if (error) {
+        console.log("Error:", error);
         return res.json({ message: error });
       }
 
-      //send the retrieved services profile as a JSON response
+      console.log("Data:", services);
       return res.json({ data: services });
+
+      //check if there's an error during the data retrieval
+
+      //send the retrieved services profile as a JSON response
     } else {
+      console.log("B");
       let newKeyword;
       if (keyword.trim() !== "") {
         newKeyword = `%${keyword}%`;
@@ -111,7 +122,7 @@ serviceRouter.get("/", async (req, res) => {
         .from("services")
         .select(`*,categories(name,background_color,text_color)`)
         .ilike("name", newKeyword)
-        .order("service_id", { ascending: true });
+        .order("category_id", { ascending: true });
 
       if (error) {
         return res.json({ message: error });

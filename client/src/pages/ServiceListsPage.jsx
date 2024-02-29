@@ -14,7 +14,7 @@ function ServiceListsPage() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(3000);
   const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(0);
   const [sortBy, setSortBy] = useState("");
   const [categoryData, setCategoryData] = useState([]);
 
@@ -24,8 +24,6 @@ function ServiceListsPage() {
     );
     setCategoryData(data.data);
   };
-
-  console.log(categoryData);
 
   useEffect(() => {
     getCategory();
