@@ -23,7 +23,7 @@ const AdminEditPromotion = () => {
 
       <div className="flex-1 flex flex-col">
         <EditPromotionNav
-          buttonAdd="แก้ไข"
+          buttonAdd="บันทึก"
           buttonCancel="ยกเลิก"
           //handleEditPromotion={handleEditPromotion}
           onClickButtonCancel={() => navigate("/admin-promotion")}
