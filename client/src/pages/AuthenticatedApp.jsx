@@ -22,6 +22,7 @@ import AdminCategoryEdit from "./AdminCategoryEdit";
 import AdminAddServicePage from "./AdminAddServicePage";
 import AdminAddPromotion from "./AdminAddPromotion";
 import AdminEditPromotion from "./AdminEditPromotion";
+import AdminServiceDetail from "./AdminServiceDetail";
 
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
@@ -52,12 +53,17 @@ function AuthenticatedApp() {
             path="/admin-promotion-details/:promotionId"
             element={<DetailPromotionCode />}
           />
+
           <Route path="/admin-promotion-add" element={<AdminAddPromotion />} />
           <Route
             path="/admin-promotion-edit"
             element={<AdminEditPromotion />}
           />
           <Route path="/admin-promotion" element={<PromotionCode />} />
+          <Route
+            path="/admin-service-detail"
+            element={<AdminServiceDetail />}
+          />
           <Route path="/promotion-nav" element={<CodePromoNav />} />
           <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>
