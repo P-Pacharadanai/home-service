@@ -24,22 +24,20 @@ function AdminCategory() {
 
   const navigate = useNavigate();
   return (
-    <div className="flex h-screen ">
-      <div className="h-full">
-        <SidebarNavAdmin currentPage="หมวดหมู่" />
-      </div>
+    <div className="flex h-screen">
+      <SidebarNavAdmin currentPage="หมวดหมู่" />
 
       <div className="flex-1 flex flex-col">
         <TopbarSearch
           title="หมวดหมู่"
           searchText="ค้นหาหมวดหมู่..."
           buttonAdd="เพิ่มหมวดหมู่ +"
-          onClickButtonAdd={() => navigate("/admin-category/create")}
+          onAddClick={() => navigate("/admin-category/create")}
           inputKeyword={inputKeyword}
           setInputKeyword={setInputKeyword}
         />
 
-        <div className="flex-1 p-4 overflow-y-auto bg-base relative">
+        <div className="flex-1 p-4 overflow-y-auto bg-base relative ">
           <CategoryTable
             inputKeyword={inputKeyword}
             setDeleteCategoryId={setDeleteCategoryId}
