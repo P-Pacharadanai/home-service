@@ -1,7 +1,8 @@
 import { Select } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
-function DropdownCategories() {
-  const [categoryId, setCategoryId] = useState();
+function DropdownCategories(props) {
+  const { handleOnChange } = props;
   const [categoryData, setCategoryData] = useState([]);
 
   const getCategory = async () => {
@@ -10,13 +11,15 @@ function DropdownCategories() {
     setCategoryData(data.data);
   };
 
-  const handleCategoryChange = (e) => {
-    setCategoryId(e.target.value);
-  };
+  useEffect(() => {
+    getCategory;
+  }, []);
 
   return (
     <Select
-      onChange={handleCategoryChange}
+      onChange={(e) => {
+        handleOnChange(e);
+      }}
       variant="outline"
       placeholder="เลือกหมวดหมู่"
       className="font-semibold text-center"

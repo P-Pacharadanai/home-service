@@ -5,19 +5,6 @@ import multer from "multer";
 const serviceRouter = Router();
 const storage = multer.memoryStorage();
 const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
-// const imageUpload = multer({ dest: "/upload" }).fields([{ name: "image" }]);
-// serviceRouter.post("/", async (req, res) => {
-//   const { name, category, subService } = req.body;
-//   try {
-//     const { error } = await supabase.from("services_list").insert();
-
-//     return res.json({
-//       clientSecret: paymentIntent.client_secret,
-//     });
-//   } catch (error) {
-//     return res.json({ message: error });
-//   }
-// });
 
 serviceRouter.post("/", imageUpload, async (req, res) => {
   console.log(req.body.subService);
@@ -25,6 +12,10 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
   const serviceName = req.body.name;
   const categoryId = req.body.category_id;
   const subService = JSON.parse(req.body.subService);
+
+  const subServicePrice = subService.map((item) => item.price);
+  const sortPrice = subServicePrice.sort((a, b) => a - b);
+
   try {
     const { data: image, error } = await supabase.storage
       .from("image")
@@ -40,7 +31,12 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 
     const { data: service } = await supabase
       .from("services")
-      .insert({ name: serviceName, category: categoryId, image: imagePath })
+      .insert({
+        name: serviceName,
+        price: sortPrice[0],
+        category_id: categoryId,
+        image: imagePath,
+      })
       .select();
 
     const serviceId = service[0].service_id;
@@ -49,8 +45,6 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
       ...item,
       service_id: serviceId,
     }));
-
-    console.log(newSubService);
 
     const { data: serviceList } = await supabase
       .from("service_list")
@@ -66,61 +60,57 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
 
 serviceRouter.get("/", async (req, res) => {
   try {
+    // Extract filter parameters (optional)
     const { keyword, category, min, max, sortBy } = req.query;
 
-    if (category || min || max || sortBy) {
-      // retrieve all user profile from the "services" table
-      let sort, asc;
-      switch (sortBy) {
-        case "":
-          (sort = "service_id"), (asc = true);
-          break;
-        case "ASC":
-          (sort = "price"), (asc = true);
-          break;
-        case "DESC":
-          (sort = "price"), (asc = false);
-          break;
-      }
+    // Build the base query
+    const getData = supabase
+      .from("services")
+      .select(
+        `*,service_list(title,price,unit), categories(id,name, background_color, text_color)`
+      );
 
-      let { data: services, error } = await supabase
-        .from("services")
-        .select(`*,categories(name,background_color,text_color)`)
-        .like("name", `%${keyword}%` || "%")
-        .like("category", category || "%")
-        .gte("price", min)
-        .lte("price", max)
-        .order(sort, { ascending: asc });
-
-      //check if there's an error during the data retrieval
-      if (error) {
-        return res.json({ message: error });
-      }
-
-      //send the retrieved services profile as a JSON response
-      return res.json({ data: services });
-    } else {
-      let newKeyword;
-      if (keyword.trim() !== "") {
-        newKeyword = `%${keyword}%`;
-      } else {
-        newKeyword = "%";
-      }
-
-      const { data: services, error } = await supabase
-        .from("services")
-        .select(`*,categories(name,background_color,text_color)`)
-        .ilike("name", newKeyword)
-        .order("service_id", { ascending: true });
-
-      if (error) {
-        return res.json({ message: error });
-      }
-
-      return res.json({ data: services });
+    if (keyword) {
+      getData.ilike("name", `%${keyword?.trim() || "%"}%`);
     }
+
+    // Apply optional filtering based on provided parameters
+    if (category && Number(category) !== 0) {
+      getData.eq("category_id", Number(category));
+    }
+
+    if (min) {
+      getData.gte("price", min);
+    }
+
+    if (max) {
+      getData.lte("price", max);
+    }
+
+    // Apply sorting (default: category_id asc)
+    const sort =
+      sortBy === "ASC" || sortBy === "DESC" ? "price" : "category_id";
+    const ascending = sortBy === "DESC" ? false : true;
+
+    getData
+      .order(sort, { ascending: ascending })
+      .order("price", { referencedTable: "service_list", ascending: true });
+
+    console.log(sortBy);
+    // Apply keyword filtering (case-insensitive)
+    // Execute the getData and handle errorsce
+    const { data: services, error } = await getData;
+
+    if (error) {
+      console.error("Error:", error);
+      return res.status(400).json({ message: error.message }); // Use status code and error message
+    }
+
+    // Return the retrieved services as JSON response
+    return res.json({ data: services });
   } catch (error) {
-    return res.json({ message: error });
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" }); // Generic error message for user
   }
 });
 
