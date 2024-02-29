@@ -14,7 +14,6 @@ import {
   PromotionCode,
   DetailPromotionCode,
   CodePromoNav,
-  FixedPercenPromoNav,
 } from "../components/adminPromotion/";
 
 import AdminCategoryCreate from "./AdminCategoryCreate";
@@ -23,6 +22,7 @@ import AdminCategoryEdit from "./AdminCategoryEdit";
 import AdminAddServicePage from "./AdminAddServicePage";
 import AdminAddPromotion from "./AdminAddPromotion";
 import AdminEditPromotion from "./AdminEditPromotion";
+
 function AuthenticatedApp() {
   const { isAuthenticated } = useAuth();
 
@@ -59,10 +59,6 @@ function AuthenticatedApp() {
           />
           <Route path="/admin-promotion" element={<PromotionCode />} />
           <Route path="/promotion-nav" element={<CodePromoNav />} />
-          <Route
-            path="/fixed-promotion-nav"
-            element={<FixedPercenPromoNav />}
-          />
           <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>
       ) : (

@@ -1,6 +1,6 @@
 import DetailPromotionCode from "./DetailPromotionCode.jsx";
 import PromotionCode from "./PromotionCode.jsx";
 import CodePromoNav from "./CodePromoNav";
-import FixedPercenPromoNav from "./FixedPercentPromoNav.jsx";
+import EditPromotionNav from "./EditPromotionNav.jsx";
 
-export { PromotionCode, DetailPromotionCode , CodePromoNav, FixedPercenPromoNav };
+export { PromotionCode, DetailPromotionCode, CodePromoNav, EditPromotionNav };
