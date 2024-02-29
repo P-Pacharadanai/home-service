@@ -25,13 +25,13 @@ function HeaderSection(props) {
       <div id="right-content" className="flex-1 flex flex-row justify-end">
         <button
           onClick={() => navigate("/admin-category")}
-          className="min-w-28 bg-white text-[1rem] text-blue-600 border border-blue-600 rounded-lg px-6 py-2 ml-6"
+          className="min-w-28 bg-white text-[1rem] text-blue-600 border border-blue-600 hover:border-blue-400 hover:text-blue-400 duration-200 rounded-lg px-6 py-2 ml-6"
         >
           ยกเลิก
         </button>
         <button
           onClick={handleEditCategory}
-          className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
+          className="min-w-28 bg-blue-600 hover:bg-blue-500 duration-200 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
         >
           ยืนยัน
         </button>

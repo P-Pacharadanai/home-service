@@ -21,12 +21,14 @@ function AdminCategoryCreate() {
   };
 
   const handleCreateCategory = async () => {
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category`,
-      categoryData
-    );
+    if (categoryData.name.trim() !== "") {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/category`,
+        categoryData
+      );
 
-    navigate(`/admin-category/${data?.data?.id}`);
+      navigate(`/admin-category/${data?.data?.id}`);
+    }
   };
 
   return (
@@ -40,7 +42,7 @@ function AdminCategoryCreate() {
           title="เพิ่มหมวดหมู่"
           buttonAdd="สร้าง"
           buttonCancel="ยกเลิก"
-          onClickButtonAdd={handleCreateCategory}
+          onAddClick={handleCreateCategory}
           onClickButtonCancel={() => navigate("/admin-category")}
         />
         <div className="flex-1 px-10 py-14 bg-base">

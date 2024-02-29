@@ -27,8 +27,6 @@ const CategoryTable = (props) => {
         categories: newCategories,
       }
     );
-
-    console.log("Data: ", data);
   };
 
   const handleConfirmDelete = (id, name) => {
@@ -101,14 +99,12 @@ const CategoryTable = (props) => {
                           {...provided.draggableProps}
                           className="border-b relative bg-white"
                         >
-                          <td
-                            className="w-[56px] py-2 px-4"
-                            {...provided.dragHandleProps}
-                          >
+                          <td className="w-[56px] py-2 px-4">
                             <img
                               src={GripVerticalIcon}
                               alt="Grip Icon"
                               className="h-6 w-6 cursor-move"
+                              {...provided.dragHandleProps}
                             />
                           </td>
                           <td className="w-[80px] py-8 px-6 text-center">
@@ -119,7 +115,7 @@ const CategoryTable = (props) => {
                               onClick={() =>
                                 navigate(`/admin-category/${category.id}`)
                               }
-                              className="w-fit hover:cursor-pointer"
+                              className="w-fit hover:cursor-pointer hover:text-gray-500 duration-200"
                             >
                               บริการ{category.name}
                             </p>
@@ -131,7 +127,7 @@ const CategoryTable = (props) => {
                               <img
                                 src={TrashIcon}
                                 alt="Trash Icon"
-                                className="cursor-pointer h-4 w-4"
+                                className="cursor-pointer h-4 w-4 hover:opacity-80 duration-200"
                                 onClick={() =>
                                   handleConfirmDelete(
                                     category.id,
@@ -147,7 +143,7 @@ const CategoryTable = (props) => {
                                     `/admin-category/edit/${category.id}`
                                   )
                                 }
-                                className="cursor-pointer h-4 w-4"
+                                className="cursor-pointer h-4 w-4 hover:opacity-70 duration-200"
                               />
                             </div>
                           </td>

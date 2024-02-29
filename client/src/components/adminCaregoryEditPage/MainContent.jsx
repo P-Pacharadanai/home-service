@@ -79,14 +79,20 @@ function MainContent(props) {
           </div>
         )}
       </div>
-      <div
-        onClick={handleConfirmDelete}
-        className="flex items-center justify-end gap-3 mt-6 cursor-pointer"
-      >
-        <img src={TrashIcon} alt="Trash Icon" className="w-4 h-auto" />
-        <p className="text-[1rem] text-gray-600 font-semibold underline ">
-          ลบหมวดหมู่
-        </p>
+      <div className="w-full flex justify-end">
+        <div
+          onClick={handleConfirmDelete}
+          className="group flex items-center justify-end gap-3 mt-6 cursor-pointer"
+        >
+          <img
+            src={TrashIcon}
+            alt="Trash Icon"
+            className="w-4 h-auto group-hover:opacity-80 duration-200"
+          />
+          <p className="text-[1rem] text-gray-600 group-hover:text-gray-500 duration-200 font-semibold underline ">
+            ลบหมวดหมู่
+          </p>
+        </div>
       </div>
     </div>
   );

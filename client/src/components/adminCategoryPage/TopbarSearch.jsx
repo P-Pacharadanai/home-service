@@ -1,10 +1,9 @@
 import { Magnifying } from "../../assets/icons/index";
-import { useState } from "react";
 
 const TopbarSearch = (props) => {
   const { inputKeyword, setInputKeyword } = props;
   const onAddClick = props.onAddClick;
-  console.log(props);
+
   const handleKeywordChange = (event) => {
     setInputKeyword(event.target.value);
   };
@@ -33,14 +32,14 @@ const TopbarSearch = (props) => {
         {props.buttonCancel && (
           <button
             onClick={props.onClickButtonCancel}
-            className="min-w-28 text-[1rem] text-blue-600 border border-blue-600 rounded-lg px-6 py-2 ml-6"
+            className="min-w-28 text-[1rem] text-blue-600  border border-blue-600 hover:border-blue-400 hover:text-blue-400 rounded-lg px-6 py-2 ml-6 duration-200"
           >
             {props.buttonCancel}
           </button>
         )}
         <button
           onClick={onAddClick}
-          className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
+          className="min-w-28 bg-blue-600 hover:bg-blue-500 text-[1rem] text-white rounded-lg px-6 py-2 ml-6 duration-200"
         >
           {props.buttonAdd}
         </button>
