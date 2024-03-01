@@ -120,12 +120,12 @@ promotionRouter.post("/", async (req, res) => {
 //Put
 promotionRouter.put("/", async (req, res) => {
   try {
-    const promotion = req.body.categories;
-    console.log(promotion);
+    const promotionData = req.body.promotionData;
+    console.log(promotionData);
 
     const { data, error } = await supabase
       .from("promotion")
-      .upsert(promotion)
+      .upsert(promotionData)
       .select();
 
     if (error) {

@@ -4,6 +4,8 @@ import { SidebarNavAdmin } from "../components/common/";
 import { EditPromotionNav } from "../components/adminPromotion";
 import EditPromotionDetail from "../components/adminEditPromotion/EditPromotionDetail";
 import axios from "axios";
+import dayjs from "dayjs";
+
 const AdminEditPromotion = () => {
   /* const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
   const [promotionType, setPromotionType] = useState(""); // State for promotion type
@@ -34,9 +36,85 @@ const AdminEditPromotion = () => {
     }
   };
 
+  const updatePromotionData = async () => {
+    let date = null;
+    if (expirationDate && expirationTime) {
+      const timestamp = dayjs(
+        `${expirationDate} ${expirationTime}`,
+        "DD/MM/YYYY HH:mm"
+      ).valueOf();
+
+      date = new Date(timestamp);
+    } else if (expirationDate) {
+      date = new Date(promotionData.expiration_date);
+
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      };
+
+      const time = date.toLocaleDateString("en-EN", options).slice(-5);
+
+      const timestamp = dayjs(
+        `${expirationDate} ${time}`,
+        "DD/MM/YYYY HH:mm"
+      ).valueOf();
+
+      date = new Date(timestamp);
+
+      date.setHours(date.getHours() + 7);
+    } else if (expirationTime) {
+      date = new Date(promotionData.expiration_date);
+
+      const options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      };
+
+      const dateStr = date.toLocaleDateString("en-EN", options);
+
+      const timestamp = dayjs(
+        `${dateStr} ${expirationTime}`,
+        "DD/MM/YYYY HH:mm"
+      ).valueOf();
+
+      date = new Date(timestamp);
+      console.log(date);
+    }
+
+    let newPromotionData;
+    if (date) {
+      newPromotionData = {
+        ...promotionData,
+        expiration_date: date,
+        updated_at: new Date(),
+      };
+    } else {
+      newPromotionData = {
+        ...promotionData,
+        updated_at: new Date(),
+      };
+    }
+
+    console.log(newPromotionData);
+
+    try {
+      const { data } = await axios.put(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
+        { promotionData: newPromotionData }
+      );
+      console.log(data.data);
+    } catch (error) {
+      console.error("Failed to fetch category data:", error);
+    }
+  };
+
   useEffect(() => {
     getPromotionData();
   }, []);
+
   return (
     <div className="flex h-screen ">
       <div className="h-full">
@@ -48,6 +126,7 @@ const AdminEditPromotion = () => {
           buttonAdd="บันทึก"
           buttonCancel="ยกเลิก"
           //handleEditPromotion={handleEditPromotion}
+          handleEditPromotion={updatePromotionData}
           onClickButtonCancel={() => navigate("/admin-promotion")}
         />
 
