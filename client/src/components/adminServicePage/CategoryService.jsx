@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { convertThaiDateTime } from "../common";
+import AdminServiceListSkeleton from "../skeleton/AdminServiceList";
 const ServiceService = (props) => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,7 @@ const ServiceService = (props) => {
       }
     );
 
-    console.log("Data: ", data);
+    //console.log("Data: ", data);
   };
 
   const handleDragEnd = (result) => {
@@ -63,13 +64,7 @@ const ServiceService = (props) => {
   useEffect(() => {
     getServiceData();
   }, [props.inputKeyword, props.refresh]);
-  console.log("Services:", services);
-
-  const ServiceColorMap = {
-    บริการทั่วไป: "py-1 px2.5 text-blue-800 bg-blue-100",
-    บริการห้องครัว: "py-1 px2.5 text-purple-900 bg-purple-100",
-    บริการห้องน้ำ: "py-1 px2.5 text-green-900 bg-green-100",
-  };
+  //console.log("Services:", services);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -89,6 +84,11 @@ const ServiceService = (props) => {
                 <th className="py-2.5 px-6 w-[120px]">Action</th>
               </tr>
             </thead>
+            {services.length === 0 && (
+              <tbody className="bg-white">
+                <AdminServiceListSkeleton itemCount={9} />
+              </tbody>
+            )}
             <Droppable droppableId="subServiceList">
               {(provided) => (
                 <tbody
@@ -152,12 +152,23 @@ const ServiceService = (props) => {
                                 <img
                                   src={TrashIcon}
                                   alt="Trash Icon"
-                                  className="cursor-pointer h-4 w-4"
+                                  onClick={() =>
+                                    handleConfirmDelete(
+                                      service.id,
+                                      service.name
+                                    )
+                                  }
+                                  className="cursor-pointer h-4 w-4 hover:opacity-80 duration-200"
                                 />
                                 <img
                                   src={PenSquareIcon}
                                   alt="Edit Icon"
-                                  className="cursor-pointer h-4 w-4"
+                                  onClick={() =>
+                                    navigate(
+                                      `/admin-service/edit/${service.id}`
+                                    )
+                                  }
+                                  className="cursor-pointer h-4 w-4 hover:opacity-70 duration-200"
                                 />
                               </div>
                             </td>
