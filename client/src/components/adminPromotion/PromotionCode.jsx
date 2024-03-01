@@ -29,20 +29,22 @@ const PromotionCode = () => {
     //console.log(data.data);
   };
 
-  const handleConfirmDelete = async () => {
-    console.log("Attempting to delete promo code", deleteCodePromoId);
+  const handleConfirmDelete = async (promocode) => {
+   //console.log("Attempting to delete promo code", deleteCodePromoId);
+   console.log(promocode);
     await axios.delete(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
-        deleteCodePromoId.id
+        promocode.promotion_id
       }`
     );
-    setIsModalOpen(true);
-    setCategoryData((currentCodes) =>
-      currentCodes.filter((code) => code.id !== deleteCodePromoId.id)
+    setCategoryData(
+    categoryData.filter((code) => code.promotion_id !== promocode.promotion_id)
     );
-
-    setDeleteCodePromoId({ id: 0, name: "" });
-    navigate("/admin-promotion");
+    
+    //setDeleteCodePromoId({ id: 0, name: "" });
+    setIsModalOpen(false);
+    //navigate("/admin-promotion");
+    
   };
 
   const handleDeleteClick = (promoCode) => {
@@ -76,6 +78,24 @@ const PromotionCode = () => {
       }
     } else {
       return discount || "No discount";
+    }
+  }
+
+  function formatDiscount(discount, isPercentage) {
+    if (typeof discount !== "number") {
+        return "Invalid discount value";
+    }
+    
+    if (isPercentage) {
+        // It's a percentage discount
+        if (discount < 1) {
+            // Convert decimal to percentage if not already in percentage form
+            discount = discount * 100;
+        }
+        return `-${discount.toFixed(2)}%`;
+    } else {
+        // It's a fixed discount
+        return `-${discount.toFixed(2)}`;
     }
   }
 
@@ -127,11 +147,10 @@ const PromotionCode = () => {
                 </Link>
                 <div>{promoCode.type}</div>
                 <div>
-                  {promoCode.usage_fixed}
-                  {promoCode.usage_percent}/{promoCode.usage_limit}
+                  {promoCode.usage_count}/{promoCode.usage_limit}
                 </div>
                 <div style={{ color: "rgba(200, 36, 56, 1)" }}>
-                  {formatDiscount(promoCode.discount)}
+                  {promoCode.type === "fixed" ? `${formatDiscount(promoCode.discount)} ฿` : `${formatDiscount(promoCode.discount)} %` }
                 </div>
                 <div>{convertThaiDateTime(promoCode.created_at)}</div>
                 <div className="ml-8 w-full">
@@ -139,7 +158,7 @@ const PromotionCode = () => {
                 </div>
                 <div className="flex justify-center gap-6 ml-20">
                   <button
-                    onClick={() => handleDeleteClick(`${promoCode.code}`)}
+                    onClick={() => handleDeleteClick(promoCode)}
                   >
                     <Trash2 className="w-4 h-4 text-gray-500 hover:text-gray-950" />
                   </button>
@@ -162,7 +181,7 @@ const PromotionCode = () => {
         <AlertModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onConfirm={handleConfirmDelete}
+          onConfirm={() => handleConfirmDelete(selectedPromoCode)}
           promoCode={selectedPromoCode}
         />
       </div>
