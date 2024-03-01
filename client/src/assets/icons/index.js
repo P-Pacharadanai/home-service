@@ -33,6 +33,7 @@ import lessthanIcon from "./less-than-solid.svg";
 import userIcon from "./circle-user-solid.svg";
 import oopsIcon from "./oopsIcon.svg";
 import savefileIcon from "./saveflieIcon.svg";
+import imageIcon from "./image-regular.svg";
 
 export {
   houseXs,
@@ -70,4 +71,5 @@ export {
   userIcon,
   oopsIcon,
   savefileIcon,
+  imageIcon,
 };

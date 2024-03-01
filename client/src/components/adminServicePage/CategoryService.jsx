@@ -102,7 +102,7 @@ const ServiceService = (props) => {
 
                     return (
                       <Draggable
-                        key={service.id}
+                        key={service.service_id}
                         draggableId={service.service_id.toString()}
                         index={index}
                       >
@@ -126,7 +126,9 @@ const ServiceService = (props) => {
                             <td className="py-8 px-6 w-[262px]">
                               <p
                                 onClick={() =>
-                                  navigate(`/admin-service/${service.id}`)
+                                  navigate(
+                                    `/admin-service/${service.service_id}`
+                                  )
                                 }
                               >
                                 บริการ{service.name}
@@ -154,7 +156,7 @@ const ServiceService = (props) => {
                                   alt="Trash Icon"
                                   onClick={() =>
                                     handleConfirmDelete(
-                                      service.id,
+                                      service.service_id,
                                       service.name
                                     )
                                   }
@@ -165,7 +167,7 @@ const ServiceService = (props) => {
                                   alt="Edit Icon"
                                   onClick={() =>
                                     navigate(
-                                      `/admin-service/edit/${service.id}`
+                                      `/admin-service/edit/${service.service_id}`
                                     )
                                   }
                                   className="cursor-pointer h-4 w-4 hover:opacity-70 duration-200"
