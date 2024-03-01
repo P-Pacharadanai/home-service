@@ -40,6 +40,10 @@ const AddPromotionDetail = (props) => {
     return current && current < dayjs().endOf("day");
   };
   console.log(discount);
+  console.log(promotionCode);
+  console.log(promotionType);
+  console.log(usageLimit);
+
   return (
     <div className="w-[1120px] h-[428px] px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 inline-flex font-['Prompt'] ">
       <div className={divStyle}>

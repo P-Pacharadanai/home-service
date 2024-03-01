@@ -9,22 +9,40 @@ import axios from "axios";
 
 const AdminAddPromotion = () => {
   const [promotionData, setPromotionData] = useState({});
-  const handleCreatePromotion = async () => {
-    const formData = new FormData();
-    formData.append("promotionCode", promotionCode);
-    formData.append("promotionType", promotionType);
-    formData.append("discount", discount);
-    formData.append("usageLimit", usageLimit);
+  const navigate = useNavigate();
 
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
-      promotionData
-    );
-    console.log(promotionData);
-    navigate(`/admin-promotion/${data?.data?.id}`);
+  const onChangeHandler = (evt) => {
+    const { name, value } = evt.target;
+    const inputData = { ...promotionData, [name]: value };
+    setPromotionData(inputData);
   };
-  {
-  }
+
+  const handleCreatePromotion = async () => {
+    if (
+      promotionData.promotionCode &&
+      typeof promotionData.promotionCode === "string"
+    ) {
+      const formData = new FormData();
+      formData.append("promotionCode", promotionCode);
+      formData.append("promotionType", promotionType);
+      formData.append("discount", discount);
+      formData.append("usageLimit", usageLimit);
+      if (promotionCode.code.trim() !== "") {
+        try {
+          const { data } = await axios.post(
+            `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
+            promotionData
+          );
+          console.log(promotionData);
+          navigate(`/admin-promotion/${data?.data?.id}`);
+        } catch (e) {
+          console.error("Failed to create promotion:", error);
+        }
+      } else {
+        console.error("Promotion code is required");
+      }
+    }
+  };
 
   const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
   const [promotionType, setPromotionType] = useState(""); // State for promotion type
@@ -35,7 +53,6 @@ const AdminAddPromotion = () => {
   const [expirationDate, setExpirationDate] = useState(null); // State for expiration date
   const [expirationTime, setExpirationTime] = useState(null); // State for expiration time
 
-  const navigate = useNavigate();
   return (
     <div className="flex h-screen ">
       <div className="h-full">
