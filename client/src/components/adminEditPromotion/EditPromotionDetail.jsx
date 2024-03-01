@@ -71,21 +71,13 @@ const EditPromotionDetail = (props) => {
     setDiscount("");
   };
 
-  const handleFixedDiscountChange = (e) => {
-    const newValue = e.target.value;
-    setFixedDiscount(newValue);
-    // Update the shared discount value only if the promotion type is 'fixed'
-    if (promotionType === "fixed") {
-      setDiscount(newValue);
-    }
-  };
-
-  const handlePercentDiscountChange = (e) => {
-    const newValue = e.target.value;
-    setPercentDiscount(newValue);
-    // Update the shared discount value only if the promotion type is 'percent'
-    if (promotionType === "percent") {
-      setDiscount(newValue);
+  const handleDisabledInputChange = (type) => {
+    if (type === "fixed") {
+      setPercentDiscount(0);
+      setDiscount(0);
+    } else if (type === "percent") {
+      setFixedDiscount(0);
+      setDiscount(0);
     }
   };
 
@@ -109,66 +101,73 @@ const EditPromotionDetail = (props) => {
       </div>
       <div className="w-[497px] h-24 justify-start items-start gap-6 inline-flex">
         <p className={fontStyle}>ประเภท</p>
-        <div className="flex-col justify-start items-start gap-3 inline-flex ">
-          <div className="w-[268px] justify-between items-center inline-flex ">
-            <div className="justify-start items-center gap-3 flex  ">
-              <input
-                type="radio"
-                value="fixed"
-                onChange={handleFixedDiscountChange}
-                className=" justify-start items-start flex focus:outline-none "
-              />
-              <p className="text-black text-sm font-normal font-['Prompt'] leading-[21px] ">
-                Fixed
-              </p>
-            </div>
-            <div className="relative">
-              <input
-                type="number"
-                value={fixedDiscount}
-                placeholder={`${categoryData.discount} ฿`}
-                style={{ textAlign: "right" }}
-                onChange={handleFixedDiscountChange}
-                className="w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input "
-              />
-            </div>
-          </div>
-
-          <div className="w-[268px] justify-between items-center inline-flex">
-            <div className="justify-start items-center gap-3 flex">
-              <input
-                type="radio"
-                value="percent"
-                onChange={handlePercentDiscountChange}
-              />
-              <p className="text-black text-sm font-normal font-['Prompt'] leading-[21px]">
-                Percent
-              </p>
-            </div>
-            <div className="relative">
-              <input
-                type="number"
-                value={percentDiscount}
-                placeholder="%"
-                style={{ textAlign: "right" }}
-                onChange={handlePercentDiscountChange}
-                className="w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none disabled-input "
-              />
-            </div>
-          </div>
+        <div className="justify-start items-center gap-3 flex">
+          <input
+            type="radio"
+            name="promotionType"
+            value="fixed"
+            checked={promotionType === "fixed"}
+            onChange={(e) => setPromotionType(e.target.value)}
+            className="w-5 h-5 justify-start items-start flex"
+          />
+          <p
+            className={`text-black text-sm font-normal font-['Prompt'] leading-[21px] ${
+              promotionType === "percent" ? "text-gray-400" : ""
+            }`}
+          >
+            Fixed
+          </p>
         </div>
-      </div>
-      <div className={divStyle}>
-        <p className={fontStyle}>โควต้าการใช้</p>
-        <div className="relative flex items-center w-full h-screen">
-          <p className="absolute left-4 ">{categoryData.usage_count}</p>
+
+        <div className="relative">
           <input
             type="number"
-            value={usageLimit}
-            onChange={(e) => setUsageLimit(e.target.value)}
-            placeholder="ครั้ง"
-            style={{ textAlign: "right" }}
-            className=" flex w-[433px] h-11 px-4 py-2.5 bg-white rounded-lg border border-gray-300 gap-2.5 focus:outline-none"
+            value={fixedDiscount}
+            checked={promotionType === "fixed"}
+            onChange={handlePromotionTypeChange}
+            onBlur={() => handleDisabledInputChange("fixed")}
+            className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none ${
+              promotionType !== "fixed" ? "disabled-input" : ""
+            }`}
+            disabled={promotionType !== "fixed"}
+            placeholder={categoryData.usage_fixed}
+          />
+        </div>
+
+        <div className="justify-start items-center gap-3 flex">
+          <input
+            type="radio"
+            name="promotionType"
+            value="percent"
+            checked={promotionType === "percent"}
+            onChange={(e) => {
+              setPromotionType(e.target.value);
+              if (promotionType === "percent") {
+                setDiscount(e.target.value);
+              }
+            }}
+            className="w-5 h-5 justify-start items-start flex"
+          />
+          <p
+            className={`text-black text-sm font-normal font-['Prompt'] leading-[21px] ${
+              promotionType === "fixed" ? "text-gray-400" : ""
+            }`}
+          >
+            Percent
+          </p>
+        </div>
+
+        <div className="relative">
+          <input
+            type="number"
+            value={percentDiscount}
+            onChange={handlePromotionTypeChange}
+            onBlur={() => handleDisabledInputChange("percent")}
+            className={`w-[140px] h-[42px] px-[13px] py-[9px] bg-white rounded-md border border-gray-300 justify-end items-center flex focus:outline-none ${
+              promotionType !== "percent" ? "disabled-input" : ""
+            }`}
+            disabled={promotionType !== "percent"}
+            placeholder={categoryData.usage_percent}
           />
         </div>
       </div>
@@ -180,14 +179,14 @@ const EditPromotionDetail = (props) => {
           disabledDate={disabledDate}
           defaultValue={expirationDate}
           onChange={changeDate}
-          placeholder="กรุณาเลือกวันที่"
+          placeholder={categoryData.end_date}
           style={pickerStyle}
         />
         <TimePicker
           format="HH:mm"
-          defaultValue={expirationTime}
+          //defaultValue={expirationTime}
           onChange={changeTime}
-          placeholder="กรุณาเลือกเวลา"
+          placeholder={categoryData.end_time}
           style={pickerStyle}
         />
       </div>
