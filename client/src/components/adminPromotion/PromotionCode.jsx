@@ -127,7 +127,8 @@ const PromotionCode = () => {
                 </Link>
                 <div>{promoCode.type}</div>
                 <div>
-                  {promoCode.usage_count}/{promoCode.usage_limit}
+                  {promoCode.usage_fixed}
+                  {promoCode.usage_percent}/{promoCode.usage_limit}
                 </div>
                 <div style={{ color: "rgba(200, 36, 56, 1)" }}>
                   {formatDiscount(promoCode.discount)}
