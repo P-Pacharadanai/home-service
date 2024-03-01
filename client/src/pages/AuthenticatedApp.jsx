@@ -48,7 +48,14 @@ function AuthenticatedApp() {
             element={<AdminCategoryEdit />}
           />
           <Route path="/admin-service" element={<AdminService />} />
-          <Route path="/admin-edit-service" element={<AdminEditService />} />
+          <Route
+            path="/admin-service/edit/:serviceId"
+            element={<AdminEditService />}
+          />
+          <Route
+            path="/admin-service/:serviceId"
+            element={<AdminServiceDetail />}
+          />
           <Route
             path="/admin-promotion-details/:promotionId"
             element={<DetailPromotionCode />}
@@ -60,10 +67,7 @@ function AuthenticatedApp() {
             element={<AdminEditPromotion />}
           />
           <Route path="/admin-promotion" element={<PromotionCode />} />
-          <Route
-            path="/admin-service-detail"
-            element={<AdminServiceDetail />}
-          />
+
           <Route path="/promotion-nav" element={<CodePromoNav />} />
           <Route path="/admin-add-service" element={<AdminAddServicePage />} />
         </Routes>

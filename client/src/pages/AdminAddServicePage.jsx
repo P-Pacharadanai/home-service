@@ -2,7 +2,7 @@ import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import { Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { GripVerticalIcon } from "../assets/icons/index.js";
+import { GripVerticalIcon, imageIcon } from "../assets/icons/index.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -156,13 +156,56 @@ function AdminAddServicePage() {
                   })}
                 </Select>
               </div>
+              {/* <div className="border border-gray-300 rounded-lg w-[27rem]  h-[12.5rem] ">
+                <img
+                  src={serviceData.image}
+                  alt="service image"
+                  className="h-full w-full object-contain "
+                />
+              </div>
+
+              <div className="flex flex-row justify-between mt-1">
+                <span className="text-xs text-gray-700 ">
+                  ขนาดภาพที่แแนะนำ 1440 x 225 Px
+                </span>
+                <label
+                  htmlFor="fileInput"
+                  className="text-blue-600 text-sm font-semibold underline cursor-pointer"
+                >
+                  เปลี่ยนรูปภาพ
+                  <input
+                    type="file"
+                    id="fileInput"
+                    onChange={handleUploadImageChange}
+                    className="hidden"
+                  />
+                </label> */}
               <div className="flex flex-row">
                 <p className="w-[200px]">
                   รูปภาพ<span className="text-red">*</span>
                 </p>
 
-                <input type="file" onChange={handleUploadImageChange}></input>
-                <img className=" w-[300px] h-[300px]" src={imageUrl} />
+                <div className="">
+                  <label
+                    htmlFor="fileInput"
+                    className="text-blue-600 text-sm font-semibold underline cursor-pointer"
+                  >
+                    อัพโหลดรูปภาพ
+                    <input
+                      type="file"
+                      id="fileInput"
+                      onChange={handleUploadImageChange}
+                      className="hidden"
+                    />
+                    {imageUrl && (
+                      <img
+                        className="w-[300px] h-[300px]"
+                        src={imageUrl}
+                        alt="Uploaded Image"
+                      />
+                    )}
+                  </label>
+                </div>
               </div>
               <div className="flex flex-col gap-5">
                 <p>รายการบริการย่อย</p>
