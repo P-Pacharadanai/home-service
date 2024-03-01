@@ -133,9 +133,9 @@ const PromotionCode = () => {
                 <div style={{ color: "rgba(200, 36, 56, 1)" }}>
                   {formatDiscount(promoCode.discount)}
                 </div>
-                <div>{convertThaiDateTime(promoCode.expiration_date)}</div>
+                <div>{convertThaiDateTime(promoCode.created_at)}</div>
                 <div className="ml-8 w-full">
-                  {convertThaiDateTime(promoCode.created_at)}
+                  {convertThaiDateTime(promoCode.end_date)}
                 </div>
                 <div className="flex justify-center gap-6 ml-20">
                   <button
