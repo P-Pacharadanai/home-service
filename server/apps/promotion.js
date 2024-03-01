@@ -81,7 +81,7 @@ promotionRouter.delete("/:promotionId", async (req, res) => {
     const { error } = await supabase
       .from("promotion")
       .delete()
-      .eq("id", promotionId);
+      .eq("promotion_id", promotionId);
 
     if (error) {
       return res.json({ message: error.message });

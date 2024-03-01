@@ -31,6 +31,7 @@ const DetailPromotionCode = () => {
     navigate("/admin-promotion");
   };
 
+
   function formatDiscount(discount) {
     if (typeof discount === "number") {
       // Check if it's a percentage
@@ -45,6 +46,8 @@ const DetailPromotionCode = () => {
       return "No discount";
     }
   }
+
+
 
   return (
     <div className="flex">
@@ -95,14 +98,13 @@ const DetailPromotionCode = () => {
               className="flex justify-start items-start -ml-32"
               style={{ color: "rgba(200, 36, 56, 1)" }}
             >
-              {formatDiscount(categoryData.discount)}
+              {categoryData.type === "fixed" ? `${formatDiscount(categoryData.discount)} ฿` : `${formatDiscount(categoryData.discount)} %` }
             </p>
           </div>
           <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
             <p className="font-prompt font-medium max-w-40">โควต้าการใช้</p>
             <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
-              {categoryData.usage_fixed}
-              {categoryData.usage_percent}/{categoryData.usage_limit} ครั้ง
+              {categoryData.usage_count}/{categoryData.usage_limit} ครั้ง
             </p>
           </div>
           <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">

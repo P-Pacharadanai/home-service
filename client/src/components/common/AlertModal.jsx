@@ -10,7 +10,7 @@ const AlertModal = ({ isOpen, onClose, onConfirm, promoCode }) => {
         <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4  hover:text-gray-600" aria-label="Close"> <X className="h-6 w-6" /></button>
         <img src={oopsIcon} />
         <h2 className="text-2xl">ยืนยันการลบรายการ?</h2>
-        <p className="text-xl text-gray-700">คุณต้องการลบรายการ ‘{promoCode}’ ใช่หรือไม่</p>
+        <p className="text-xl text-gray-700">คุณต้องการลบรายการ ‘{promoCode.code}’ ใช่หรือไม่</p>
         <div className="flex justify-center gap-4 mt-4">
           <button onClick={onConfirm} className="bg-blue-600 text-white px-4 py-2 rounded-lg border border-transparen hover:scale-110 duration-300 hover:ease-in">
             ลบรายการ
