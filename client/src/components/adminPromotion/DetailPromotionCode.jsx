@@ -31,30 +31,15 @@ const DetailPromotionCode = () => {
     navigate("/admin-promotion");
   };
 
-  {
-    /*
-  function formatDiscount(discount) {
-    if (typeof discount === "number" && discount.includes("%")) {
-      return `${discount}`;
-    } else if (typeof discount === "20") {
-      if (discount === "number") {
-        return `-${discount.toFixed(2)}%`;
-      }
-    } else {
-      return "No discount";
-    }
-  }
-*/
-  }
   function formatDiscount(discount) {
     if (typeof discount === "number") {
       // Check if it's a percentage
       if (discount < 1) {
         // Convert decimal to percentage
-        return `-${(discount * 100).toFixed(2)}%`;
+        return `-${(discount * 100).toFixed(2)} %`;
       } else {
         // It's a fixed discount
-        return `฿${discount.toFixed(2)}`;
+        return `${discount.toFixed(2)} `;
       }
     } else {
       return "No discount";
