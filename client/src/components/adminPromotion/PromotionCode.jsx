@@ -126,8 +126,9 @@ const PromotionCode = () => {
           </div>
         </nav>
 
-        <section className="font-prompt mt-10 border-gray-300 rounded-lg border w-[1110px] ml-10 mb-40 bg-white">
-          <div className="grid grid-cols-7 bg-gray-100 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
+        <div className="pr-10">
+        <section className="font-prompt mt-10 border-gray-300 rounded-lg border max-w-full ml-10 mb-40 bg-white">
+          <div className="grid grid-cols-7 bg-gray-200 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
             <div>Promotion Code</div>
             <div>ประเภท</div>
             <div>โควต้าการใช้</div>
@@ -156,11 +157,11 @@ const PromotionCode = () => {
                 <div className="ml-8 w-full">
                   {convertThaiDateTime(promoCode.end_date)}
                 </div>
-                <div className="flex justify-center gap-6 ml-20">
+                <div className="flex justify-center gap-6 ml-24">
                   <button
                     onClick={() => handleDeleteClick(promoCode)}
                   >
-                    <Trash2 className="w-4 h-4 text-gray-500 hover:text-gray-950" />
+                    <Trash2 className="w-6 h-6 text-gray-500 hover:text-gray-950" />
                   </button>
                   <button
                     onClick={() =>
@@ -170,7 +171,7 @@ const PromotionCode = () => {
                     }
                     aria-label={`Edit ${promoCode.code}`}
                   >
-                    <img src={savefileIcon} alt="Edit" className="w-4 h-4" />
+                    <img src={savefileIcon} alt="Edit" className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -185,6 +186,7 @@ const PromotionCode = () => {
           promoCode={selectedPromoCode}
         />
       </div>
+      </div>  
     </div>
   );
 };

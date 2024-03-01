@@ -55,7 +55,7 @@ const DetailPromotionCode = () => {
         <SidebarNavAdmin />
       </div>
 
-      <div className="pl-[15rem] flex-2 overflow-auto w-full bg-gray-100 h-screen">
+      <div className="pl-[14rem] flex-2 overflow-auto w-full bg-gray-100 h-screen">
         <nav className="flex items-center w-full border-b bg-white font-prompt h-[80px] p-10">
           <div onClick={handleBackClick}>
             <ChevronLeft className="w-12 h-12 text-gray-600 cursor-pointer ml-5" />
@@ -78,8 +78,9 @@ const DetailPromotionCode = () => {
             </button>
           </div>
         </nav>
-
-        <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto max-w-[1110px] w-full mt-10 mb-40 overflow-auto">
+        
+        <div className="pl-20 pr-10">
+        <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto  max-w-full mt-10 mb-40 overflow-auto">
           <div className="grid grid-cols-2 p-6 w-[850px]">
             <p className="font-medium max-w-40">Promotion Code</p>
             <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
@@ -128,6 +129,7 @@ const DetailPromotionCode = () => {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
