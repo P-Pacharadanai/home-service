@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { convertThaiDateTime } from "../common";
+import AdminServiceListSkeleton from "../skeleton/AdminServiceList";
 const ServiceService = (props) => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,15 +26,13 @@ const ServiceService = (props) => {
     }
   };
 
-  const updateServiceData = async (newCategories) => {
+  const updateServiceData = async (newServices) => {
     const { data } = await axios.put(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service`,
       {
         services: newServices,
       }
     );
-
-    console.log("Data: ", data);
   };
 
   const handleDragEnd = (result) => {
@@ -48,7 +47,7 @@ const ServiceService = (props) => {
       index: index + 1,
     }));
 
-    // updateServiceData(updatedService);
+    updateServiceData(updatedService);
 
     setServices(updatedService);
   };
@@ -63,13 +62,6 @@ const ServiceService = (props) => {
   useEffect(() => {
     getServiceData();
   }, [props.inputKeyword, props.refresh]);
-  console.log("Services:", services);
-
-  const ServiceColorMap = {
-    บริการทั่วไป: "py-1 px2.5 text-blue-800 bg-blue-100",
-    บริการห้องครัว: "py-1 px2.5 text-purple-900 bg-purple-100",
-    บริการห้องน้ำ: "py-1 px2.5 text-green-900 bg-green-100",
-  };
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -89,6 +81,11 @@ const ServiceService = (props) => {
                 <th className="py-2.5 px-6 w-[120px]">Action</th>
               </tr>
             </thead>
+            {services.length === 0 && (
+              <tbody className="bg-white">
+                <AdminServiceListSkeleton itemCount={9} />
+              </tbody>
+            )}
             <Droppable droppableId="subServiceList">
               {(provided) => (
                 <tbody
@@ -102,7 +99,7 @@ const ServiceService = (props) => {
 
                     return (
                       <Draggable
-                        key={service.id}
+                        key={service.service_id}
                         draggableId={service.service_id.toString()}
                         index={index}
                       >
@@ -123,10 +120,12 @@ const ServiceService = (props) => {
                             <td className="py-8 px-6 text-center w-[58px] ">
                               {index + 1}
                             </td>
-                            <td className="py-8 px-6 w-[262px]">
+                            <td className="py-8 px-6 w-[fit] hover:cursor-pointer hover:text-gray-500 duration-200">
                               <p
                                 onClick={() =>
-                                  navigate(`/admin-service/${service.id}`)
+                                  navigate(
+                                    `/admin-service/${service.service_id}`
+                                  )
                                 }
                               >
                                 บริการ{service.name}
@@ -152,12 +151,23 @@ const ServiceService = (props) => {
                                 <img
                                   src={TrashIcon}
                                   alt="Trash Icon"
-                                  className="cursor-pointer h-4 w-4"
+                                  onClick={() =>
+                                    handleConfirmDelete(
+                                      service.service_id,
+                                      service.name
+                                    )
+                                  }
+                                  className="cursor-pointer h-4 w-4 hover:opacity-80 duration-200"
                                 />
                                 <img
                                   src={PenSquareIcon}
                                   alt="Edit Icon"
-                                  className="cursor-pointer h-4 w-4"
+                                  onClick={() =>
+                                    navigate(
+                                      `/admin-service/edit/${service.service_id}`
+                                    )
+                                  }
+                                  className="cursor-pointer h-4 w-4 hover:opacity-70 duration-200"
                                 />
                               </div>
                             </td>

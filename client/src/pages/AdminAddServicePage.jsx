@@ -2,7 +2,7 @@ import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import { Select } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { GripVerticalIcon } from "../assets/icons/index.js";
+import { GripVerticalIcon, imageIcon } from "../assets/icons/index.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -58,7 +58,8 @@ function AdminAddServicePage() {
       !serviceName ||
       !categoryId ||
       !uploadImage ||
-      subService.some((item) => !item.title || !item.price || !item.unit)
+      subService.some((item) => !item.title || !item.price || !item.unit) ||
+      !subService
     ) {
       alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
       return;
@@ -105,7 +106,12 @@ function AdminAddServicePage() {
           <section className="w-full flex flex-row item-center justify-s h-[80px] p-4 bg-white">
             <div className="w-1/2 font-medium text-xl">เพิ่มบริการ</div>
             <div id="right-content" className="w-1/2 flex flex-row justify-end">
-              <button className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3">
+              <button
+                className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3"
+                onClick={() => {
+                  navigate("/admin-service");
+                }}
+              >
                 ยกเลิก
               </button>
               <button
@@ -119,53 +125,111 @@ function AdminAddServicePage() {
           <section className="h-screen w-full bg-gray-100 p-10">
             <div className="flex flex-col gap-10 w-full h-full bg-white px-8 py-10 ">
               <div className="flex flex-row">
-                <p className="w-[200px]">
+                <p className="basis-28">
                   ชื่อบริการ<span className="text-red">*</span>
                 </p>
                 <input
                   type="text"
-                  placeholder="Enter service name"
-                  className="border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
+                  className="border border-gray-300 focus:outline-none rounded-lg w-[435px] h-[42px] "
                   onChange={(e) => {
                     setServiceName(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex flex-row w-[400px]">
-                <p className="w-[400px]">
+              <div className="flex flex-row">
+                <p className="basis-28">
                   หมวดหมู่<span className="text-red">*</span>
                 </p>
-                <Select
-                  onChange={(e) => {
-                    setCategoryId(e.target.value);
-                  }}
-                  variant="outline"
-                  placeholder="เลือกหมวดหมู่"
-                  className="font-semibold text-center"
-                >
-                  {categoryData.map((item) => {
-                    return (
-                      <option
-                        key={item.id}
-                        value={item.id}
-                        isdisabled={(item.id === undefined).toString()}
-                      >
-                        บริการ{item.name}
-                      </option>
-                    );
-                  })}
-                </Select>
+                <div className="w-[435px] h-11">
+                  <Select
+                    onChange={(e) => {
+                      setCategoryId(e.target.value);
+                    }}
+                    variant="outline"
+                    placeholder="เลือกหมวดหมู่"
+                    className="text-left text-gray-700"
+                  >
+                    {categoryData.map((item) => {
+                      return (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          isdisabled={(item.id === undefined).toString()}
+                        >
+                          บริการ{item.name}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </div>
               </div>
+
               <div className="flex flex-row">
-                <p className="w-[200px]">
+                <p className="basis-28">
                   รูปภาพ<span className="text-red">*</span>
                 </p>
-
-                <input type="file" onChange={handleUploadImageChange}></input>
-                <img className=" w-[300px] h-[300px]" src={imageUrl} />
+                <div className="flex flex-col">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg w-[27rem] h-[12.5rem] flex justify-center">
+                    <div className="flex flex-col items-center justify-center">
+                      {!imageUrl && (
+                        <>
+                          <img
+                            src={imageIcon}
+                            alt="image icon"
+                            className="w-[2.25rem] h-[2.25rem]"
+                          />
+                          <label
+                            htmlFor="fileInput"
+                            className="text-blue-600 text-sm font-normal cursor-pointer"
+                          >
+                            อัพโหลดรูปภาพ
+                            <input
+                              type="file"
+                              id="fileInput"
+                              onChange={handleUploadImageChange}
+                              className="hidden"
+                            />
+                          </label>
+                          <p className="font-normal text-gray-700 text-sm">
+                            PNG, JPG ขนาดไม่เกิน 5MB
+                          </p>
+                        </>
+                      )}
+                    </div>
+                    {imageUrl && (
+                      <img
+                        className="max-h-[12.5rem] object-cover"
+                        src={imageUrl}
+                        alt="Uploaded Image"
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-row justify-between mt-1">
+                    <span className="text-xs text-gray-700 ">
+                      ขนาดภาพที่แแนะนำ 1440 x 225 Px
+                    </span>
+                    {imageUrl && (
+                      <label
+                        htmlFor="fileInput"
+                        className="text-blue-600 text-sm font-semibold underline cursor-pointer"
+                      >
+                        เปลี่ยนรูปภาพ
+                        <input
+                          type="file"
+                          id="fileInput"
+                          onChange={handleUploadImageChange}
+                          className="hidden"
+                        />
+                      </label>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-5">
-                <p>รายการบริการย่อย</p>
+              <hr className=" border border-gray-300  px-3" />
+              <div className="flex flex-col">
+                <p className="text-sm text-gray-700 font-semibold mb-8">
+                  รายการบริการย่อย
+                </p>
                 <Droppable droppableId="subServiceList">
                   {(provided) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -180,65 +244,76 @@ function AdminAddServicePage() {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              className="flex flex-row gap-10 my-5"
+                              className="flex flex-row gap-10 "
                             >
-                              <div className="flex justify-center items-center w-[20px]">
+                              <div className="flex flex-row gap-2 items-center">
                                 <img
                                   src={GripVerticalIcon}
-                                  className="w-[10px] h-full"
+                                  alt="GripVertial icon click for drag and drop"
+                                  className="h-5 w-5 mr-1"
                                 />
-                              </div>
 
-                              <div>
-                                <p>ชื่อรายการ</p>
-                                <input
-                                  type="text"
-                                  placeholder="Enter service name"
-                                  className="border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
-                                  onChange={(e) =>
-                                    handleSubServiceChange(
-                                      index,
-                                      "title",
-                                      e.target.value
-                                    )
-                                  }
-                                />
+                                <div className="mb-8">
+                                  <label className="block mb-1 text-gray-700 text-sm">
+                                    ชื่อรายการ
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
+                                    onChange={(e) =>
+                                      handleSubServiceChange(
+                                        index,
+                                        "title",
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="mb-8">
+                                  <label className="block mb-1 text-gray-700 text-sm">
+                                    ค่าบริการ / 1 หน่วย
+                                  </label>
+                                  <div className="relative">
+                                    <input
+                                      type="number"
+                                      className="flex justify-end items-center border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[44px] "
+                                      onChange={(e) =>
+                                        handleSubServiceChange(
+                                          index,
+                                          "price",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 text-base font-normal">
+                                      ฿
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <div className="mb-8">
+                                  <label className="block mb-1 text-gray-700 text-sm">
+                                    หน่วยการบริการ
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[42px] "
+                                    onChange={(e) =>
+                                      handleSubServiceChange(
+                                        index,
+                                        "unit",
+                                        e.target.value
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <span
+                                  className="flex items-center text-blue-600 text-sm font-semibold underline cursor-pointer "
+                                  onClick={() => removeSubService(item.id)}
+                                >
+                                  ลบรายการ
+                                </span>
                               </div>
-                              <div>
-                                <p>ค่าบริการ / 1 หน่วย</p>
-                                <input
-                                  type="text"
-                                  placeholder="฿"
-                                  className="border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[44px] "
-                                  onChange={(e) =>
-                                    handleSubServiceChange(
-                                      index,
-                                      "price",
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </div>
-                              <div>
-                                <p>หน่วยการบริการ</p>
-                                <input
-                                  type="text"
-                                  className="border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[42px] "
-                                  onChange={(e) =>
-                                    handleSubServiceChange(
-                                      index,
-                                      "unit",
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </div>
-                              <a
-                                className="flex items-center "
-                                onClick={() => removeSubService(item.id)}
-                              >
-                                ลบรายการ
-                              </a>
                             </div>
                           )}
                         </Draggable>

@@ -14,7 +14,9 @@ const PaymentSuccess = () => {
   console.log("orderData", orderData);
 
   const getOrderData = async () => {
-    const { data } = await axios.get(`http://localhost:4000/order/${orderId}`);
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/order/${orderId}`
+    );
     console.log("Data", data);
     setOrderData(data?.data);
   };

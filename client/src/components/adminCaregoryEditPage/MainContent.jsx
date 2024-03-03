@@ -1,7 +1,10 @@
 import { TrashIcon } from "../../assets/icons";
+import { useNavigate } from "react-router-dom";
 
 function MainContent(props) {
   const { categoryData, onChangeHandler, setDeleteCategoryId } = props;
+
+  const navigate = useNavigate();
 
   const handleConfirmDelete = () => {
     setDeleteCategoryId({
