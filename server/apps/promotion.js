@@ -98,11 +98,11 @@ promotionRouter.delete("/:promotionId", async (req, res) => {
 // Post
 promotionRouter.post("/", async (req, res) => {
   try {
-    const { code, type, discount, endDate } = req.body;
+    const { promotionData } = req.body;
 
     const { data, error } = await supabase
       .from("promotion")
-      .insert({ code, type: type, discount: discount, endDate: endDate })
+      .insert(promotionData)
       .select();
 
     if (error) {

@@ -1,57 +1,84 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
 import { SidebarNavAdmin } from "../components/common/";
 import {
   AddPromotionDetail,
   AddPromotionNav,
 } from "../components/adminAddPromotion";
-import { useState } from "react";
-import axios from "axios";
 
 const AdminAddPromotion = () => {
-  const [promotionData, setPromotionData] = useState({});
+  const [promotionData, setPromotionData] = useState({
+    code: null,
+    type: "fixed",
+    discount: "0",
+    usage_limit: null,
+    expiration_date: null,
+  });
+  const [expirationDate, setExpirationDate] = useState(null);
+  const [expirationTime, setExpirationTime] = useState(null);
+
   const navigate = useNavigate();
 
-  const onChangeHandler = (evt) => {
-    const { name, value } = evt.target;
-    const inputData = { ...promotionData, [name]: value };
-    setPromotionData(inputData);
-  };
-
   const handleCreatePromotion = async () => {
-    if (
-      promotionData.promotionCode &&
-      typeof promotionData.promotionCode === "string"
-    ) {
-      const formData = new FormData();
-      formData.append("promotionCode", promotionCode);
-      formData.append("promotionType", promotionType);
-      formData.append("discount", discount);
-      formData.append("usageLimit", usageLimit);
-      if (promotionCode.code.trim() !== "") {
-        try {
-          const { data } = await axios.post(
-            `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
-            promotionData
-          );
-          console.log(promotionData);
-          navigate(`/admin-promotion/${data?.data?.id}`);
-        } catch (e) {
-          console.error("Failed to create promotion:", error);
-        }
-      } else {
-        console.error("Promotion code is required");
+    const errorMessage = validatePromotionData();
+    if (Object.keys(errorMessage).length !== 0) {
+      if (Object.keys(errorMessage).length > 1) {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
       }
+
+      alert(Object.values(errorMessage).join("\n"));
+      return;
+    }
+
+    const expirationDateTime = new Date(
+      dayjs(`${expirationDate} ${expirationTime}`, "DD/MM/YYYY HH:mm").valueOf()
+    );
+
+    const newPromotionData = {
+      ...promotionData,
+      expiration_date: expirationDateTime,
+    };
+
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
+        { promotionData: newPromotionData }
+      );
+      console.log(data);
+      navigate(`/admin-promotion-details/${data?.data?.promotion_id}`);
+    } catch (error) {
+      console.error("Failed to create promotion:", error);
     }
   };
 
-  const [promotionCode, setPromotionCode] = useState(""); // State for promotion code
-  const [promotionType, setPromotionType] = useState(""); // State for promotion type
-  const [fixedDiscount, setFixedDiscount] = useState("");
-  const [percentDiscount, setPercentDiscount] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [usageLimit, setUsageLimit] = useState(""); // State for usage limit
-  const [expirationDate, setExpirationDate] = useState(null); // State for expiration date
-  const [expirationTime, setExpirationTime] = useState(null); // State for expiration time
+  const validatePromotionData = () => {
+    const errors = {};
+
+    if (!promotionData.code) {
+      errors.code = "กรุณาระบุรหัสโปรโมชัน";
+    }
+
+    if (promotionData.discount === "0" || promotionData.discount === "") {
+      errors.discount = "กรุณาระบุส่วนลด";
+    }
+
+    if (!promotionData.usage_limit) {
+      errors.usage_limit = "กรุณาระบุจำนวนครั้งที่สามารถใช้ได้";
+    }
+
+    if (!expirationDate) {
+      errors.expiration_date = "กรุณาระบุวันหมดอายุ";
+    }
+
+    if (!expirationTime) {
+      errors.expiration_date = "กรุณาระบุเวลาหมดอายุ";
+    }
+
+    return errors;
+  };
 
   return (
     <div className="flex h-screen ">
@@ -69,20 +96,8 @@ const AdminAddPromotion = () => {
 
         <div className="flex-1 p-8  overflow-y-auto bg-base relative">
           <AddPromotionDetail
-            promotionCode={promotionCode}
-            setPromotionCode={setPromotionCode}
-            promotionType={promotionType}
-            setPromotionType={setPromotionType}
-            fixedDiscount={fixedDiscount}
-            setFixedDiscount={setFixedDiscount}
-            percentDiscount={percentDiscount}
-            setPercentDiscount={setPercentDiscount}
-            discount={discount}
-            setDiscount={setDiscount}
-            usageLimit={usageLimit}
-            setUsageLimit={setUsageLimit}
-            expirationDate={expirationDate}
-            expirationTime={expirationTime}
+            promotionData={promotionData}
+            setPromotionData={setPromotionData}
             setExpirationDate={setExpirationDate}
             setExpirationTime={setExpirationTime}
           />
