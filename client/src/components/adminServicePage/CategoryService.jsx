@@ -47,7 +47,7 @@ const ServiceService = (props) => {
       index: index + 1,
     }));
 
-    updateServiceData(updatedService);
+    // updateServiceData(updatedService);
 
     setServices(updatedService);
   };
@@ -66,87 +66,85 @@ const ServiceService = (props) => {
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex mt-10 ml-10">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
-            <thead>
-              <tr className="bg-gray-100 text-gray-700 text-sm">
-                <th className="py-2.5 px-6 w-[56px]"></th>
-                <th className="py-2.5 px-6 w-[58px]">ลำดับ</th>
-                <th className="py-2.5 px-6 w-[262px] text-left">ชื่อบริการ</th>
-                <th className="py-2.5 px-6 w-[225px] text-left">หมวดหมู่</th>
-                <th className="py-2.5 px-6 w-[209px] text-left">สร้างเมื่อ</th>
-                <th className="py-2.5 px-6 w-[226px] text-left">แก้ไขล่าสุด</th>
-                <th className="py-2.5 px-6 w-[120px]">Action</th>
-              </tr>
-            </thead>
-            {services.length === 0 && (
-              <tbody className="bg-white">
-                <AdminServiceListSkeleton itemCount={9} />
-              </tbody>
-            )}
-            <Droppable droppableId="subServiceList">
-              {(provided) => (
-                <tbody
-                  className="bg-white"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {services.map((service, index) => {
-                    const createAt = convertThaiDateTime(service.created_at);
-                    const updateAt = convertThaiDateTime(service.updated_at);
+        <table className="w-full font-prompt rounded-lg border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100 text-gray-700 text-sm">
+              <th className="py-2.5 px-6 w-[56px]"></th>
+              <th className="py-2.5 px-6 w-[58px]">ลำดับ</th>
+              <th className="py-2.5 px-6 w-[262px] text-left">ชื่อบริการ</th>
+              <th className="py-2.5 px-6 w-[225px] text-left">หมวดหมู่</th>
+              <th className="py-2.5 px-6 w-[209px] text-left">สร้างเมื่อ</th>
+              <th className="py-2.5 px-6 w-[226px] text-left">แก้ไขล่าสุด</th>
+              <th className="py-2.5 px-6 w-[120px]">Action</th>
+            </tr>
+          </thead>
+          {services.length === 0 && (
+            <tbody className="bg-white">
+              <AdminServiceListSkeleton itemCount={9} />
+            </tbody>
+          )}
+          <Droppable droppableId="subServiceList">
+            {(provided) => (
+              <tbody
+                className="bg-white"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {services.map((service, index) => {
+                  const createAt = convertThaiDateTime(service.created_at);
+                  const updateAt = convertThaiDateTime(service.updated_at);
 
-                    return (
-                      <Draggable
-                        key={service.service_id}
-                        draggableId={service.service_id.toString()}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <tr
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            className="border-b relative bg-white"
-                          >
-                            <td className="py-2 px-4 w-[56px]">
+                  return (
+                    <Draggable
+                      key={service.service_id}
+                      draggableId={service.service_id.toString()}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="border-b relative bg-white hover:bg-gray-50"
+                        >
+                          <td className="py-2 px-4 w-[56px]">
+                            <div className="flex justify-center">
                               <img
                                 {...provided.dragHandleProps}
                                 src={GripVerticalIcon}
                                 alt="Grip Icon"
                                 className="h-6 w-6 cursor-move"
                               />
-                            </td>
-                            <td className="py-8 px-6 text-center w-[58px] ">
-                              {index + 1}
-                            </td>
-                            <td className="py-8 px-6 w-[fit] hover:cursor-pointer hover:text-gray-500 duration-200">
-                              <p
-                                onClick={() =>
-                                  navigate(
-                                    `/admin-service/${service.service_id}`
-                                  )
-                                }
-                              >
-                                บริการ{service.name}
-                              </p>
-                            </td>
+                            </div>
+                          </td>
+                          <td className="py-8 px-6 text-center w-[58px] ">
+                            {index + 1}
+                          </td>
+                          <td className="py-8 px-6 w-[fit] hover:cursor-pointer hover:text-gray-500 duration-200">
+                            <p
+                              onClick={() =>
+                                navigate(`/admin-service/${service.service_id}`)
+                              }
+                            >
+                              บริการ{service.name}
+                            </p>
+                          </td>
 
-                            <td className="py-8 px-6 w-[225px]">
-                              <p
-                                style={{
-                                  backgroundColor: `${service.categories.background_color}`,
-                                  color: `${service.categories.text_color}`,
-                                }}
-                                className="py-1 px-2.5 inline-block font-normal text-xs h-[26px] rounded-lg"
-                              >
-                                บริการ{service.categories.name}
-                              </p>
-                            </td>
+                          <td className="py-8 px-6 w-[225px]">
+                            <p
+                              style={{
+                                backgroundColor: `${service.categories.background_color}`,
+                                color: `${service.categories.text_color}`,
+                              }}
+                              className="py-1 px-2.5 inline-block font-normal text-xs h-[26px] rounded-lg"
+                            >
+                              บริการ{service.categories.name}
+                            </p>
+                          </td>
 
-                            <td className="py-8 px-6 w-[209px]">{createAt}</td>
-                            <td className="py-8 px-6 w-[226px]">{updateAt}</td>
-                            <td className="py-8 px-6 text-center ">
+                          <td className="py-8 px-6 w-[209px]">{createAt}</td>
+                          <td className="py-8 px-6 w-[226px]">{updateAt}</td>
+                          <td className="py-8 px-6 text-center ">
+                            <div className="flex justify-center">
                               <div className="flex flex-row items-center justify-center gap-7 w-[120px]">
                                 <img
                                   src={TrashIcon}
@@ -170,18 +168,18 @@ const ServiceService = (props) => {
                                   className="cursor-pointer h-4 w-4 hover:opacity-70 duration-200"
                                 />
                               </div>
-                            </td>
-                          </tr>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
-                </tbody>
-              )}
-            </Droppable>
-          </table>
-        )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </table>
       </div>
     </DragDropContext>
   );

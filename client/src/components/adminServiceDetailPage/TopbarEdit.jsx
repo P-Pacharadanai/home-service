@@ -27,7 +27,7 @@ function TopbarEdit(props) {
           onClick={() =>
             navigate(`/admin-service/edit/${serviceData.service_id}`)
           }
-          className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
+          className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6 hover:bg-blue-500 duration-200"
         >
           แก้ไข
         </button>

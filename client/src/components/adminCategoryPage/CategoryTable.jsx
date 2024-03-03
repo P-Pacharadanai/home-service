@@ -60,15 +60,15 @@ const CategoryTable = (props) => {
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex mt-10 ml-10">
-        <table className="w-[1120px] font-prompt rounded-lg border border-gray-200">
+        <table className="w-full font-prompt rounded-lg border border-gray-200 mr-6">
           <thead>
             <tr className="bg-gray-100 text-gray-700 text-sm">
-              <th className="py-2.5 px-6 w-[56px]"></th>
-              <th className="py-2.5 px-6 w-[80px]">ลำดับ</th>
-              <th className="py-2.5 px-6 w-[262px] text-left">ชื่อหมวดหมู่</th>
-              <th className="py-2.5 px-6 w-[245px] text-left">สร้างเมื่อ</th>
-              <th className="py-2.5 px-6 w-[357px] text-left">แก้ไขล่าสุด</th>
-              <th className="py-2.5 px-6 w-[120px]">Action</th>
+              <th className="py-2.5 px-6 w-[5%]"></th>
+              <th className="py-2.5 px-6 w-[7%]">ลำดับ</th>
+              <th className="py-2.5 px-6 w-[23%] text-left">ชื่อหมวดหมู่</th>
+              <th className="py-2.5 px-6 w-[22%] text-left">สร้างเมื่อ</th>
+              <th className="py-2.5 px-6 w-[32%] text-left">แก้ไขล่าสุด</th>
+              <th className="py-2.5 px-6 w-[11%]">Action</th>
             </tr>
           </thead>
           {categories.length === 0 && (
@@ -79,7 +79,7 @@ const CategoryTable = (props) => {
           <Droppable droppableId="subServiceList">
             {(provided) => (
               <tbody
-                className="bg-white"
+                className="bg-white w-full"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -97,20 +97,22 @@ const CategoryTable = (props) => {
                         <tr
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          className="border-b relative bg-white"
+                          className="border-b relative bg-white w-full hover:bg-gray-50"
                         >
-                          <td className="w-[56px] py-2 px-4">
-                            <img
-                              src={GripVerticalIcon}
-                              alt="Grip Icon"
-                              className="h-6 w-6 cursor-move"
-                              {...provided.dragHandleProps}
-                            />
+                          <td className="w-[5%] py-2 px-4">
+                            <div className=" flex justify-center">
+                              <img
+                                src={GripVerticalIcon}
+                                alt="Grip Icon"
+                                className="h-6 w-6 cursor-move"
+                                {...provided.dragHandleProps}
+                              />
+                            </div>
                           </td>
-                          <td className="w-[80px] py-8 px-6 text-center">
+                          <td className="w-[7%] py-8 px-6 text-center">
                             {index + 1}
                           </td>
-                          <td className="w-[262px] py-8 px-6">
+                          <td className="w-[23%] py-8 px-6">
                             <p
                               onClick={() =>
                                 navigate(`/admin-category/${category.id}`)
@@ -120,9 +122,9 @@ const CategoryTable = (props) => {
                               บริการ{category.name}
                             </p>
                           </td>
-                          <td className="w-[245px] py-8 px-6 ">{createAt}</td>
-                          <td className="w-[357px] py-8 px-6 ">{updateAt}</td>
-                          <td className="w-[120px] py-8 px-6 text-center">
+                          <td className="w-[22%] py-8 px-6">{createAt}</td>
+                          <td className="w-[32%] py-8 px-6">{updateAt}</td>
+                          <td className="w-[11%] py-8 px-6 text-center">
                             <div className="flex flex-row items-center justify-center gap-7">
                               <img
                                 src={TrashIcon}

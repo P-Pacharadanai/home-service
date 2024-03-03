@@ -68,7 +68,7 @@ function SearchTab(props) {
             onChange={handleCategoryChange}
             variant="unstyled"
             placeholder="บริการทั้งหมด"
-            className="font-semibold text-center"
+            className="font-semibold text-center cursor-pointer "
             defaultValue={1}
           >
             {categoryData.map((item) => {
@@ -124,7 +124,7 @@ function SearchTab(props) {
               onChange={handleSortByChange}
               variant="unstyled"
               placeholder="บริการแนะนำ"
-              className="font-semibold text-center"
+              className="font-semibold text-center cursor-pointer"
             >
               <option value="ASC">ราคา น้อย-มาก</option>
               <option value="DESC">ราคา มาก-น้อย</option>

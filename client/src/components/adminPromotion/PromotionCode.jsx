@@ -4,6 +4,7 @@ import {
   SidebarNavAdmin,
   convertThaiDateTime,
 } from "../../components/common";
+import AdminPromotionSkeleton from "../skeleton/AdminPromotion";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus, Trash2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -118,7 +119,7 @@ const PromotionCode = () => {
             </div>
             <button
               onClick={handleNavigation}
-              className="flex items-center gap-2 px-9 py-2 bg-blue-600 text-white rounded-lg hover:bg-white hover:border-blue-600 border hover:text-blue-600"
+              className="flex items-center gap-2 px-9 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 duration:200"
             >
               เพิ่ม Promotion Code
               <Plus className="w-5 " />
@@ -137,6 +138,12 @@ const PromotionCode = () => {
               <div className="ml-8">วันหมดอายุ</div>
               <div className="text-center ml-20">Action</div>
             </div>
+            {!promoCodeData.length && (
+              <div className="divide-y divide-gray-200 py-2">
+                <AdminPromotionSkeleton itemCount={5} />
+              </div>
+            )}
+
             <div className="divide-y divide-gray-200 py-2">
               {promoCodeData.map((promoCode) => (
                 <div

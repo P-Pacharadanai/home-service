@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import {
-  frameIcon,
-  iconrBell,
-  vectorLogout,
-  userIcon,
-} from "../../assets/icons";
+import { frameIcon, iconrBell, userIcon } from "../../assets/icons";
+import { arrowRight } from "../../assets/icons/index.js";
 import { menuItemsUser } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
 import { Link } from "react-router-dom";
@@ -20,30 +16,29 @@ const ButtonUser = () => {
   return (
     <>
       <div className="relative">
-        <button
+        <div
           id="dropdownAvatarNameButton"
-          onClick={toggleDropdown}
           className="flex items-center text-sm pe-1 text-gray-900 rounded-lg whitespace-nowrap px-8 pb-2 pt-2.5 leading-normal -mr-4"
-          type="button"
         >
           {state.user?.firstName} {state.user?.lastName}
           <img
-            className="ml-4 w-8 h-8 me-2 rounded-full"
+            className="ml-4 w-8 h-8 me-2 rounded-full cursor-pointer"
             src={userIcon}
             alt="user photo"
+            onClick={toggleDropdown}
           />
           <img
-            className="w-8 h-8 p-2 bg-slate-300 rounded-full"
+            className="w-8 h-8 p-2 bg-slate-300 rounded-full cursor-pointer"
             src={iconrBell}
             alt="user photo"
           />
-        </button>
+        </div>
 
         {/* Dropdown menu */}
         {isOpen && (
           <div
             id="dropdownAvatarName"
-            className="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-md shadow w-52 dark:bg-white dark:divide-gray-300"
+            className="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-md shadow-xl w-52 dark:bg-white dark:divide-gray-300 "
           >
             {/*}
               <div className="px-4 py-3 text-sm text-gray-950 drak:text-white">
@@ -52,35 +47,41 @@ const ButtonUser = () => {
               </div>
               */}
             <ul
-              className="py-4 text-sm text-gray-300 dark:text-gray-800"
+              className="pt-4 text-sm text-gray-300 dark:text-gray-800"
               aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton"
             >
               {menuItemsUser.map((menuItem, index) => (
-                <li key={index} className="flex items-center">
-                  <img
-                    src={menuItem.icon}
-                    alt="icon"
-                    className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
-                  />
+                <li key={index} className="group flex items-center">
+                  <div className="py-[0.65rem] group-hover:bg-gray-100">
+                    <img
+                      src={menuItem.icon}
+                      alt="icon"
+                      className="ml-3 w-[12px] object-cover h-full me-1 opacity-50 group-hover:opacity-100"
+                    />
+                  </div>
+
                   <Link
                     to={menuItem.path || "#"}
-                    className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
+                    className="block w-full px-6 py-2 group-hover:bg-gray-100 text-gray-800 group-hover:text-gray-950 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="py-2 flex items-center">
-              <img
-                src={vectorLogout}
-                alt="icon"
-                className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
-              />
+            <div className="py-2 flex items-center group">
+              <div className="py-3 group-hover:bg-gray-100 ">
+                <img
+                  src={arrowRight}
+                  alt="icon"
+                  className="ml-3 w-[12px] object-cover h-full me-1 opacity-50 group-hover:opacity-100"
+                />
+              </div>
+
               <span
                 onClick={() => logout()}
                 href="#"
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-100 dark:text-gray-800 dark:hover:text-gray-500 hover:cursor-pointer"
+                className="w-full block px-6 py-2 text-sm text-gray-800 group-hover:bg-gray-100 dark:hover:bg-gray-100 dark:text-gray-800 dark:hover:text-gray-500 cursor-pointer"
               >
                 ออกจากระบบ
               </span>

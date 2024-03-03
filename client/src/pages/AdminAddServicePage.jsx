@@ -34,7 +34,9 @@ function AdminAddServicePage() {
   };
 
   const removeSubService = (id) => {
-    setSubService(subService.filter((item) => item.id !== id));
+    if (subService.length !== 1) {
+      setSubService(subService.filter((item) => item.id !== id));
+    }
   };
 
   const handleSubServiceChange = (index, field, value) => {
@@ -98,16 +100,16 @@ function AdminAddServicePage() {
 
   return (
     <div className="flex h-screen font-prompt">
-      <div className="h-full">
+      <div className="h-screen">
         <SidebarNavAdmin />
       </div>
-      <div className="w-full">
+      <div className="flex flex-col w-full overflow-y-auto ">
         <DragDropContext onDragEnd={handleDragEnd}>
-          <section className="w-full flex flex-row item-center justify-s h-[80px] p-4 bg-white">
+          <section className="w-full flex flex-row items-center  h-[80px] px-14 bg-white">
             <div className="w-1/2 font-medium text-xl">เพิ่มบริการ</div>
             <div id="right-content" className="w-1/2 flex flex-row justify-end">
               <button
-                className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3"
+                className="border border-blue-600 text-blue-600 hover:border-blue-400 duration-200 hover:text-blue-400 rounded-lg px-6 py-2.5 ml-3"
                 onClick={() => {
                   navigate("/admin-service");
                 }}
@@ -115,15 +117,15 @@ function AdminAddServicePage() {
                 ยกเลิก
               </button>
               <button
-                className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3"
+                className="bg-blue-600 hover:bg-blue-500 duration-200 text-white rounded-lg px-6 py-2.5 ml-3"
                 onClick={handleCreate}
               >
                 สร้าง
               </button>
             </div>
           </section>
-          <section className="h-screen w-full bg-gray-100 p-10">
-            <div className="flex flex-col gap-10 w-full h-full bg-white px-8 py-10 ">
+          <section className="h-full w-full bg-base p-10  overflow-y-auto">
+            <div className="flex flex-col gap-10 w-full h-fit bg-white px-8 py-10 ">
               <div className="flex flex-row">
                 <p className="basis-28">
                   ชื่อบริการ<span className="text-red">*</span>
@@ -211,7 +213,7 @@ function AdminAddServicePage() {
                     {imageUrl && (
                       <label
                         htmlFor="fileInput"
-                        className="text-blue-600 text-sm font-semibold underline cursor-pointer"
+                        className="text-blue-600 text-sm font-semibold underline cursor-pointer hover:text-blue-400 duration-200"
                       >
                         เปลี่ยนรูปภาพ
                         <input
@@ -308,7 +310,7 @@ function AdminAddServicePage() {
                                   />
                                 </div>
                                 <span
-                                  className="flex items-center text-blue-600 text-sm font-semibold underline cursor-pointer "
+                                  className="flex items-center text-gray-400 hover:text-blue-400 duration-200 text-sm font-semibold underline cursor-pointer "
                                   onClick={() => removeSubService(item.id)}
                                 >
                                   ลบรายการ
@@ -325,7 +327,7 @@ function AdminAddServicePage() {
                 <div>
                   <button
                     onClick={addSubService}
-                    className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3"
+                    className="border  border-blue-600 hover:border-blue-400 hover:text-blue-400 duration-200 text-blue-600 rounded-lg px-6 py-2.5 ml-3"
                   >
                     เพิ่มรายการ +
                   </button>

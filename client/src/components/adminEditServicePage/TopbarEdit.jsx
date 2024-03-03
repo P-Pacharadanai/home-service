@@ -3,17 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const TopbarEdit = (props) => {
   const { serviceData } = props.serviceState;
-
-  // const {
-  //   serviceData,
-  //   setServiceData,
-  //   categoryData,
-  //   setCategoryData,
-  //   setUploadImage,
-  //   subService,
-  //   setSubService,
-  // } = props.serviceEditState;
-
   const navigate = useNavigate();
 
   return (
@@ -36,13 +25,13 @@ const TopbarEdit = (props) => {
 
       <div id="right-content" className=" flex flex-row">
         <button
-          className="border border-blue-600 text-blue-600 rounded-lg px-6 py-2.5"
+          className="border border-blue-600 text-blue-600 rounded-lg px-6 py-2.5 hover:bg-blue-400 hover:text-blue-400 duration-200"
           onClick={() => navigate("/admin-service")}
         >
           ยกเลิก
         </button>
         <button
-          className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3"
+          className="bg-blue-600 text-white rounded-lg px-6 py-2.5 ml-3 hover:bg-blue-500 duration-200"
           onClick={props.handleEditService}
         >
           ยืนยัน

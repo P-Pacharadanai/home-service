@@ -7,11 +7,8 @@ function AdminServiceListSkeleton({ itemCount }) {
     .map((_, index) => {
       return (
         <tr
-          key={service.id}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
+          key={index}
           role="button"
-          onClick={() => navigate(`/admin-service/${service.id}`)}
           className="border-b relative bg-white cursor-pointer"
         >
           <td className="py-2 px-4 w-[56px]">

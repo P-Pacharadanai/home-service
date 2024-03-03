@@ -35,7 +35,7 @@ function ServiceLists(props) {
 
   return (
     <>
-      <section className="max-container flex justify-center flex-wrap py-20">
+      <section className="bg-base flex justify-center flex-wrap py-20">
         <div className=" max-container gap-4 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-9">
           {serviceList.length === 0 && <ServiceCardSkeleton itemCount={9} />}
           {serviceList.map((service) => {
@@ -92,7 +92,7 @@ function ServiceLists(props) {
                     onClick={() => {
                       handleChooseService(service.service_id);
                     }}
-                    className="text-blue-600 font-semibold leading-6 underline mt-6 mb-2 pl-4"
+                    className="text-blue-600 hover:text-blue-400 duration-200 font-semibold leading-6 underline mt-6 mb-2 pl-4"
                   >
                     เลือกบริการ
                   </a>
