@@ -75,12 +75,15 @@ function AdminEditService() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <TopbarEdit
-          handleEditService={handleEdit}
-          serviceState={{
-            serviceData,
-          }}
-        />
+        <div className="px-10">
+          <TopbarEdit
+            handleEditService={handleEdit}
+            serviceState={{
+              serviceData,
+            }}
+          />
+        </div>
+
         <div className="flex-1 p-4 overflow-y-auto bg-base">
           <EditForm
             serviceEditState={{

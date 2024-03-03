@@ -22,7 +22,7 @@ function AdminService() {
           setInputKeyword={setInputKeyword}
         />
 
-        <div className="flex-1 p-4 overflow-y-auto bg-base">
+        <div className="flex-1 pl-4 pr-6 pb-16 overflow-y-auto bg-base">
           <CategoryService inputKeyword={inputKeyword} />
         </div>
       </div>

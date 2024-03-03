@@ -37,7 +37,7 @@ function AdminCategory() {
           setInputKeyword={setInputKeyword}
         />
 
-        <div className="flex-1 p-4 overflow-y-auto bg-base relative ">
+        <div className="flex-1 p-4 pb-16 overflow-y-auto bg-base relative ">
           <CategoryTable
             inputKeyword={inputKeyword}
             setDeleteCategoryId={setDeleteCategoryId}

@@ -75,11 +75,19 @@ const EditForm = (props) => {
     navigate("/admin-service");
   };
 
-  const removeSubService = async (id) => {
-    await axios.delete(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/list/${id}`
-    );
-    setSubService(subService.filter((item) => item.service_list_id !== id));
+  const removeSubService = async (id, index) => {
+    if (subService.length !== 1) {
+      if (id) {
+        await axios.delete(
+          `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/list/${id}`
+        );
+        setSubService(subService.filter((item) => item.service_list_id !== id));
+        console.log("it's working");
+        return;
+      }
+
+      setSubService(subService.filter((item, i) => i !== index));
+    }
   };
 
   const handleUploadImageChange = async (e) => {
@@ -95,8 +103,8 @@ const EditForm = (props) => {
     getCategory();
   }, []);
   return (
-    <div className=" mt-10 ml-10 flex flex-col font-prompt ">
-      <div className=" w-[1120px] rounded-lg border border-gray-200 bg-white">
+    <div className=" mt-10 mx-10 flex flex-col font-prompt ">
+      <div className=" w-full rounded-lg border border-gray-200 bg-white">
         <div className="ml-6 mt-8">
           <label className="flex text-gray-900 ">
             <p className="basis-28">
@@ -165,7 +173,7 @@ const EditForm = (props) => {
                 </span>
                 <label
                   htmlFor="fileInput"
-                  className="text-blue-600 text-sm font-semibold underline cursor-pointer"
+                  className="text-blue-600 text-sm font-semibold underline cursor-pointer hover:text-blue-400 duration-200"
                 >
                   เปลี่ยนรูปภาพ
                   <input
@@ -241,8 +249,8 @@ const EditForm = (props) => {
                 </div>
 
                 <span
-                  className="text-blue-600 text-sm font-semibold underline cursor-pointer "
-                  onClick={() => removeSubService(item.service_list_id)}
+                  className="text-blue-600 text-sm font-semibold underline cursor-pointer hover:text-blue-400 duration-200"
+                  onClick={() => removeSubService(item.service_list_id, index)}
                 >
                   ลบรายการ
                 </span>
@@ -252,7 +260,7 @@ const EditForm = (props) => {
         </div>
 
         <button
-          className="border border-blue-600 text-blue-600 rounded-lg px-6 py-2.5 mt-6 ml-6"
+          className="border border-blue-600 text-blue-600 rounded-lg px-6 py-2.5 mt-6 ml-6 hover:border-blue-400 hover:text-blue-400 duration-200"
           onClick={addSubService}
         >
           เพิ่มรายการ +
