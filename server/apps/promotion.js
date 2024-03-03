@@ -95,4 +95,49 @@ promotionRouter.delete("/:promotionId", async (req, res) => {
   }
 });
 
+// Post
+promotionRouter.post("/", async (req, res) => {
+  try {
+    const { promotionData } = req.body;
+
+    const { data, error } = await supabase
+      .from("promotion")
+      .insert(promotionData)
+      .select();
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: data[0],
+    });
+  } catch (error) {
+    return res.json({ message: error.message });
+  }
+});
+
+//Put
+promotionRouter.put("/", async (req, res) => {
+  try {
+    const promotionData = req.body.promotionData;
+    console.log(promotionData);
+
+    const { data, error } = await supabase
+      .from("promotion")
+      .upsert(promotionData)
+      .select();
+
+    if (error) {
+      return res.json({ message: error });
+    }
+
+    return res.json({
+      data: data,
+    });
+  } catch (error) {
+    return res.json({ message: error });
+  }
+});
+
 export default promotionRouter;
