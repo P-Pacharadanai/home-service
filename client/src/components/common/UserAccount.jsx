@@ -4,9 +4,9 @@ import { UserAcct } from "../../constants";
 
 const UserAccount = ({ currentPage }) => {
   return (
-    <div className="h-[250px] bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt sticky top-28">
+    <div className="h-fit p-2 pt-0 bg-white rounded-lg border border-gray-300 w-[250px] dark:bg-white font-prompt sticky top-28">
       <div className="px-4 py-4 text-sm dark:text-white">
-        <p className="text-gray-700 text-lg justify-start flex m-auto mt-3">
+        <p className="text-gray-700 text-lg justify-start flex m-auto ">
           บัญชีผู้ใช้
         </p>
         <hr className="border-gray-300 mt-4" />
@@ -29,7 +29,7 @@ const UserAccount = ({ currentPage }) => {
                     : item.text === "ข้อมูลผู้ใช้งาน"
                     ? "w-[22px]"
                     : "w-[24px]"
-                } h-auto me-1 p-1`}
+                } h-auto me-1 p-1 `}
                 style={{
                   filter:
                     currentPage === item.text

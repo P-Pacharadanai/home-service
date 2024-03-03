@@ -8,16 +8,16 @@ const Footer = () => {
         <div className="flex flex-wrap gap-2 items-center justify-center ml-22 px-16 ">
           <img
             src={houseXs}
-            width={20}
-            height={20}
+            width={40}
+            height={40}
             className="flex justify-between items-start"
           />
-          <h4 className="text-blue-500 font-medium font-prompt text-2xl">
+          <h4 className="text-blue-500 font-medium font-prompt text-3xl">
             HomeServices
           </h4>
         </div>
         <div className="flex flex-col items-start flex-1 -ml-14 px-16 font-prompt">
-          <h4 className="text-gray-950 text-xl">บริษัท โฮมเซอร์วิสเซส จำกัด</h4>
+          <h4 className="text-gray-950 text-lg">บริษัท โฮมเซอร์วิสเซส จำกัด</h4>
           <p className="text-sm text-gray-800 whitespace-nowrap leading-6 sm:max-w-sm">
             452 ซอยสุขุมวิท 79 แขวงพระโขนงเหนือ เขตวัฒนา กรุงเทพมหานคร 10260
           </p>
@@ -37,9 +37,7 @@ const Footer = () => {
                 height={18}
                 className="object-contain m-0"
               />
-              <p className="text-xl font-montserrat text-gray-800">
-                {contact.link}
-              </p>
+              <p className="text-[1rem] text-gray-800">{contact.link}</p>
             </a>
           ))}
         </div>

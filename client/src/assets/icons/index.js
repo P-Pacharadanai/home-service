@@ -34,6 +34,10 @@ import userIcon from "./circle-user-solid.svg";
 import oopsIcon from "./oopsIcon.svg";
 import savefileIcon from "./saveflieIcon.svg";
 import imageIcon from "./image-regular.svg";
+import userProfile from "./user-regular.svg";
+import clipboardIcon from "./clipboard-regular.svg";
+import clockRotate from "./clock-rotate-left-solid.svg";
+import arrowRight from "./arrow-right-from-bracket-solid_1.svg";
 
 export {
   houseXs,
@@ -72,4 +76,8 @@ export {
   oopsIcon,
   savefileIcon,
   imageIcon,
+  userProfile,
+  clipboardIcon,
+  clockRotate,
+  arrowRight,
 };
