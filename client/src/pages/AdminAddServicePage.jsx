@@ -58,7 +58,8 @@ function AdminAddServicePage() {
       !serviceName ||
       !categoryId ||
       !uploadImage ||
-      subService.some((item) => !item.title || !item.price || !item.unit)
+      subService.some((item) => !item.title || !item.price || !item.unit) ||
+      !subService
     ) {
       alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
       return;

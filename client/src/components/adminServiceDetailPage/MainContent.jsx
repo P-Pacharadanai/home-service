@@ -1,24 +1,7 @@
 import { convertThaiDateTime } from "../common";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 function MainContent(props) {
-  const { categoryData, setDeleteCategoryId, params } = props;
-
-  const [serviceData, setServiceData] = useState({});
-  // console.log(params.serviceId);
-
-  const getServiceList = async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${params.serviceId}`
-    );
-    setServiceData(data.data);
-    console.log("it's working");
-    console.log(data.data);
-  };
-
-  useEffect(() => {
-    getServiceList();
-  }, []);
+  const { serviceData } = props;
 
   return (
     <div>
@@ -54,9 +37,9 @@ function MainContent(props) {
           </p>
         </div>
         {serviceData.service_list &&
-          serviceData?.service_list.map((list) => {
+          serviceData?.service_list.map((list, index) => {
             return (
-              <div className="flex flex-row w-[67rem]">
+              <div key={index} className="flex flex-row w-[67rem]">
                 <div className="mr-6 w-[30rem]">
                   <p className="text-sm font-normal text-gray-700 ">
                     ชื่อรายการ
