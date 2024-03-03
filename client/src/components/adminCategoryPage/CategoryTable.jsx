@@ -97,7 +97,7 @@ const CategoryTable = (props) => {
                         <tr
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          className="border-b relative bg-white w-full"
+                          className="border-b relative bg-white w-full hover:bg-gray-50"
                         >
                           <td className="w-[5%] py-2 px-4">
                             <div className=" flex justify-center">

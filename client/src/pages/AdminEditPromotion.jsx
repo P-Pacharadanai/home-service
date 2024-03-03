@@ -161,7 +161,7 @@ const AdminEditPromotion = () => {
           handleEditPromotion={updatePromotionData}
           onClickButtonCancel={() => navigate("/admin-promotion")}
         />
-        <div className="flex-1 p-8  overflow-y-auto bg-base relative">
+        <div className="flex-1 p-8 pr-16 pl-12 overflow-y-auto bg-base relative">
           <EditPromotionDetail
             promotionData={promotionData}
             setPromotionData={setPromotionData}

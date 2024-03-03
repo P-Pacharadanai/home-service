@@ -45,13 +45,13 @@ const EditPromotionNav = (props) => {
       </div>
       <div className="w-full flex justify-end px-12 gap-4 ">
         <button
-          className="bg-white text-blue-600 text-lg px-9 py-2 rounded-lg border-blue-600 border"
+          className="bg-white text-blue-600 hover:text-blue-400 hover:border-blue-400 duration:200 text-lg px-9 py-2 rounded-lg border border-blue-600 "
           onClick={props.onClickButtonCancel}
         >
           {props.buttonCancel}
         </button>
         <button
-          className="bg-blue-600 text-white text-lg px-9 py-2 rounded-lg"
+          className="bg-blue-600 hover:bg-blue-500 text-white text-lg px-9 py-2 rounded-lg"
           onClick={props.handleEditPromotion}
         >
           {props.buttonAdd}

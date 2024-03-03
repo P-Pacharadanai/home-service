@@ -76,8 +76,8 @@ const EditPromotionDetail = (props) => {
   };
 
   return (
-    <div className="w-fit">
-      <div className="w-[1120px]  px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 inline-flex font-['Prompt'] ">
+    <div>
+      <div className="w-full px-6 py-10 bg-white rounded-lg border border-gray-200 flex-col justify-start items-start gap-10 flex font-['Prompt'] ">
         <div className={divStyle}>
           <p className={fontStyle}>Promotion Code</p>
           <input
@@ -221,7 +221,7 @@ const EditPromotionDetail = (props) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-end">
+      <div className="w-full flex justify-end font-prompt">
         <div
           onClick={handleConfirmDelete}
           className="group flex items-center justify-end gap-3 mt-6 cursor-pointer"
@@ -231,7 +231,7 @@ const EditPromotionDetail = (props) => {
             alt="Trash Icon"
             className="w-4 h-auto group-hover:opacity-80 duration-200"
           />
-          <p className="text-[1rem] text-gray-600 group-hover:text-gray-500 duration-200 font-semibold underline ">
+          <p className="text-[1rem] text-gray-600  duration-200 font-semibold underline group-hover:text-blue-400 duration:200">
             ลบ Promotion Code
           </p>
         </div>

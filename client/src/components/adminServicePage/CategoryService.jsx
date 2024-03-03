@@ -104,7 +104,7 @@ const ServiceService = (props) => {
                         <tr
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          className="border-b relative bg-white"
+                          className="border-b relative bg-white hover:bg-gray-50"
                         >
                           <td className="py-2 px-4 w-[56px]">
                             <div className="flex justify-center">
