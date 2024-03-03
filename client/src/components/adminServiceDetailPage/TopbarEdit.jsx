@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-function HeaderSection(props) {
-  const { categoryData } = props;
+function TopbarEdit(props) {
+  const { serviceData } = props;
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function HeaderSection(props) {
         <div>
           <div className="text-xs text-gray-700">บริการ</div>
           <div className="font-medium text-xl text-gray-950">
-            {categoryData?.name}
+            {serviceData.name}
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@ function HeaderSection(props) {
       <div id="right-content" className="flex-1 flex flex-row justify-end">
         <button
           onClick={() =>
-            navigate(`/admin-edit-service/edit/${categoryData.id}`)
+            navigate(`/admin-service/edit/${serviceData.service_id}`)
           }
           className="min-w-28 bg-blue-600 text-[1rem] text-white rounded-lg px-6 py-2 ml-6"
         >
@@ -36,4 +36,4 @@ function HeaderSection(props) {
   );
 }
 
-export default HeaderSection;
+export default TopbarEdit;

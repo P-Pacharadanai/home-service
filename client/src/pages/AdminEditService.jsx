@@ -1,17 +1,44 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ConfirmCancel } from "../components/common";
 import SidebarNavAdmin from "../components/common/SidebarNavAdmin";
 import TopbarEdit from "../components/adminEditServicePage/TopbarEdit";
 import EditForm from "../components/adminEditServicePage/EditForm";
+
 function AdminEditService() {
   const [subService, setSubService] = useState([]);
   const [serviceData, setServiceData] = useState({});
   const [categoryData, setCategoryData] = useState([]);
   const [uploadImage, setUploadImage] = useState();
+  const [deleteServiceId, setDeleteServiceId] = useState({ id: 0, name: "" });
 
   const navigate = useNavigate();
+  const params = useParams();
+
+  const getServiceList = async () => {
+    const serviceUrl = `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${
+      params.serviceId
+    }`;
+    const { data } = await axios.get(serviceUrl);
+    setServiceData(data.data);
+    setSubService(data.data.service_list);
+  };
+
+  useEffect(() => {
+    getServiceList();
+  }, []);
+
+  const handleDelete = async () => {
+    await axios.delete(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${
+        deleteServiceId.id
+      }`
+    );
+
+    setDeleteServiceId({ id: 0, name: "" });
+    navigate("/admin-category");
+  };
 
   const handleEdit = async () => {
     if (
@@ -32,7 +59,7 @@ function AdminEditService() {
     formData.append("subService", JSON.stringify(newSubService));
     formData.append("image", uploadImage);
 
-    console.log("category_Id: ", Number(serviceData.category_id));
+    // console.log("category_Id: ", Number(serviceData.category_id));
 
     const { data } = await axios.put(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/update`,
@@ -40,8 +67,7 @@ function AdminEditService() {
       { headers: { "Content-Type": "multipart/form-data" } }
     );
 
-    console.log(data.data);
-    navigate("/admin-service");
+    navigate(`/admin-service/${serviceData.service_id}`);
   };
 
   return (
@@ -55,9 +81,6 @@ function AdminEditService() {
           handleEditService={handleEdit}
           serviceState={{
             serviceData,
-            categoryData,
-            uploadImage,
-            subService,
           }}
         />
         <div className="flex-1 p-4 overflow-y-auto bg-base">
@@ -73,6 +96,13 @@ function AdminEditService() {
               setSubService,
             }}
           />
+          {deleteServiceId.id !== 0 && (
+            <ConfirmCancel
+              itemName={deleteServiceId.name}
+              onDelete={handleDelete}
+              onClose={() => setDeleteServiceId({ id: 0, name: "" })}
+            />
+          )}
         </div>
       </div>
     </div>

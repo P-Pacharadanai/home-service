@@ -26,15 +26,13 @@ const ServiceService = (props) => {
     }
   };
 
-  const updateServiceData = async (newCategories) => {
+  const updateServiceData = async (newServices) => {
     const { data } = await axios.put(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service`,
       {
         services: newServices,
       }
     );
-
-    //console.log("Data: ", data);
   };
 
   const handleDragEnd = (result) => {
@@ -49,7 +47,7 @@ const ServiceService = (props) => {
       index: index + 1,
     }));
 
-    // updateServiceData(updatedService);
+    updateServiceData(updatedService);
 
     setServices(updatedService);
   };
@@ -64,7 +62,6 @@ const ServiceService = (props) => {
   useEffect(() => {
     getServiceData();
   }, [props.inputKeyword, props.refresh]);
-  //console.log("Services:", services);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -123,7 +120,7 @@ const ServiceService = (props) => {
                             <td className="py-8 px-6 text-center w-[58px] ">
                               {index + 1}
                             </td>
-                            <td className="py-8 px-6 w-[262px]">
+                            <td className="py-8 px-6 w-[fit] hover:cursor-pointer hover:text-gray-500 duration-200">
                               <p
                                 onClick={() =>
                                   navigate(

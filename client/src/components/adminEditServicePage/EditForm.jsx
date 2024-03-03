@@ -130,7 +130,7 @@ const EditForm = (props) => {
               fontSize="16px"
               value={serviceData.category_id}
             >
-              {categoryData.map((item) => {
+              {categoryData.map((item, index) => {
                 return (
                   <option
                     key={item.id}
