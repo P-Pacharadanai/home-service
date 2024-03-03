@@ -4,6 +4,7 @@ import {
   SidebarNavAdmin,
   convertThaiDateTime,
 } from "../../components/common";
+import AdminPromotionSkeleton from "../skeleton/AdminPromotion";
 import { savefileIcon } from "../../assets/icons";
 import { Search, Plus, Trash2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -137,6 +138,12 @@ const PromotionCode = () => {
               <div className="ml-8">วันหมดอายุ</div>
               <div className="text-center ml-20">Action</div>
             </div>
+            {!promoCodeData.length && (
+              <div className="divide-y divide-gray-200 py-2">
+                <AdminPromotionSkeleton itemCount={5} />
+              </div>
+            )}
+
             <div className="divide-y divide-gray-200 py-2">
               {promoCodeData.map((promoCode) => (
                 <div
