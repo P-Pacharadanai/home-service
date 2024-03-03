@@ -26,6 +26,10 @@ async function init() {
   app.use("/promotion", promotionRouter);
   app.use("/category", categoryRouter);
 
+  app.get("/", (req, res) => {
+    res.send("App is running...");
+  });
+
   app.get("*", (req, res) => {
     res.status(404).send("Not found");
   });

@@ -18,8 +18,6 @@ const AdminEditPromotion = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  console.log(deletePromotionId);
-
   const getPromotionData = async () => {
     try {
       const { data } = await axios.get(

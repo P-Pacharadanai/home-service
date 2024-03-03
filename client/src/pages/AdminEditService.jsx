@@ -59,8 +59,6 @@ function AdminEditService() {
     formData.append("subService", JSON.stringify(newSubService));
     formData.append("image", uploadImage);
 
-    // console.log("category_Id: ", Number(serviceData.category_id));
-
     const { data } = await axios.put(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/update`,
       formData,

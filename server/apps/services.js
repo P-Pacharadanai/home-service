@@ -7,7 +7,6 @@ const storage = multer.memoryStorage();
 const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
 
 serviceRouter.post("/", imageUpload, async (req, res) => {
-  console.log(req.body.subService);
   const file = req.files.image[0];
   const serviceName = req.body.name;
   const categoryId = req.body.category_id;
@@ -51,7 +50,6 @@ serviceRouter.post("/", imageUpload, async (req, res) => {
       .insert(newSubService)
       .select();
 
-    console.log("serviceList", serviceList);
     return res.json({ message: data });
   } catch (error) {
     return res.json({ message: error });
@@ -96,8 +94,6 @@ serviceRouter.get("/", async (req, res) => {
       .order(sort, { ascending: ascending })
       .order("price", { referencedTable: "service_list", ascending: true });
 
-    console.log(sortBy);
-    // Apply keyword filtering (case-insensitive)
     // Execute the getData and handle errorsce
     const { data: services, error } = await getData;
 
@@ -117,7 +113,6 @@ serviceRouter.get("/", async (req, res) => {
 serviceRouter.get("/:serviceId", async (req, res) => {
   try {
     const serviceId = req.params.serviceId;
-    console.log(serviceId);
 
     const { data, error } = await supabase
       .from("services")

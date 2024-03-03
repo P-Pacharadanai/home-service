@@ -39,7 +39,6 @@ const EditForm = (props) => {
     const { name, value } = event.target;
     const inputData = { ...serviceData, [name]: value };
     setServiceData(inputData);
-    console.log(inputData);
   };
 
   const onChangeSubService = (event, index) => {
