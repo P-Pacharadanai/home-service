@@ -21,7 +21,6 @@ function AdminCategory() {
     setDeleteCategoryId({ id: 0, name: "" });
     setRefresh(!refresh);
   };
-  console.log(refresh);
 
   const navigate = useNavigate();
   return (

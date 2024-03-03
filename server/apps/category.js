@@ -84,7 +84,6 @@ categoryRouter.post("/", async (req, res) => {
 categoryRouter.put("/", async (req, res) => {
   try {
     const categories = req.body.categories;
-    console.log(categories);
 
     const { data, error } = await supabase
       .from("categories")

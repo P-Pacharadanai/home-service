@@ -16,7 +16,6 @@ const EditPromotionNav = (props) => {
         }`
       );
       setCategoryData(data.data);
-      //console.log(data.data);
     } catch (error) {
       console.error("Failed to fetch category data:", error);
     }

@@ -15,30 +15,27 @@ const PromotionCode = () => {
   const [selectedPromoCode, setSelectedPromoCode] = useState("");
   const { state } = useAuth();
   const navigate = useNavigate();
-  const [categoryData, setCategoryData] = useState([]);
-  const [deleteCodePromoId, setDeleteCodePromoId] = useState({
-    id: 0,
-    name: "",
-  });
+  const [promoCodeData, setPromoCodeData] = useState([]);
 
-  const getCategoryData = async () => {
+  const [inputKeyword, setInputKeyword] = useState("");
+
+  const getPromoCodeData = async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`
+      `${
+        import.meta.env.VITE_APP_HOME_SERVICE_API
+      }/promotion?keyword=${inputKeyword}`
     );
-    setCategoryData(data.data);
-    //console.log(data.data);
+    setPromoCodeData(data.data);
   };
 
   const handleConfirmDelete = async (promocode) => {
-    //console.log("Attempting to delete promo code", deleteCodePromoId);
-    console.log(promocode);
     await axios.delete(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
         promocode.promotion_id
       }`
     );
-    setCategoryData(
-      categoryData.filter(
+    setPromoCodeData(
+      promoCodeData.filter(
         (code) => code.promotion_id !== promocode.promotion_id
       )
     );
@@ -64,9 +61,9 @@ const PromotionCode = () => {
 
   useEffect(() => {
     if (state.user?.userId) {
-      getCategoryData();
+      getPromoCodeData();
     }
-  }, [state.user?.userId]);
+  }, [state.user?.userId, inputKeyword]);
 
   function formatDiscount(discount) {
     if (typeof discount === "string" && discount.includes("%")) {
@@ -113,8 +110,10 @@ const PromotionCode = () => {
               <Search className="text-gray-300 absolute left-4" />
               <input
                 type="text"
+                value={inputKeyword}
                 placeholder="ค้นหา Promotion Code..."
                 className="flex-grow text-mb bg-transparent text-gray-700 w-full text-[1rem] focus:outline-none border border-gray-400 p-2 pl-16 pr-16 rounded-lg outline-none focus:border-gray-600 focus:bg-gray-100 focus:ring-1"
+                onChange={(event) => setInputKeyword(event.target.value)}
               />
             </div>
             <button
@@ -139,7 +138,7 @@ const PromotionCode = () => {
               <div className="text-center ml-20">Action</div>
             </div>
             <div className="divide-y divide-gray-200 py-2">
-              {categoryData.map((promoCode) => (
+              {promoCodeData.map((promoCode) => (
                 <div
                   key={promoCode.promotion_id}
                   className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt"

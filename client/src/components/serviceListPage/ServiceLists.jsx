@@ -19,7 +19,6 @@ function ServiceLists(props) {
     const result = await axios.get(apiUrl);
     let serviceListData = result.data.data;
     setServiceList(serviceListData);
-    console.log("Data:", result.data);
   };
 
   const { isAuthenticated } = useAuth();

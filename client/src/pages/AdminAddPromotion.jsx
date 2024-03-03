@@ -47,7 +47,6 @@ const AdminAddPromotion = () => {
         `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion`,
         { promotionData: newPromotionData }
       );
-      console.log(data);
       navigate(`/admin-promotion-details/${data?.data?.promotion_id}`);
     } catch (error) {
       console.error("Failed to create promotion:", error);
