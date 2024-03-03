@@ -4,20 +4,23 @@ function ConvertThaiDateTime(isoString) {
   dateObject.setHours(dateObject.getHours() + 7);
 
   const options = {
-    year: "numeric",
-    month: "2-digit",
     day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,
   };
 
   const formattedTime = dateObject
-    .toLocaleDateString("en-EN", options)
+    .toLocaleDateString("th-TH-u-ca-gregory", options)
     .split(",")
     .join("");
 
-  return `${formattedTime.slice(0, 16)}${formattedTime.slice(-2)}`;
+  const newDate = formattedTime.slice(0, 16);
+  const amPm = dateObject.getHours() >= 12 ? "PM" : "AM";
+
+  return `${newDate}${amPm}`;
 }
 
 export default ConvertThaiDateTime;

@@ -30,21 +30,22 @@ const PromotionCode = () => {
   };
 
   const handleConfirmDelete = async (promocode) => {
-   //console.log("Attempting to delete promo code", deleteCodePromoId);
-   console.log(promocode);
+    //console.log("Attempting to delete promo code", deleteCodePromoId);
+    console.log(promocode);
     await axios.delete(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/promotion/${
         promocode.promotion_id
       }`
     );
     setCategoryData(
-    categoryData.filter((code) => code.promotion_id !== promocode.promotion_id)
+      categoryData.filter(
+        (code) => code.promotion_id !== promocode.promotion_id
+      )
     );
-    
+
     //setDeleteCodePromoId({ id: 0, name: "" });
     setIsModalOpen(false);
     //navigate("/admin-promotion");
-    
   };
 
   const handleDeleteClick = (promoCode) => {
@@ -83,19 +84,19 @@ const PromotionCode = () => {
 
   function formatDiscount(discount, isPercentage) {
     if (typeof discount !== "number") {
-        return "Invalid discount value";
+      return "Invalid discount value";
     }
-    
+
     if (isPercentage) {
-        // It's a percentage discount
-        if (discount < 1) {
-            // Convert decimal to percentage if not already in percentage form
-            discount = discount * 100;
-        }
-        return `-${discount.toFixed(2)}%`;
+      // It's a percentage discount
+      if (discount < 1) {
+        // Convert decimal to percentage if not already in percentage form
+        discount = discount * 100;
+      }
+      return `-${discount.toFixed(2)}%`;
     } else {
-        // It's a fixed discount
-        return `-${discount.toFixed(2)}`;
+      // It's a fixed discount
+      return `-${discount.toFixed(2)}`;
     }
   }
 
@@ -127,66 +128,68 @@ const PromotionCode = () => {
         </nav>
 
         <div className="pr-10">
-        <section className="font-prompt mt-10 border-gray-300 rounded-lg border max-w-full ml-10 mb-40 bg-white">
-          <div className="grid grid-cols-7 bg-gray-200 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
-            <div>Promotion Code</div>
-            <div>ประเภท</div>
-            <div>โควต้าการใช้</div>
-            <div>ราคาที่ลด</div>
-            <div>สร้างเมื่อ</div>
-            <div className="ml-8">วันหมดอายุ</div>
-            <div className="text-center ml-20">Action</div>
-          </div>
-          <div className="divide-y divide-gray-200 py-2">
-            {categoryData.map((promoCode) => (
-              <div
-                key={promoCode.promotion_id}
-                className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt"
-              >
-                <Link to={`/admin-promotion-details/${promoCode.promotion_id}`}>
-                  {promoCode.code}
-                </Link>
-                <div>{promoCode.type}</div>
-                <div>
-                  {promoCode.usage_count}/{promoCode.usage_limit}
-                </div>
-                <div style={{ color: "rgba(200, 36, 56, 1)" }}>
-                  {promoCode.type === "fixed" ? `${formatDiscount(promoCode.discount)} ฿` : `${formatDiscount(promoCode.discount)} %` }
-                </div>
-                <div>{convertThaiDateTime(promoCode.created_at)}</div>
-                <div className="ml-8 w-full">
-                  {convertThaiDateTime(promoCode.end_date)}
-                </div>
-                <div className="flex justify-center gap-6 ml-24">
-                  <button
-                    onClick={() => handleDeleteClick(promoCode)}
+          <section className="font-prompt mt-10 border-gray-300 rounded-lg border max-w-full ml-10 mb-40 bg-white">
+            <div className="grid grid-cols-7 bg-gray-200 py-3 px-6 stext-md text-start text-gray-700 border-gray-100 rounded-t-lg border">
+              <div>Promotion Code</div>
+              <div>ประเภท</div>
+              <div>โควต้าการใช้</div>
+              <div>ราคาที่ลด</div>
+              <div>สร้างเมื่อ</div>
+              <div className="ml-8">วันหมดอายุ</div>
+              <div className="text-center ml-20">Action</div>
+            </div>
+            <div className="divide-y divide-gray-200 py-2">
+              {categoryData.map((promoCode) => (
+                <div
+                  key={promoCode.promotion_id}
+                  className="grid grid-cols-7 text-start items-center py-8 px-8 bg-white hover:bg-gray-50 font-prompt"
+                >
+                  <Link
+                    to={`/admin-promotion-details/${promoCode.promotion_id}`}
                   >
-                    <Trash2 className="w-6 h-6 text-gray-500 hover:text-gray-950" />
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate(
-                        `/admin-promotion-edit/${promoCode.promotion_id}`
-                      )
-                    }
-                    aria-label={`Edit ${promoCode.code}`}
-                  >
-                    <img src={savefileIcon} alt="Edit" className="w-5 h-5" />
-                  </button>
+                    {promoCode.code}
+                  </Link>
+                  <div>{promoCode.type}</div>
+                  <div>
+                    {promoCode.usage_count}/{promoCode.usage_limit}
+                  </div>
+                  <div style={{ color: "rgba(200, 36, 56, 1)" }}>
+                    {promoCode.type === "fixed"
+                      ? `${formatDiscount(promoCode.discount)} ฿`
+                      : `${formatDiscount(promoCode.discount)} %`}
+                  </div>
+                  <div>{convertThaiDateTime(promoCode.created_at)}</div>
+                  <div className="ml-8 w-full">
+                    {convertThaiDateTime(promoCode.expiration_date)}
+                  </div>
+                  <div className="flex justify-center gap-6 ml-24">
+                    <button onClick={() => handleDeleteClick(promoCode)}>
+                      <Trash2 className="w-6 h-6 text-gray-500 hover:text-gray-950" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/admin-promotion-edit/${promoCode.promotion_id}`
+                        )
+                      }
+                      aria-label={`Edit ${promoCode.code}`}
+                    >
+                      <img src={savefileIcon} alt="Edit" className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <AlertModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onConfirm={() => handleConfirmDelete(selectedPromoCode)}
-          promoCode={selectedPromoCode}
-        />
+          <AlertModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onConfirm={() => handleConfirmDelete(selectedPromoCode)}
+            promoCode={selectedPromoCode}
+          />
+        </div>
       </div>
-      </div>  
     </div>
   );
 };

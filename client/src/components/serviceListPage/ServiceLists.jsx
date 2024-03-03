@@ -72,12 +72,12 @@ function ServiceLists(props) {
                       className="relative "
                     />
                     ค่าบริการประมาณ{" "}
-                    {service.service_list.length === 1
-                      ? service.service_list[0].price.toLocaleString()
-                      : `${service.service_list[0].price.toLocaleString()} -
-                    ${service.service_list[
-                      service.service_list.length - 1
-                    ].price.toLocaleString()}`}
+                    {service?.service_list?.length === 1
+                      ? service?.service_list[0]?.price.toLocaleString()
+                      : `${service?.service_list[0]?.price.toLocaleString()} -
+                    ${service?.service_list[
+                      service?.service_list?.length - 1
+                    ]?.price.toLocaleString()}`}
                     {" ฿"}
                     <img
                       src={iconTagCircle}

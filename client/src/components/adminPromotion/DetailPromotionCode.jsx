@@ -31,7 +31,6 @@ const DetailPromotionCode = () => {
     navigate("/admin-promotion");
   };
 
-
   function formatDiscount(discount) {
     if (typeof discount === "number") {
       // Check if it's a percentage
@@ -46,8 +45,6 @@ const DetailPromotionCode = () => {
       return "No discount";
     }
   }
-
-
 
   return (
     <div className="flex">
@@ -78,58 +75,60 @@ const DetailPromotionCode = () => {
             </button>
           </div>
         </nav>
-        
-        <div className="pl-20 pr-10">
-        <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto  max-w-full mt-10 mb-40 overflow-auto">
-          <div className="grid grid-cols-2 p-6 w-[850px]">
-            <p className="font-medium max-w-40">Promotion Code</p>
-            <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
-              {categoryData.code}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-prompt font-medium max-w-40">ประเภท</p>
-            <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
-              {categoryData.type}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-prompt font-medium max-w-40">ราคาที่ลด</p>
-            <p
-              className="flex justify-start items-start -ml-32"
-              style={{ color: "rgba(200, 36, 56, 1)" }}
-            >
-              {categoryData.type === "fixed" ? `${formatDiscount(categoryData.discount)} ฿` : `${formatDiscount(categoryData.discount)} %` }
-            </p>
-          </div>
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-prompt font-medium max-w-40">โควต้าการใช้</p>
-            <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
-              {categoryData.usage_count}/{categoryData.usage_limit} ครั้ง
-            </p>
-          </div>
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-prompt font-medium max-w-40">วันหมดอายุ</p>
-            <p className="flex justify-start items-start -ml-32 text-black">
-              {convertThaiDateTime(categoryData.end_date)}
-            </p>
-          </div>
 
-          <hr className="border-t border-gray-300 w-full mb-2 mt-2" />
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
-            <p className="flex justify-start items-start -ml-32 text-black">
-              {convertThaiDateTime(categoryData.created_at)}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
-            <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
-            <p className="flex justify-start items-start -ml-32 text-black">
-              {convertThaiDateTime(categoryData.updated_at)}
-            </p>
+        <div className="pl-20 pr-10">
+          <div className="bg-white rounded-lg border text-start text-lg text-gray-700 py-8 px-6 font-prompt flex flex-col justify-start items-start mx-auto  max-w-full mt-10 mb-40 overflow-auto">
+            <div className="grid grid-cols-2 p-6 w-[850px]">
+              <p className="font-medium max-w-40">Promotion Code</p>
+              <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
+                {categoryData.code}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-prompt font-medium max-w-40">ประเภท</p>
+              <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
+                {categoryData.type}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-prompt font-medium max-w-40">ราคาที่ลด</p>
+              <p
+                className="flex justify-start items-start -ml-32"
+                style={{ color: "rgba(200, 36, 56, 1)" }}
+              >
+                {categoryData.type === "fixed"
+                  ? `${formatDiscount(categoryData.discount)} ฿`
+                  : `${formatDiscount(categoryData.discount)} %`}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-prompt font-medium max-w-40">โควต้าการใช้</p>
+              <p className="flex justify-start items-start -ml-32 max-w-40 text-black">
+                {categoryData.usage_count}/{categoryData.usage_limit} ครั้ง
+              </p>
+            </div>
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-prompt font-medium max-w-40">วันหมดอายุ</p>
+              <p className="flex justify-start items-start -ml-32 text-black">
+                {convertThaiDateTime(categoryData.expiration_date)}
+              </p>
+            </div>
+
+            <hr className="border-t border-gray-300 w-full mb-2 mt-2" />
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-prompt font-medium max-w-40">สร้างเมื่อ</p>
+              <p className="flex justify-start items-start -ml-32 text-black">
+                {convertThaiDateTime(categoryData.created_at)}
+              </p>
+            </div>
+            <div className="grid grid-cols-2 p-6 w-[850px] font-prompt">
+              <p className="font-medium font-prompt max-w-40 ">แก้ไขล่าสุด</p>
+              <p className="flex justify-start items-start -ml-32 text-black">
+                {convertThaiDateTime(categoryData.updated_at)}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );
