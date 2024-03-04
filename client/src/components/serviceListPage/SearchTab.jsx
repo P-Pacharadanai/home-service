@@ -19,7 +19,8 @@ function SearchTab(props) {
   const [searchMax, setSearchMax] = useState(3000);
   const [searchWord, setSearchWord] = useState("");
 
-  const { setMin, setMax, setKeyword, setCategory, setSortBy } = props;
+  const { setMin, setMax, setKeyword, setCategory, setSortBy, categoryData } =
+    props;
 
   const handleSliderChange = (value) => {
     setSearchMin(value[0]);
@@ -67,11 +68,20 @@ function SearchTab(props) {
             onChange={handleCategoryChange}
             variant="unstyled"
             placeholder="บริการทั้งหมด"
-            className="font-semibold text-center"
+            className="font-semibold text-center cursor-pointer "
+            defaultValue={1}
           >
-            <option value="ทั่วไป">บริการทั่วไป</option>
-            <option value="ห้องครัว">บริการห้องครัว</option>
-            <option value="ห้องน้ำ">บริการห้องน้ำ</option>
+            {categoryData.map((item) => {
+              return (
+                <option
+                  key={item.id}
+                  value={item.id}
+                  isdisabled={(item.id === undefined).toString()}
+                >
+                  บริการ{item.name}
+                </option>
+              );
+            })}
           </Select>
         </div>
 
@@ -114,7 +124,7 @@ function SearchTab(props) {
               onChange={handleSortByChange}
               variant="unstyled"
               placeholder="บริการแนะนำ"
-              className="font-semibold text-center"
+              className="font-semibold text-center cursor-pointer"
             >
               <option value="ASC">ราคา น้อย-มาก</option>
               <option value="DESC">ราคา มาก-น้อย</option>

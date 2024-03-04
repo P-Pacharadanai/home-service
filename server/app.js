@@ -8,6 +8,7 @@ import serviceRouter from "./apps/services.js";
 import paymentRouter from "./apps/payment.js";
 import orderRouter from "./apps/orders.js";
 import promotionRouter from "./apps/promotion.js";
+import categoryRouter from "./apps/category.js";
 
 async function init() {
   const app = express();
@@ -23,6 +24,11 @@ async function init() {
   app.use("/payment", paymentRouter);
   app.use("/order", orderRouter);
   app.use("/promotion", promotionRouter);
+  app.use("/category", categoryRouter);
+
+  app.get("/", (req, res) => {
+    res.send("App is running...");
+  });
 
   app.get("*", (req, res) => {
     res.status(404).send("Not found");

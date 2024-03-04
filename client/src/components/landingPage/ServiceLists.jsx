@@ -3,6 +3,7 @@ import axios from "axios";
 import { iconTag, iconTagCircle } from "../../assets/icons";
 import { useAuth } from "../../contexts/authentication";
 import { useNavigate } from "react-router-dom";
+import ServiceCardSkeleton from "../skeleton/SeviceCard";
 
 function ServiceLists() {
   const [serviceList, setServiceList] = useState([]);
@@ -31,6 +32,9 @@ function ServiceLists() {
   return (
     <>
       <div className="flex flex-wrap flex-1 justify-center gap-8 sm:w-[349px] sm:min-w-[340px] w-full rounded-[8px] font-prompt">
+        {serviceList.length === 0 && (
+          <ServiceCardSkeleton itemCount={3} marginTop="mt-4" />
+        )}
         {serviceList.map((service, index) => (
           <div
             key={index}
@@ -46,8 +50,14 @@ function ServiceLists() {
               className="w-full h-[180px] rounded-tl-lg rounded-tr-lg object-cover"
             />
             <div className="mt-4 flex gap-2.5 pl-4">
-              <p className="text-md text-blue-800 p-2.5 rounded-xl leading-none bg-blue-100">
-                บริการ{service.category}
+              <p
+                className="text-md text-blue-800 p-2.5 rounded-xl leading-none"
+                style={{
+                  backgroundColor: `${service.categories.background_color}`,
+                  color: `${service.categories.text_color}`,
+                }}
+              >
+                บริการ{service.categories.name}
               </p>
             </div>
             <h3 className="mt-2 text-xl leading-normal font-semibold pl-4 text-gray-950">
@@ -61,7 +71,16 @@ function ServiceLists() {
                 height={4}
                 className="absolute -mb-3 mt-1 ml-1"
               />
-              <p className="text-gray-700">ค่าบริการประมาณ {service.price} ฿</p>
+              <p className="text-gray-700">
+                ค่าบริการประมาณ{" "}
+                {service.service_list.length === 1
+                  ? service.service_list[0].price.toLocaleString()
+                  : `${service.service_list[0].price.toLocaleString()} -
+                    ${service.service_list[
+                      service.service_list.length - 1
+                    ].price.toLocaleString()}`}
+                {" ฿"}
+              </p>
               <p className="leading-normal text-gray-700 tracking-wide text-sm">
                 {service.type}
               </p>

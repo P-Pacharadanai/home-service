@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { iconrBell, userIcon, vectorLogout } from "../../assets/icons";
+import { arrowRight } from "../../assets/icons/index.js";
 import { menuItemsAdmin } from "../../constants";
 import { useAuth } from "../../contexts/authentication";
 
@@ -15,24 +18,24 @@ const ButtonAdmin = () => {
   return (
     <>
       <div className="relative">
-        <button
+        <div
           id="dropdownAvatarNameButton"
-          onClick={toggleDropdown}
           className="flex items-center text-sm pe-1 text-gray-900 p-2 rounded-lg whitespace-nowrap px-6 pb-2 pt-2.5 leading-normal"
           type="button"
         >
           {state.user?.firstName} {state.user?.lastName}
           <img
-            className="ml-3 w-8 h-8 me-1 rounded-full"
+            className="ml-3 w-8 h-8 me-1 rounded-full cursor-pointer"
             src={userIcon}
             alt="user photo"
+            onClick={toggleDropdown}
           />
           <img
-            className="ml-2 w-8 h-8 p-2 bg-slate-300 me-6 rounded-full"
+            className="ml-2 w-8 h-8 p-2 bg-slate-300 me-6 rounded-full cursor-pointer"
             src={iconrBell}
             alt="user photo"
           />
-        </button>
+        </div>
 
         {/* Dropdown menu */}
         {isOpen && (
@@ -47,35 +50,41 @@ const ButtonAdmin = () => {
             </div>
             */}
             <ul
-              className="py-4 text-sm text-gray-300 dark:text-gray-800"
+              className="pt-4 text-sm text-gray-300 dark:text-gray-800"
               aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton"
             >
               {menuItemsAdmin.map((menuItem, index) => (
-                <li key={index} className="flex items-center">
-                  <img
-                    src={menuItem.icon}
-                    alt="icon"
-                    className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
-                  />
-                  <a
-                    href="#"
-                    className="block px-6 py-2 hover:bg-gray-100 dark:hover:bg-base dark:hover:text-gray-500"
+                <li key={index} className="group flex items-center">
+                  <div className="py-[0.65rem] group-hover:bg-gray-100">
+                    <img
+                      src={menuItem.icon}
+                      alt="icon"
+                      className="ml-3 w-[12px] object-cover h-full me-1 opacity-50 group-hover:opacity-100"
+                    />
+                  </div>
+
+                  <Link
+                    to={menuItem.path || "#"}
+                    className="block w-full px-6 py-2 group-hover:bg-gray-100 text-gray-800 group-hover:text-gray-950 dark:hover:bg-base dark:hover:text-gray-500"
                   >
                     {menuItem.text}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <div className="py-2 flex items-center">
-              <img
-                src={vectorLogout}
-                alt="icon"
-                className="ml-3 w-[9px] h-[12px] me-1 rounded-full"
-              />
+            <div className="py-2 flex items-center group">
+              <div className="py-3 group-hover:bg-gray-100 ">
+                <img
+                  src={arrowRight}
+                  alt="icon"
+                  className="ml-3 w-[12px] object-cover h-full me-1 opacity-50 group-hover:opacity-100"
+                />
+              </div>
+
               <span
                 onClick={() => logout()}
                 href="#"
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-100 dark:text-gray-800 dark:hover:text-gray-500 hover:cursor-pointer"
+                className="w-full block px-6 py-2 text-sm text-gray-800 group-hover:bg-gray-100 dark:hover:bg-gray-100 dark:text-gray-800 dark:hover:text-gray-500 cursor-pointer"
               >
                 ออกจากระบบ
               </span>

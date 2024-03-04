@@ -81,7 +81,6 @@ userRouter.delete("/:id", async (req, res) => {
 
     const { data, error } = await supabase.auth.admin.deleteUser(authId);
 
-    console.log("data: ", data);
     if (error) {
       return res.json({ message: error });
     }

@@ -11,11 +11,11 @@ const PaymentSuccess = () => {
   const params = useParams();
 
   const orderId = params.orderId;
-  console.log("orderData", orderData);
 
   const getOrderData = async () => {
-    const { data } = await axios.get(`http://localhost:4000/order/${orderId}`);
-    console.log("Data", data);
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/order/${orderId}`
+    );
     setOrderData(data?.data);
   };
 
@@ -65,9 +65,8 @@ const PaymentSuccess = () => {
     getOrderData();
   }, []);
 
-  console.log(orderData);
   return (
-    <section className="font-prompt max-container bg-gray-100 w-svw h-svh">
+    <section className="font-promp bg-gray-100 w-svw h-svh">
       <NavUser />
 
       <div className="w-[500px] mx-auto mt-10 rounded-lg border-gray-300 border">

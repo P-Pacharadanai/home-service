@@ -6,7 +6,6 @@ const Modal = ({ onClose, orderId }) => {
   const modalRef = useRef();
   const [serviceListData, setServiceListData] = useState([]);
 
-  console.log("serviceListData: ", serviceListData);
   const getServiceList = async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_APP_HOME_SERVICE_API}/order/${orderId}/list`

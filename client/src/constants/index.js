@@ -13,6 +13,13 @@ import {
   historyBlue,
   vectorhumanBlue,
 } from "../assets/icons/";
+import {
+  userProfile,
+  clipboardIcon,
+  clockRotate,
+  arrowRight,
+} from "../assets/icons/index.js";
+
 import { cleaning, acCleaning, washing } from "../assets/images";
 
 // Our service is landing page
@@ -49,22 +56,26 @@ export const ourServices = [
 
 //Dropdown Admin
 export const menuItemsAdmin = [
-  { icon: vectorHuman, text: "ข้อมูลผู้ใช้งาน" },
-  { icon: vectorChart, text: "รายการคำสั่งซ่อม" },
-  { icon: vectorHistoryGray, text: "ประวัติการซ่อม" },
-  { icon: vectorHistoryGray, text: "Admin Dashboard" },
+  { icon: userProfile, text: "ข้อมูลผู้ใช้งาน" },
+  // {
+  //   icon: vectorChart,
+  //   text: "รายการคำสั่งซ่อม",
+  //   path: "/customer-service-list",
+  // },
+  // { icon: vectorHistoryGray, text: "ประวัติการซ่อม", path: "/service-history" },
+  { icon: clockRotate, text: "Admin Dashboard", path: "/admin-category" },
 ];
 
 //Dropdown User
 export const menuItemsUser = [
-  { icon: vectorHuman, text: "ข้อมูลผู้ใช้งาน" },
+  { icon: userProfile, text: "ข้อมูลผู้ใช้งาน" },
   {
-    icon: vectorChart,
+    icon: clipboardIcon,
     text: "รายการคำสั่งซ่อม",
     path: "/customer-service-list",
   },
   {
-    icon: vectorHistoryBlack,
+    icon: clockRotate,
     text: "ประวัติการซ่อม",
     path: "/service-history",
   },
@@ -84,13 +95,13 @@ export const footerContacts = [
 
 //User account
 export const UserAcct = [
-  { icon: vectorHumanMd, text: "ข้อมูลผู้ใช้งาน" },
+  { icon: userProfile, text: "ข้อมูลผู้ใช้งาน" },
   {
-    icon: vectorChart,
+    icon: clipboardIcon,
     text: "รายการคำสั่งซ่อม",
     path: "/customer-service-list",
   },
-  { icon: vectorHistoryGray, text: "ประวัติการซ่อม", path: "/service-history" },
+  { icon: clockRotate, text: "ประวัติการซ่อม", path: "/service-history" },
 ];
 
 //Service Lists
@@ -171,5 +182,53 @@ export const popupdetails = [
     description: "ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง",
     quantity: "2 เครื่อง",
     totalPrice: "1800 THB",
+  },
+];
+
+const initialPromotionCodes = [
+  {
+    id: 1,
+    code: "HOME202",
+    type: "Fixed",
+    usage: "10/100",
+    discount: "-50.00฿",
+    startDate: "12/02/2024 10:30 PM",
+    endDate: "12/06/2024 10:30 PM",
+  },
+  {
+    id: 2,
+    code: "HOME10",
+    type: "Percent",
+    usage: "5/100",
+    discount: "10.00%",
+    startDate: "12/02/2024 10:30 PM",
+    endDate: "12/06/2024 10:30 PM",
+  },
+  {
+    id: 3,
+    code: "HOME203",
+    type: "Fixed",
+    usage: "10/100",
+    discount: "-50.00฿",
+    startDate: "12/02/2024 10:30 PM",
+    endDate: "12/06/2024 10:30 PM",
+  },
+  {
+    id: 4,
+    code: "HOME204",
+    type: "Fixed",
+    usage: "10/100",
+    discount: "-50.00฿",
+    startDate: "12/02/2024 10:30 PM",
+    endDate: "12/06/2024 10:30 PM",
+  },
+  {
+    id: 5,
+    code: "HOME205",
+    type: "Fixed",
+    usage: "10/100",
+    discount: "-50.00฿",
+    startDate: "12/02/2024 10:30 PM",
+    endDate: "12/06/2024 10:30 PM",
   },
 ];

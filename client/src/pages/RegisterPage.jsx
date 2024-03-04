@@ -3,10 +3,12 @@ import GeneralNav from "../components/common/GeneralNav";
 
 function RegisterPage() {
   return (
-    <>
-      <GeneralNav />
+    <div className="h-screen flex flex-col">
+      <div>
+        <GeneralNav />
+      </div>
       <FormComponent />
-    </>
+    </div>
   );
 }
 export default RegisterPage;

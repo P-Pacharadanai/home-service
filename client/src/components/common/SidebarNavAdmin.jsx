@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/authentication";
+
 import {
   houseXs,
   ExitIcon,
@@ -6,53 +9,58 @@ import {
   TicketIcon,
 } from "../../assets/icons/index";
 
-export const SidebarNavAdmin = () => {
+export const SidebarNavAdmin = ({ currentPage }) => {
+  const { logout } = useAuth();
+
   const items = [
-    { icon: ListIcon, text: "หมวดหมู่" },
-    { icon: CopyIcon, text: "บริการ" },
-    { icon: TicketIcon, text: "Promotion Code" },
+    { icon: ListIcon, text: "หมวดหมู่", path: "/admin-category" },
+    { icon: CopyIcon, text: "บริการ", path: "/admin-service" },
+    { icon: TicketIcon, text: "Promotion Code", path: "/admin-promotion" },
   ];
   return (
-    <div className="flex font-prompt">
-      <div className="bg-blue-950 h-screen w-[240px]">
-        <div className="flex justify-center h-[106px] p-6">
-          <div className="flex flex-row items-center py-2 px-3 bg-blue-200 rounded-lg gap-2">
-            <img src={houseXs} alt="house icon" />
-            <button className=" text-blue-600 font-medium">HomeServices</button>
-          </div>
+    <div className="font-prompt flex flex-col bg-blue-950 w-[240px]  h-screen">
+      <div className="flex justify-center py-8">
+        <div className="items-center px-3 py-3  bg-blue-200 rounded-xl">
+          <Link
+            to="/"
+            className="flex flex-row gap-2 text-xl text-blue-600 font-medium hover:cursor-pointer"
+          >
+            <img src={houseXs} alt="house icon" className="w-7" />
+            HomeServices
+          </Link>
         </div>
+      </div>
 
-        {/* MENU LIST */}
-        <div className="h-[760px]">
-          <div className="ml-0">
-            <ul className="pl-6">
-              {items.map((item, index) => (
-                <li key={index} className="flex relative text-white">
-                  <div className="absolute inset-y-0 left-0 -top-2 flex items-center pl-2 pointer-events-none">
-                    <img src={item.icon} alt="menu icon" className="w4 h-4" />
-                  </div>
-                  <a
-                    href="#"
-                    className="h-[54px] inline-block w-full ml-2 py-2 pl-8 pr-4 text-lg rounded hover:bg-blue-900 hover:text-white focus:outline-none  focus:bg-blue-900"
-                  >
-                    {item.text}
-                  </a>
-                </li>
-              ))}
-              <div className="mt-[500px]">
-                <li className="flex relative text-white">
-                  <div className="absolute inset-y-0 left-0 -top-2 flex items-center pl-2 pointer-events-none">
-                    <img src={ExitIcon} alt="exit icon" className="w4 h-4" />
-                  </div>
-                  <a
-                    href="#"
-                    className="h-[54px] inline-block w-full ml-2 py-2 pl-8 pr-4 text-lg rounded hover:bg-blue-900 hover:text-white focus:outline-none  focus:bg-blue-900"
-                  >
-                    ออกจากระบบ
-                  </a>
-                </li>
+      {/* MENU LIST */}
+      <div className="flex-1 flex">
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            {items.map((item, index) => (
+              <li key={index} className="flex relative text-white">
+                <Link
+                  to={item.path}
+                  className={`h-[54px] flex items-center gap-4 w-full pl-8 text-[1rem] font-medium rounded hover:bg-blue-900 hover:text-white focus:outline-none  focus:bg-blue-900 ${
+                    currentPage === item.text && "bg-blue-900"
+                  }`}
+                >
+                  <img src={item.icon} alt="menu icon" className="w-4 h-4" />
+                  <p>{item.text}</p>
+                </Link>
+              </li>
+            ))}
+          </div>
+          <div className="mb-16">
+            <li
+              onClick={logout}
+              className="h-[54px] flex gap-2 items-center text-white pl-8 hover:bg-blue-900 hover:cursor-pointer"
+            >
+              <div className="pointer-events-none">
+                <img src={ExitIcon} alt="exit icon" className="w-4 h-4" />
               </div>
-            </ul>
+              <div className="text-[1rem] rounded hover:text-white focus:outline-none  focus:bg-blue-900">
+                ออกจากระบบ
+              </div>
+            </li>
           </div>
         </div>
       </div>

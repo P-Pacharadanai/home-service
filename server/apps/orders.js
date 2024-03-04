@@ -120,8 +120,6 @@ orderRouter.post("/", async (req, res) => {
       return res.json({ message: orderError });
     }
 
-    console.log("orderData :", orderData);
-
     const orderServiceList = serviceOrder.map((item) => ({
       order_id: orderData[0]?.order_id,
       service_list_id: item.service_list_id,

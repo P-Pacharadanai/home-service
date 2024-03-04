@@ -31,7 +31,6 @@ function CheckoutForm(props) {
     setLoading(false);
     setErrorMessage(error.message);
   };
-  console.log(totalOrderData);
 
   const handleSubmit = async () => {
     setConfirmPayment(false);
@@ -98,10 +97,9 @@ function CheckoutForm(props) {
 
     setPromotionCode({
       ...promotionCode,
-      promotion: data.data,
+      promotion: data.data[0],
       errorMessage: "",
     });
-    console.log(data);
   };
 
   useEffect(() => {
