@@ -23,12 +23,12 @@ function AdminServiceDetail() {
   return (
     <div className="flex h-screen font-prompt ">
       <div className="h-full">
-        <SidebarNavAdmin currentPage="หมวดหมู่" />
+        <SidebarNavAdmin currentPage="บริการ" />
       </div>
       <div className="flex-1 flex flex-col">
         <TopbarEdit serviceData={serviceData} />
 
-        <div className="flex-1 px-10 py-14 bg-base">
+        <div className="flex-1 px-10 py-14 bg-base overflow-y-auto">
           <MainContent serviceData={serviceData} />
         </div>
       </div>

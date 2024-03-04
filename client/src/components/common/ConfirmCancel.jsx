@@ -21,7 +21,10 @@ const ConfirmCancel = ({ onDelete, onClose, itemName }) => {
           ยืนยันการลบรายการ?
         </div>
         <div className="text-gray-700 text-center font-light text-[1rem] mt-2 leading-normal">
-          <p>คุณต้องการลบรายการ '{itemName}'</p>
+          <p>
+            คุณต้องการลบรายการ '
+            <span className="text-blue-600">{itemName}</span>'
+          </p>
           <p>ใช่หรือไม่</p>
         </div>
         <div className="flex gap-4 mt-5">

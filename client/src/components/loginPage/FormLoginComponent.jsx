@@ -134,17 +134,17 @@ const FormLoginComponent = () => {
           </div>
 
           <div className="mt-5 w-full">
-            <button className="w-full h-11 px-6 py-2.5 rounded-lg border border-blue-600 justify-center items-center gap-2 inline-flex ">
+            <div className="w-full h-11 px-6 py-2.5 rounded-lg border border-gray-400 justify-center items-center gap-2 inline-flex ">
               <img
                 src={facebookLogo}
                 alt="facebook logo"
-                className="w-[23px] h-[23px]"
+                className="w-[23px] h-[23px] grayscale"
               />
               &nbsp;&nbsp;
-              <p className="text-blue-600  font-medium leading-normal ">
+              <p className="text-gray-400  font-medium leading-normal ">
                 เข้าสู่ระบบด้วย Facebook
               </p>
-            </button>
+            </div>
           </div>
           <div className="mt-5 mb-8 w-full  h-6 justify-center items-center gap-2 inline-flex">
             <p className="text-center text-gray-600  font-normal ">

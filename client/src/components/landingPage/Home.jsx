@@ -8,6 +8,7 @@ const Home = () => {
 
   const handleLoginClick = () => {
     navigate("/service-list");
+    window.scrollTo(0, 0);
   };
 
   return (

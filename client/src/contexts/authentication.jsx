@@ -59,6 +59,12 @@ function AuthProvider(props) {
         return console.error("login error:", error);
       }
       setState({ ...state, loading: false });
+      console.log(data.user.role);
+      if (data.user.role === "authenticated_admin") {
+        navigate("/admin-category");
+        return;
+      }
+
       navigate("/");
     } catch (error) {
       console.error("An error occurred during login:", error);

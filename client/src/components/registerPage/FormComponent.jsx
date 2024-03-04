@@ -44,9 +44,9 @@ function FormComponent() {
   };
 
   return (
-    <div className="font-prompt bg-base w-screen min-h-screen flex justify-center items-center">
+    <div className="flex-1 font-prompt bg-base w-screen  flex justify-center items-center">
       <div
-        className="flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
+        className=" flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
         id="register-form-container"
       >
         <h1 className="text-blue-950 text-center font-medium text-2xl leading-8 mt-8">
@@ -269,17 +269,17 @@ function FormComponent() {
             </span>
           </div>
           <div className="mt-5 w-full">
-            <button
-              onClick={() => navigate("/login")}
-              className="flex items-center justify-center  bg-white text-blue-600 rounded-md border border-blue-600 p-2 md:p-4 lg:p-6 font-semibold w-full relative"
+            <div
+              // onClick={() => navigate("/login")}
+              className="flex items-center justify-center  bg-white text-gray-400 rounded-md border border-gray-400 p-2 md:p-4 lg:p-6 font-semibold w-full relative cursor-default"
             >
               <img
                 src={facebookLogo}
                 alt="facebook logo"
-                className="w-[25px] h-[25px]"
+                className="w-[25px] h-[25px] grayscale"
               />
               &nbsp;&nbsp;เข้าสู่ระบบด้วย Facebook
-            </button>
+            </div>
           </div>
 
           <div

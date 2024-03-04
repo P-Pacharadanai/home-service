@@ -15,6 +15,7 @@ const EditForm = (props) => {
     setUploadImage,
     subService,
     setSubService,
+    setDeleteServiceId,
   } = props.serviceEditState;
 
   const navigate = useNavigate();
@@ -59,6 +60,13 @@ const EditForm = (props) => {
     setSubService([...subService, newSubServiceItem]);
   };
 
+  const handleConfirmDelete = (id, name) => {
+    setDeleteServiceId({
+      id: id,
+      name: "บริการ" + name,
+    });
+  };
+
   // const handleConfirmDelete = () => {
   //   setDeleteServiceId({
   //     id: serviceData.id,
@@ -66,14 +74,14 @@ const EditForm = (props) => {
   //   });
   // };
 
-  const removeService = async (id) => {
-    await axios.delete(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${
-        serviceData.service_id
-      }`
-    );
-    navigate("/admin-service");
-  };
+  // const removeService = async (id) => {
+  //   await axios.delete(
+  //     `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${
+  //       serviceData.service_id
+  //     }`
+  //   );
+  //   navigate("/admin-service");
+  // };
 
   const removeSubService = async (id, index) => {
     if (subService.length !== 1) {
@@ -291,7 +299,9 @@ const EditForm = (props) => {
       </div>
       <div className="w-full flex justify-end">
         <div
-          onClick={removeService}
+          onClick={() =>
+            handleConfirmDelete(serviceData.service_id, serviceData?.name)
+          }
           className="group flex items-center justify-end gap-3 mt-6 cursor-pointer"
         >
           <img
