@@ -7,16 +7,16 @@ import { convertThaiDateTime } from "../common";
 import AdminServiceListSkeleton from "../skeleton/AdminServiceList";
 const ServiceService = (props) => {
   const [services, setServices] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { refresh, setDeleteServiceId, inputKeyword } = props;
 
   const navigate = useNavigate();
 
   const getServiceData = async () => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service?keyword=${
-          props.inputKeyword
-        }`
+        `${
+          import.meta.env.VITE_APP_HOME_SERVICE_API
+        }/service?keyword=${inputKeyword}`
       );
       setServices(data.data);
 
@@ -35,8 +35,32 @@ const ServiceService = (props) => {
     );
   };
 
+  // const handleDragEnd = (result) => {
+  //   if (!result.destination) return;
+
+  //   const reOrderedService = Array.from(services);
+  //   const [reOrderedItem] = reOrderedService.splice(result.source.index, 1);
+  //   reOrderedService.splice(result.destination.index, 0, reOrderedItem);
+
+  //   const updatedService = reOrderedService.map((service, index) => ({
+  //     ...service,
+  //     index: index + 1,
+  //   }));
+
+  //   // updateServiceData(updatedService);
+
+  //   setServices(updatedService);
+  // };
+
   const handleDragEnd = (result) => {
     if (!result.destination) return;
+
+    const sourceService = services[result.source.index];
+    const destinationService = services[result.destination.index];
+
+    if (sourceService.categories.name !== destinationService.categories.name) {
+      return;
+    }
 
     const reOrderedService = Array.from(services);
     const [reOrderedItem] = reOrderedService.splice(result.source.index, 1);
@@ -53,7 +77,7 @@ const ServiceService = (props) => {
   };
 
   const handleConfirmDelete = (id, name) => {
-    props.setDeleteServiceId({
+    setDeleteServiceId({
       id: id,
       name: "บริการ" + name,
     });
@@ -61,7 +85,7 @@ const ServiceService = (props) => {
 
   useEffect(() => {
     getServiceData();
-  }, [props.inputKeyword, props.refresh]);
+  }, [inputKeyword, refresh]);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>

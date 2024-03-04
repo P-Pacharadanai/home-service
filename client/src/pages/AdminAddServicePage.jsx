@@ -101,7 +101,7 @@ function AdminAddServicePage() {
   return (
     <div className="flex h-screen font-prompt">
       <div className="h-screen">
-        <SidebarNavAdmin />
+        <SidebarNavAdmin currentPage="บริการ" />
       </div>
       <div className="flex flex-col w-full overflow-y-auto ">
         <DragDropContext onDragEnd={handleDragEnd}>

@@ -31,13 +31,11 @@ function AdminEditService() {
 
   const handleDelete = async () => {
     await axios.delete(
-      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${
-        deleteServiceId.id
-      }`
+      `${import.meta.env.VITE_APP_HOME_SERVICE_API}/service/${params.serviceId}`
     );
 
     setDeleteServiceId({ id: 0, name: "" });
-    navigate("/admin-category");
+    navigate("/admin-service");
   };
 
   const handleEdit = async () => {
@@ -71,7 +69,7 @@ function AdminEditService() {
   return (
     <div className="flex h-screen ">
       <div className="h-full">
-        <SidebarNavAdmin />
+        <SidebarNavAdmin currentPage="บริการ" />
       </div>
 
       <div className="flex-1 flex flex-col">
@@ -95,6 +93,7 @@ function AdminEditService() {
               setUploadImage,
               subService,
               setSubService,
+              setDeleteServiceId,
             }}
           />
           {deleteServiceId.id !== 0 && (

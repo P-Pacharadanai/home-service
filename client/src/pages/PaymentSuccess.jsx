@@ -66,7 +66,7 @@ const PaymentSuccess = () => {
   }, []);
 
   return (
-    <section className="font-prompt max-container bg-gray-100 w-svw h-svh">
+    <section className="font-promp bg-gray-100 w-svw h-svh">
       <NavUser />
 
       <div className="w-[500px] mx-auto mt-10 rounded-lg border-gray-300 border">

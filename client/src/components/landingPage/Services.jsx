@@ -5,9 +5,9 @@ import { GeneralBtn } from "../../components/common";
 
 const Services = () => {
   const navigate = useNavigate();
-
   const handleLoginClick = () => {
     navigate("/service-list"); // Navigate to wherever you want
+    window.scrollTo(0, 0);
   };
 
   return (

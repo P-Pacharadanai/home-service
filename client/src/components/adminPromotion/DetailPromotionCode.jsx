@@ -48,7 +48,7 @@ const DetailPromotionCode = () => {
   return (
     <div className="flex">
       <div className=" top-0 left-0 fixed w-64 min-h-screen">
-        <SidebarNavAdmin />
+        <SidebarNavAdmin currentPage="Promotion Code" />
       </div>
 
       <div className="pl-[14rem] flex-2 overflow-auto w-full bg-gray-100 h-screen">
