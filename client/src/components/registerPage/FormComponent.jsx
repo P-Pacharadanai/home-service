@@ -58,7 +58,7 @@ function FormComponent() {
   };
 
   return (
-    <div className="flex-1 font-prompt bg-base w-screen  flex justify-center items-center">
+    <div className="flex-1 font-prompt bg-base w-screen  flex justify-center py-10 items-center">
       <div
         className=" flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
         id="register-form-container"

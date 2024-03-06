@@ -1,3 +1,5 @@
+import { Spinner } from "@chakra-ui/react";
+
 function FooterDetail(props) {
   const {
     currentStep,
@@ -62,11 +64,18 @@ function FooterDetail(props) {
           }`}
           onClick={nextStep}
         >
-          {currentStep === 3
-            ? loading
-              ? "กำลังดำเนินการ"
-              : "ยืนยันการชำระเงิน >"
-            : "ดำเนินการ >"}
+          {currentStep === 3 ? (
+            loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <Spinner size="sm" />
+                <p>กำลังดำเนินการ</p>
+              </div>
+            ) : (
+              "ยืนยันการชำระเงิน >"
+            )
+          ) : (
+            "ดำเนินการ >"
+          )}
         </button>
       </div>
     </div>
