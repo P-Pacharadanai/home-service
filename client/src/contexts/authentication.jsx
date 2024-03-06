@@ -35,7 +35,7 @@ function AuthProvider(props) {
       //check if there's an error during sign up
       if (error) {
         setState({ ...state, loading: false, error: true });
-        return console.error("register error:", error);
+        return { error: error.message };
       }
 
       createUserProfile(data, formData);
@@ -104,8 +104,6 @@ function AuthProvider(props) {
     try {
       //check whether the user has previously registered or not
       if (data.user.identities.length ?? 0 !== 0) {
-        navigate("/login");
-
         //if the user does not exist, create user profile in database
         await axios.post(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/users`, {
           authUserId: data.user.id,

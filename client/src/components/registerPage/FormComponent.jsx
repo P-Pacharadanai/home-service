@@ -6,6 +6,8 @@ import { useAuth } from "../../contexts/authentication"; // รอเขีย�
 import { validateForm } from "./ValidateForm";
 import { HidePasswordIcon } from "../../assets/icons";
 import { ShowPasswordIcon } from "../../assets/icons";
+import { Spinner } from "@chakra-ui/react";
+
 function FormComponent() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,6 +16,7 @@ function FormComponent() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -25,7 +28,7 @@ function FormComponent() {
   const navigate = useNavigate();
 
   const { register } = useAuth();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
       firstName,
@@ -36,7 +39,18 @@ function FormComponent() {
     };
     const formErrors = validateForm(data);
     if (Object.keys(formErrors).length === 0) {
-      register(data);
+      setIsLoading(true);
+
+      const result = await register(data);
+
+      if (result?.error) {
+        setIsLoading(false);
+        alert("register fail");
+        return;
+      }
+      setIsLoading(false);
+      alert("register success");
+      navigate("/login");
     } else {
       setErrors(formErrors);
       setShowWarning(true);
@@ -252,10 +266,21 @@ function FormComponent() {
             <button
               type="submit"
               className={`rounded-lg ${
-                isPolicyAccepted ? "bg-blue-600" : "bg-gray-400"
+                isPolicyAccepted
+                  ? isLoading
+                    ? "bg-blue-400"
+                    : "bg-blue-600"
+                  : "bg-gray-400"
               } text-white px-8 py-3 w-full`}
             >
-              ลงทะเบียน
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Spinner size="sm" />
+                  <p>กำลังดำเนินการ</p>
+                </div>
+              ) : (
+                <p>ลงทะเบียน</p>
+              )}
             </button>
             {showWarning && (
               <p className="text-red">
