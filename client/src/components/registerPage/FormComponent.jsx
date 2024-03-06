@@ -7,6 +7,8 @@ import { validateForm } from "./ValidateForm";
 import { HidePasswordIcon } from "../../assets/icons";
 import { ShowPasswordIcon } from "../../assets/icons";
 import { Spinner } from "@chakra-ui/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function FormComponent() {
   const [firstName, setFirstName] = useState("");
@@ -28,6 +30,36 @@ function FormComponent() {
   const navigate = useNavigate();
 
   const { register } = useAuth();
+
+  const showModalSuccess = () => {
+    withReactContent(Swal).fire({
+      icon: "success",
+      iconColor: "#4c8df9",
+      title: "ลงทะเบียนสำเร็จ",
+      text: "โปรดตรวจสอบอีเมล เพื่อยืนยันตัวตน",
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: "font-prompt",
+        title: "text-xl font-prompt",
+      },
+    });
+  };
+
+  const showModalFail = (errorMessage) => {
+    withReactContent(Swal).fire({
+      icon: "error",
+      title: "ลงทะเบียนไม่สำเร็จ",
+      text: errorMessage || "ขออภัย โปรดลองใหม่อีกครั้ง",
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: "font-prompt",
+        title: "text-xl font-prompt",
+      },
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
@@ -38,22 +70,33 @@ function FormComponent() {
       password,
     };
     const formErrors = validateForm(data);
-    if (Object.keys(formErrors).length === 0) {
+    if (Object.keys(formErrors).length === 0 && isPolicyAccepted) {
       setIsLoading(true);
 
       const result = await register(data);
 
       if (result?.error) {
         setIsLoading(false);
-        alert("register fail");
+        if (result?.error === "Email rate limit exceeded") {
+          showModalFail("ลงทะเบียนเกินจำนวนที่กำหนด โปรดลองใหม่ในภายหลัง");
+          return;
+        }
+        showModalFail();
         return;
       }
+
       setIsLoading(false);
-      alert("register success");
-      navigate("/login");
+      showModalSuccess();
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
+      return;
     } else {
       setErrors(formErrors);
       setShowWarning(true);
+      return;
     }
   };
 
