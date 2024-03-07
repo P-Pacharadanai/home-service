@@ -24,11 +24,16 @@ const FormLoginComponent = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formErrors = validateFormLogin({ email, password });
     if (Object.keys(formErrors).length === 0) {
-      login({ email, password });
+      const result = await login({ email, password });
+      if (result?.error === "Invalid login credentials") {
+        setErrors({ warn: "อีเมลหรือรหัสผ่านไม่ถูกต้อง" });
+      } else {
+        setErrors({});
+      }
     } else {
       setErrors(formErrors);
     }
@@ -115,6 +120,7 @@ const FormLoginComponent = () => {
                   <p className="text-red">{errors.password}</p>
                 </div>
               )}
+              {errors?.warn && <p className="text-red mt-2">{errors.warn}</p>}
             </label>
           </div>
 

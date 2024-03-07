@@ -81,7 +81,7 @@ function FormComponent() {
           showModalFail("ลงทะเบียนเกินจำนวนที่กำหนด โปรดลองใหม่ในภายหลัง");
           return;
         }
-        showModalFail();
+        showModalFail(result?.error);
         return;
       }
 
