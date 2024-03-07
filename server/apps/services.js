@@ -1,12 +1,13 @@
 import { Router, query } from "express";
 import supabase from "../utils/db.js";
 import multer from "multer";
+import { protect } from "../middlewares/protect.js";
 
 const serviceRouter = Router();
 const storage = multer.memoryStorage();
 const imageUpload = multer({ storage: storage }).fields([{ name: "image" }]);
 
-serviceRouter.post("/", imageUpload, async (req, res) => {
+serviceRouter.post("/", [protect, imageUpload], async (req, res) => {
   const file = req.files.image[0];
   const serviceName = req.body.name;
   const categoryId = req.body.category_id;
@@ -110,7 +111,7 @@ serviceRouter.get("/", async (req, res) => {
   }
 });
 
-serviceRouter.get("/:serviceId", async (req, res) => {
+serviceRouter.get("/:serviceId", protect, async (req, res) => {
   try {
     const serviceId = req.params.serviceId;
 
@@ -136,7 +137,7 @@ serviceRouter.get("/:serviceId", async (req, res) => {
   }
 });
 
-serviceRouter.get("/:serviceId/list", async (req, res) => {
+serviceRouter.get("/:serviceId/list", protect, async (req, res) => {
   try {
     const serviceId = req.params.serviceId;
 
@@ -158,7 +159,7 @@ serviceRouter.get("/:serviceId/list", async (req, res) => {
   }
 });
 
-serviceRouter.put("/update", imageUpload, async (req, res) => {
+serviceRouter.put("/update", [protect, imageUpload], async (req, res) => {
   const serviceId = req.body.serviceId;
   const serviceName = req.body.name;
   const categoryId = req.body.category_Id;
@@ -257,7 +258,7 @@ serviceRouter.put("/update", imageUpload, async (req, res) => {
   }
 });
 
-serviceRouter.delete("/:serviceId", async (req, res) => {
+serviceRouter.delete("/:serviceId", protect, async (req, res) => {
   try {
     const serviceId = req.params.serviceId;
 
@@ -278,7 +279,7 @@ serviceRouter.delete("/:serviceId", async (req, res) => {
   }
 });
 
-serviceRouter.delete("/list/:serviceListId", async (req, res) => {
+serviceRouter.delete("/list/:serviceListId", protect, async (req, res) => {
   try {
     const serviceListId = req.params.serviceListId;
     const { error } = await supabase
