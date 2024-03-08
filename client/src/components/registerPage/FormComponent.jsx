@@ -6,6 +6,10 @@ import { useAuth } from "../../contexts/authentication"; // รอเขีย�
 import { validateForm } from "./ValidateForm";
 import { HidePasswordIcon } from "../../assets/icons";
 import { ShowPasswordIcon } from "../../assets/icons";
+import { Spinner } from "@chakra-ui/react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 function FormComponent() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,6 +18,7 @@ function FormComponent() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isPolicyAccepted, setIsPolicyAccepted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
@@ -25,7 +30,37 @@ function FormComponent() {
   const navigate = useNavigate();
 
   const { register } = useAuth();
-  const handleSubmit = (event) => {
+
+  const showModalSuccess = () => {
+    withReactContent(Swal).fire({
+      icon: "success",
+      iconColor: "#4c8df9",
+      title: "ลงทะเบียนสำเร็จ",
+      text: "โปรดตรวจสอบอีเมล เพื่อยืนยันตัวตน",
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: "font-prompt",
+        title: "text-xl font-prompt",
+      },
+    });
+  };
+
+  const showModalFail = (errorMessage) => {
+    withReactContent(Swal).fire({
+      icon: "error",
+      title: "ลงทะเบียนไม่สำเร็จ",
+      text: errorMessage || "ขออภัย โปรดลองใหม่อีกครั้ง",
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: "font-prompt",
+        title: "text-xl font-prompt",
+      },
+    });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
       firstName,
@@ -35,16 +70,38 @@ function FormComponent() {
       password,
     };
     const formErrors = validateForm(data);
-    if (Object.keys(formErrors).length === 0) {
-      register(data);
+    if (Object.keys(formErrors).length === 0 && isPolicyAccepted) {
+      setIsLoading(true);
+
+      const result = await register(data);
+
+      if (result?.error) {
+        setIsLoading(false);
+        if (result?.error === "Email rate limit exceeded") {
+          showModalFail("ลงทะเบียนเกินจำนวนที่กำหนด โปรดลองใหม่ในภายหลัง");
+          return;
+        }
+        showModalFail(result?.error);
+        return;
+      }
+
+      setIsLoading(false);
+      showModalSuccess();
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
+      return;
     } else {
       setErrors(formErrors);
       setShowWarning(true);
+      return;
     }
   };
 
   return (
-    <div className="flex-1 font-prompt bg-base w-screen  flex justify-center items-center">
+    <div className="flex-1 font-prompt bg-base w-screen  flex justify-center py-10 items-center">
       <div
         className=" flex flex-col w-10/12 lg:w-8/12 bg-white rounded-xl border border-gray-300 mx-auto px-20 max-w-[620px]"
         id="register-form-container"
@@ -252,10 +309,21 @@ function FormComponent() {
             <button
               type="submit"
               className={`rounded-lg ${
-                isPolicyAccepted ? "bg-blue-600" : "bg-gray-400"
+                isPolicyAccepted
+                  ? isLoading
+                    ? "bg-blue-400"
+                    : "bg-blue-600"
+                  : "bg-gray-400"
               } text-white px-8 py-3 w-full`}
             >
-              ลงทะเบียน
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Spinner size="sm" />
+                  <p>กำลังดำเนินการ</p>
+                </div>
+              ) : (
+                <p>ลงทะเบียน</p>
+              )}
             </button>
             {showWarning && (
               <p className="text-red">

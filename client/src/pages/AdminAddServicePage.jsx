@@ -132,7 +132,7 @@ function AdminAddServicePage() {
                 </p>
                 <input
                   type="text"
-                  className="border border-gray-300 focus:outline-none rounded-lg w-[435px] h-[42px] "
+                  className="px-4 border border-gray-300 focus:outline-none rounded-lg w-[435px] h-[42px] "
                   onChange={(e) => {
                     setServiceName(e.target.value);
                   }}
@@ -261,7 +261,7 @@ function AdminAddServicePage() {
                                   </label>
                                   <input
                                     type="text"
-                                    className="border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
+                                    className="px-4 border border-gray-300 focus:outline-none rounded-lg w-[422px] h-[42px] "
                                     onChange={(e) =>
                                       handleSubServiceChange(
                                         index,
@@ -278,7 +278,7 @@ function AdminAddServicePage() {
                                   <div className="relative">
                                     <input
                                       type="number"
-                                      className="flex justify-end items-center border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[44px] "
+                                      className="px-4 flex justify-end items-center border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[44px] "
                                       onChange={(e) =>
                                         handleSubServiceChange(
                                           index,
@@ -299,7 +299,7 @@ function AdminAddServicePage() {
                                   </label>
                                   <input
                                     type="text"
-                                    className="border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[42px] "
+                                    className="px-4 border border-gray-300 focus:outline-none rounded-lg w-[240px] h-[42px] "
                                     onChange={(e) =>
                                       handleSubServiceChange(
                                         index,

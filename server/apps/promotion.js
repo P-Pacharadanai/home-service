@@ -1,7 +1,9 @@
 import { Router } from "express";
 import supabase from "../utils/db.js";
+import { protect } from "../middlewares/protect.js";
 
 const promotionRouter = Router();
+promotionRouter.use(protect);
 
 promotionRouter.get("/", async (req, res) => {
   try {

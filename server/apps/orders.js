@@ -1,7 +1,9 @@
 import supabase from "../utils/db.js";
 import { Router } from "express";
+import { protect } from "../middlewares/protect.js";
 
 const orderRouter = Router();
+orderRouter.use(protect);
 
 orderRouter.get("/", async (req, res) => {
   try {
