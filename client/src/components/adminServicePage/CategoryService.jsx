@@ -19,8 +19,6 @@ const ServiceService = (props) => {
         }/service?keyword=${inputKeyword}`
       );
       setServices(data.data);
-
-      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -34,23 +32,6 @@ const ServiceService = (props) => {
       }
     );
   };
-
-  // const handleDragEnd = (result) => {
-  //   if (!result.destination) return;
-
-  //   const reOrderedService = Array.from(services);
-  //   const [reOrderedItem] = reOrderedService.splice(result.source.index, 1);
-  //   reOrderedService.splice(result.destination.index, 0, reOrderedItem);
-
-  //   const updatedService = reOrderedService.map((service, index) => ({
-  //     ...service,
-  //     index: index + 1,
-  //   }));
-
-  //   // updateServiceData(updatedService);
-
-  //   setServices(updatedService);
-  // };
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
