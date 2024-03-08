@@ -38,11 +38,19 @@ function AuthProvider(props) {
         return { error: error.message };
       }
 
+      if (data.user.identities.length) {
+        if (data.user.identities[0].identity_data.email_verified === false) {
+          setState({ ...state, loading: false, error: true });
+          return {
+            error: "อีเมลนี้ถูกใช้งานแล้ว โปรดตรวจสอบอีเมลเพื่อยืนยันตัวตน",
+          };
+        }
+      }
+
       if (data.user.identities.length === 0) {
         setState({ ...state, loading: false, error: true });
         return {
-          error:
-            "อีเมลนี้ถูกใช้งานแล้ว กรุณาลองลงชื่อเข้าใช้หรือรีเซ็ตรหัสผ่าน",
+          error: "อีเมลนี้ถูกใช้งานแล้ว กรุณาลงชื่อเข้าใช้หรือรีเซ็ตรหัสผ่าน",
         };
       }
 
