@@ -39,7 +39,10 @@ function AuthProvider(props) {
       }
 
       if (data.user.identities.length) {
-        if (data.user.identities[0].identity_data.email_verified === false) {
+        const userProfile = await axios.get(
+          `${import.meta.env.VITE_APP_HOME_SERVICE_API}/users/${data.user.id}`
+        );
+        if (userProfile?.data?.data) {
           setState({ ...state, loading: false, error: true });
           return {
             error: "อีเมลนี้ถูกใช้งานแล้ว โปรดตรวจสอบอีเมลเพื่อยืนยันตัวตน",
