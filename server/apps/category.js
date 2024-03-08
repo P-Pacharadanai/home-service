@@ -1,5 +1,6 @@
 import supabase from "../utils/db.js";
 import { Router } from "express";
+import { protect } from "../middlewares/protect.js";
 
 const categoryRouter = Router();
 
@@ -40,7 +41,7 @@ categoryRouter.get("/", async (req, res) => {
   }
 });
 
-categoryRouter.get("/:categoryId", async (req, res) => {
+categoryRouter.get("/:categoryId", protect, async (req, res) => {
   try {
     const categoryId = req.params.categoryId;
 
@@ -60,7 +61,7 @@ categoryRouter.get("/:categoryId", async (req, res) => {
   }
 });
 
-categoryRouter.post("/", async (req, res) => {
+categoryRouter.post("/", protect, async (req, res) => {
   try {
     const { name, bgColor, textColor } = req.body;
 
@@ -81,7 +82,7 @@ categoryRouter.post("/", async (req, res) => {
   }
 });
 
-categoryRouter.put("/", async (req, res) => {
+categoryRouter.put("/", protect, async (req, res) => {
   try {
     const categories = req.body.categories;
 
@@ -102,7 +103,7 @@ categoryRouter.put("/", async (req, res) => {
   }
 });
 
-categoryRouter.put("/:categoryId", async (req, res) => {
+categoryRouter.put("/:categoryId", protect, async (req, res) => {
   try {
     const categoryId = req.params.categoryId;
     const { name, bgColor, textColor } = req.body;
@@ -130,7 +131,7 @@ categoryRouter.put("/:categoryId", async (req, res) => {
   }
 });
 
-categoryRouter.delete("/:categoryId", async (req, res) => {
+categoryRouter.delete("/:categoryId", protect, async (req, res) => {
   try {
     const categoryId = req.params.categoryId;
     const { error } = await supabase

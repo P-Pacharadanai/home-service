@@ -32,6 +32,8 @@
     "react-router-dom": "^6.21.3",
     "react-thailand-address-autocomplete": "^0.0.6",
     "react-timepicker": "^2.0.2",
+    "sweetalert2": "^11.10.6",
+    "sweetalert2-react-content": "^5.0.7",
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {

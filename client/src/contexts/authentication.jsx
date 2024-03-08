@@ -35,7 +35,23 @@ function AuthProvider(props) {
       //check if there's an error during sign up
       if (error) {
         setState({ ...state, loading: false, error: true });
-        return console.error("register error:", error);
+        return { error: error.message };
+      }
+
+      if (data.user.identities.length) {
+        if (data.user.identities[0].identity_data.email_verified === false) {
+          setState({ ...state, loading: false, error: true });
+          return {
+            error: "อีเมลนี้ถูกใช้งานแล้ว โปรดตรวจสอบอีเมลเพื่อยืนยันตัวตน",
+          };
+        }
+      }
+
+      if (data.user.identities.length === 0) {
+        setState({ ...state, loading: false, error: true });
+        return {
+          error: "อีเมลนี้ถูกใช้งานแล้ว กรุณาลงชื่อเข้าใช้หรือรีเซ็ตรหัสผ่าน",
+        };
       }
 
       createUserProfile(data, formData);
@@ -56,10 +72,10 @@ function AuthProvider(props) {
       //check if there's an error during sign in
       if (error) {
         setState({ ...state, loading: false, error: true });
-        return console.error("login error:", error);
+        return { error: error.message };
       }
       setState({ ...state, loading: false });
-      console.log(data.user.role);
+
       if (data.user.role === "authenticated_admin") {
         navigate("/admin-category");
         return;
@@ -102,22 +118,13 @@ function AuthProvider(props) {
 
   const createUserProfile = async (data, formData) => {
     try {
-      //check whether the user has previously registered or not
-      if (data.user.identities.length ?? 0 !== 0) {
-        navigate("/login");
+      await axios.post(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/users`, {
+        authUserId: data.user.id,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+      });
 
-        //if the user does not exist, create user profile in database
-        await axios.post(`${import.meta.env.VITE_APP_HOME_SERVICE_API}/users`, {
-          authUserId: data.user.id,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-        });
-
-        setState({ ...state, loading: false });
-      } else {
-        setState({ ...state, loading: false, error: true });
-        return console.error("user already exists.");
-      }
+      setState({ ...state, loading: false });
     } catch (error) {
       return console.error(
         "An error occurred during create user profile:",

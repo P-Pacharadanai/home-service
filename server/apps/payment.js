@@ -1,9 +1,10 @@
 import { Router } from "express";
 import stripe from "stripe";
+import { protect } from "../middlewares/protect.js";
 
 const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 const paymentRouter = Router();
-//const router = Router();
+paymentRouter.use(protect);
 
 paymentRouter.post("/create", async (req, res) => {
   const { amount } = req.body;
@@ -23,34 +24,3 @@ paymentRouter.post("/create", async (req, res) => {
   }
 });
 export default paymentRouter;
-
-
-{/*
-router.post("/create", async (req, res) => {
-  const { totalOrderPrice } = req.body;
-
-  const paymentSucess = product.map((product) => ({
-    price_date:{
-      currency: "THB",
-      product_data:{
-        name:product.name,
-        image:[product.image]
-      },
-      unit_amount: Math.round(totalOrderPrice * 100),
-  },
-  quantity:product.quantity
-  }));
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card", "promptpay"],
-    line_items: lineItems,
-    mode: "payment",
-    success_url:"http://localhost:5175/payment-success",
-    cancel_url:""
-  })
-
-  res.json({id:session.id})
-})
-
-module.exports = router;
-*/}
